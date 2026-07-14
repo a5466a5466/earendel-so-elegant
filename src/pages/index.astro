@@ -16,7 +16,7 @@ const projects = [
 		</a>
 		<button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav"><span></span><span></span><span class="sr-only">開啟選單</span></button>
 		<nav id="site-nav" class="site-nav" aria-label="主要導覽">
-			<a href="#about">關於她</a><a href="#projects">應援企劃</a><a href="#moments">星光片刻</a><a href="#follow">追隨星光</a>
+			<a href="#about">關於她</a><a href="#projects">應援企劃</a><a href="#moments">星光片刻</a><a href="#follow">追隨星光</a><a href="/lab/">功能實驗室</a>
 		</nav>
 	</header>
 
@@ -118,7 +118,7 @@ const projects = [
 	.brand { display:flex; align-items:center; gap:.75rem; text-decoration:none; }
 	.brand svg { width:31px; fill:none; stroke:var(--gold-light); stroke-width:1.1; }
 	.brand span { display:grid; line-height:1; } .brand b { font-weight:500; letter-spacing:.2em; font-size:.9rem; } .brand small { margin-top:.45rem; color:var(--gold-light); font:400 .48rem var(--sans); letter-spacing:.32em; }
-	.site-nav { display:flex; gap:2.3rem; } .site-nav a { position:relative; text-decoration:none; font-size:.8rem; letter-spacing:.16em; }
+	.site-nav { display:flex; gap:clamp(1rem,2.3vw,2.3rem); } .site-nav a { position:relative; text-decoration:none; font-size:.8rem; letter-spacing:.16em; }
 	.site-nav a::after { content:''; position:absolute; left:0; right:100%; bottom:-9px; height:1px; background:var(--gold-light); transition:right .25s; } .site-nav a:hover::after,.site-nav a:focus-visible::after { right:0; }
 	.menu-toggle { display:none; background:none; border:0; color:inherit; }
 	.hero { position:relative; min-height:100svh; overflow:hidden; color:#f4f1e9; background:radial-gradient(circle at 74% 35%, #29445a 0, #13283c 25%, #08131f 63%); }

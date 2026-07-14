@@ -1,0 +1,50 @@
+---
+import '../styles/lab/lab.css';
+
+interface Props {
+	title: string;
+	description: string;
+}
+
+const { title, description } = Astro.props;
+---
+
+<!doctype html>
+<html lang="zh-Hant">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="description" content={description} />
+		<meta name="robots" content="noindex, nofollow, noarchive" />
+		<meta name="theme-color" content="#08131f" />
+		<meta name="generator" content={Astro.generator} />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" href="/favicon.ico" />
+		<title>{title}</title>
+	</head>
+	<body>
+		<a class="lab-skip-link" href="#lab-main">跳至主要內容</a>
+		<header class="lab-header">
+			<a class="lab-brand" href="/" aria-label="返回厄倫蒂兒好氣質首頁">
+				<svg viewBox="0 0 48 48" aria-hidden="true">
+					<path d="M24 2 28.4 19.6 46 24l-17.6 4.4L24 46l-4.4-17.6L2 24l17.6-4.4L24 2Z"></path>
+					<circle cx="24" cy="24" r="4.4"></circle>
+				</svg>
+				<span><b>厄倫蒂兒</b><small>FUNCTION LAB</small></span>
+			</a>
+			<nav class="lab-nav" aria-label="實驗室導覽">
+				<a href="/">返回首頁</a>
+				<a href="/lab/" aria-current="page">實驗索引</a>
+			</nav>
+		</header>
+
+		<main id="lab-main">
+			<slot />
+		</main>
+
+		<footer class="lab-footer">
+			<p>厄倫蒂兒好氣質・功能實驗室</p>
+			<p>Prototype only · Noindex</p>
+		</footer>
+	</body>
+</html>

@@ -1,0 +1,94 @@
+---
+import LabLayout from '../../layouts/LabLayout.astro';
+
+const foundations = [
+	{
+		step: '01',
+		title: '實驗索引',
+		description: '建立所有功能實驗的共同入口、進度與驗收狀態。',
+		status: '進行中',
+		state: 'active',
+	},
+	{
+		step: '02',
+		title: '共用控制器',
+		description: '集中顯示 viewport、動態偏好、音效與效能模式。',
+		status: '下一步',
+		state: 'next',
+	},
+	{
+		step: '03',
+		title: '實驗紀錄',
+		description: '統一記錄工時、RWD、無障礙、效能與採用決策。',
+		status: '待建立',
+		state: 'pending',
+	},
+	{
+		step: '04',
+		title: '公開保護',
+		description: '維持 noindex，並在正式部署前確認 Sitemap 與入口策略。',
+		status: '基礎完成',
+		state: 'protected',
+	},
+];
+---
+
+<LabLayout
+	title="功能實驗室｜厄倫蒂兒好氣質"
+	description="厄倫蒂兒好氣質網站的 Astro 功能研究與體驗驗證空間。"
+>
+	<section class="lab-hero" aria-labelledby="lab-title">
+		<div class="lab-stars" aria-hidden="true"></div>
+		<div class="lab-orbit" aria-hidden="true"></div>
+		<div class="lab-hero-inner">
+			<p class="lab-kicker">Astro Function Laboratory</p>
+			<h1 id="lab-title">功能<span>實驗室</span></h1>
+			<p class="lab-lead">
+				在功能進入正式網站以前，先在這裡驗證它的體驗、效能與維護成本。
+			</p>
+			<div class="lab-notice" role="note">
+				<span aria-hidden="true">✦</span>
+				<div>
+					<strong>實驗功能</strong>
+					<p>這裡包含仍在測試中的介面，結果通過驗收後才會整合回正式網站。</p>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="lab-section" aria-labelledby="foundation-title">
+		<div class="lab-section-heading">
+			<div>
+				<p class="lab-eyebrow">Phase 0 · Foundation</p>
+				<h2 id="foundation-title">建立可靠的實驗基礎</h2>
+			</div>
+			<p>目前先完成實驗入口與隔離架構；其餘項目會逐步實作、逐步驗收。</p>
+		</div>
+
+		<ol class="foundation-grid">
+			{foundations.map((item) => (
+				<li class={`foundation-card is-${item.state}`}>
+					<div class="card-meta">
+						<span>{item.step}</span>
+						<small>{item.status}</small>
+					</div>
+					<h3>{item.title}</h3>
+					<p>{item.description}</p>
+				</li>
+			))}
+		</ol>
+	</section>
+
+	<section class="lab-section lab-roadmap" aria-labelledby="roadmap-title">
+		<div>
+			<p class="lab-eyebrow">Next Experiment</p>
+			<h2 id="roadmap-title">Navigation ＋ Page Transition</h2>
+			<p>Phase 0 完成後，預計先比較多頁導覽、返回行為與頁面轉場；正式開始前仍會再次確認範圍。</p>
+		</div>
+		<span class="roadmap-mark" aria-hidden="true">F03<br />＋<br />F04</span>
+	</section>
+
+	<div class="lab-home-link">
+		<a href="/">← 返回厄倫蒂兒好氣質首頁</a>
+	</div>
+</LabLayout>
