@@ -1,0 +1,61 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500;600;700&family=Outfit:wght@300;400;500;600&display=swap');
+
+:root {
+	--ink: #122335;
+	--night: #08131f;
+	--night-soft: #102338;
+	--mist: #f4f1e9;
+	--paper: #fbfaf6;
+	--gold: #bda36a;
+	--gold-light: #ded0a8;
+	--blue: #88a9bf;
+	--line: rgba(189, 163, 106, 0.32);
+	--serif: 'Noto Serif TC', 'Songti TC', serif;
+	--sans: 'Outfit', 'Noto Sans TC', sans-serif;
+	--container: min(1180px, calc(100vw - 48px));
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+	margin: 0;
+	background: var(--paper);
+	color: var(--ink);
+	font-family: var(--serif);
+	-webkit-font-smoothing: antialiased;
+}
+button, a { font: inherit; }
+a { color: inherit; }
+img, svg { display: block; max-width: 100%; }
+::selection { background: var(--gold-light); color: var(--night); }
+
+.skip-link {
+	position: fixed; z-index: 100; left: 1rem; top: 1rem;
+	transform: translateY(-200%); padding: .7rem 1rem;
+	background: white; border-radius: 99px;
+}
+.skip-link:focus { transform: none; }
+
+.container { width: var(--container); margin-inline: auto; }
+.eyebrow {
+	display: flex; align-items: center; gap: .8rem;
+	margin: 0 0 1rem; color: var(--gold); font: 500 .72rem/1 var(--sans);
+	letter-spacing: .24em; text-transform: uppercase;
+}
+.eyebrow::before { content: ''; width: 34px; height: 1px; background: currentColor; }
+.section-title { margin: 0; font-size: clamp(2rem, 4vw, 3.5rem); font-weight: 500; line-height: 1.25; letter-spacing: .04em; }
+.section-copy { color: #526273; line-height: 2; font-size: .98rem; }
+
+[data-reveal] { opacity: 0; transform: translateY(24px); transition: opacity .8s ease, transform .8s ease; }
+[data-reveal].is-visible { opacity: 1; transform: none; }
+
+@media (max-width: 720px) {
+	:root { --container: min(100% - 32px, 1180px); }
+	.section-copy { line-height: 1.85; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+	html { scroll-behavior: auto; }
+	*, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+	[data-reveal] { opacity: 1; transform: none; }
+}

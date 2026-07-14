@@ -1,0 +1,172 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const projects = [
+	{ no: '01', date: '2026 · SUMMER', title: '星光花園', en: 'Garden of Starlight', copy: '以她歌聲裡的溫柔為種子，把來自不同地方的祝福，種成一座只在夜裡盛開的花園。', tone: 'blue' },
+	{ no: '02', date: '2026 · BIRTHDAY', title: '遠星來信', en: 'Letters to Earendel', copy: '一封信，一句想說很久的話。收集細小而真摯的心意，寄往那顆照亮我們的星。', tone: 'gold' },
+	{ no: '03', date: '2025 · ARCHIVE', title: '月色音樂會', en: 'Concert Under Moonlight', copy: '收藏那些被歌聲接住的夜晚，也收藏我們曾經一起仰望、一起靜靜聆聽的時刻。', tone: 'rose' },
+];
+---
+
+<BaseLayout title="厄倫蒂兒好氣質｜Earendel, So Elegant" description="獻給厄倫蒂兒的非官方粉絲應援網站。收藏她的優雅、歌聲，與我們一起走過的星光。">
+	<header class="site-header" data-header>
+		<a class="brand" href="#top" aria-label="回到首頁">
+			<svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 2 28.4 19.6 46 24l-17.6 4.4L24 46l-4.4-17.6L2 24l17.6-4.4L24 2Z"/><circle cx="24" cy="24" r="4.4"/></svg>
+			<span><b>厄倫蒂兒</b><small>SO ELEGANT</small></span>
+		</a>
+		<button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav"><span></span><span></span><span class="sr-only">開啟選單</span></button>
+		<nav id="site-nav" class="site-nav" aria-label="主要導覽">
+			<a href="#about">關於她</a><a href="#projects">應援企劃</a><a href="#moments">星光片刻</a><a href="#follow">追隨星光</a>
+		</nav>
+	</header>
+
+	<main id="main">
+		<section id="top" class="hero">
+			<div class="hero-stars" aria-hidden="true"></div>
+			<div class="hero-orbit orbit-one" aria-hidden="true"></div><div class="hero-orbit orbit-two" aria-hidden="true"></div>
+			<div class="hero-content">
+				<p class="hero-kicker">For the star who sings beyond the night</p>
+				<h1><span>厄倫蒂兒</span><em>好氣質</em></h1>
+				<p class="hero-intro">她從很遠的地方來，<br />卻讓每一個夜晚，都有了溫柔的名字。</p>
+				<a class="hero-cta" href="#about"><span>循著星光</span><i aria-hidden="true">↓</i></a>
+			</div>
+			<div class="hero-figure" aria-hidden="true">
+				<div class="halo"></div><div class="moon"></div>
+				<svg viewBox="0 0 600 820" role="presentation">
+					<defs><linearGradient id="dress" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#d7e0e3"/><stop offset=".55" stop-color="#8fa8b5"/><stop offset="1" stop-color="#455e70"/></linearGradient><linearGradient id="hair" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f1e4c7"/><stop offset="1" stop-color="#ae9365"/></linearGradient></defs>
+					<path fill="url(#hair)" d="M316 112c-68 2-111 62-107 139 4 87-26 151-69 210 52-19 91-53 113-99-3 83-33 146-72 193 77-28 134-92 152-170 13 76 50 128 107 161-38-62-56-128-49-199 8-82-7-163-75-211Z" opacity=".95"/>
+					<ellipse cx="310" cy="222" rx="69" ry="87" fill="#e5c5a8"/><path fill="#f4ead8" d="M248 208c23-27 44-65 56-97 60 25 86 65 77 123-27-12-49-35-63-66-17 30-41 47-70 40Z"/>
+					<path fill="url(#dress)" d="M215 377c55-44 132-48 190 1l39 107c53 123 91 220 114 322H60c25-107 68-218 119-326l36-104Z"/>
+					<path fill="#e8eef0" d="m212 381-57 129 48 18 42-105 63 61 68-61 42 105 49-18-60-132c-23 30-59 54-100 78-39-26-70-51-95-75Z" opacity=".85"/>
+					<path d="M308 455v352M189 544c80 37 155 37 237 0" fill="none" stroke="#c8b47c" stroke-width="4" opacity=".75"/>
+					<path d="m307 470 11 21 23 4-17 16 4 24-21-11-21 11 4-24-18-16 24-4 11-21Z" fill="#dac58c"/>
+				</svg>
+			</div>
+			<p class="hero-side-note">UNOFFICIAL FAN PROJECT<br />EST. 2026 · TAIWAN</p>
+		</section>
+
+		<section id="about" class="about section">
+			<div class="container about-grid">
+				<div class="about-art" data-reveal>
+					<div class="arch"><div class="constellation"><i></i><i></i><i></i><i></i><i></i></div><span>Ἑωσφόρος</span></div>
+					<p>“ 在最深的夜裡，<br />也做最溫柔的光。 ”</p>
+				</div>
+				<div class="about-copy" data-reveal>
+					<p class="eyebrow">About Earendel</p>
+					<h2 class="section-title">像黎明前，<br />最安靜的那顆星。</h2>
+					<div class="ornament">✦</div>
+					<p class="section-copy">優雅從來不只是姿態。是她唱歌時，將每一個字都輕輕捧著；是面對世界時，依然保有自己的節奏與溫度。</p>
+					<p class="section-copy">我們喜歡的厄倫蒂兒，有時像月光，有時像遠方的風。她不張揚，卻總能在不經意的瞬間，照亮某一個人的夜晚。</p>
+					<dl class="about-facts"><div><dt>NAME</dt><dd>Earendel</dd></div><div><dt>SYMBOL</dt><dd>Morning Star</dd></div><div><dt>ESSENCE</dt><dd>Grace & Light</dd></div></dl>
+				</div>
+			</div>
+		</section>
+
+		<section id="projects" class="projects section">
+			<div class="container">
+				<div class="section-heading" data-reveal><div><p class="eyebrow">Fan Projects</p><h2 class="section-title">把喜歡，做成有形的光。</h2></div><p class="section-copy">每一次應援，都是我們與她之間<br />安靜而認真的約定。</p></div>
+				<div class="project-list">
+					{projects.map((project) => <article class={`project-card ${project.tone}`} data-reveal>
+						<div class="project-visual" aria-hidden="true"><span class="project-no">{project.no}</span><div class="project-celestial"><i></i></div></div>
+						<div class="project-info"><p>{project.date}</p><h3>{project.title}</h3><span>{project.en}</span><p class="project-copy">{project.copy}</p><a href="#follow" aria-label={`閱讀${project.title}企劃`}>閱讀企劃 <b>↗</b></a></div>
+					</article>)}
+				</div>
+			</div>
+		</section>
+
+		<section id="moments" class="moments section">
+			<div class="moments-glow" aria-hidden="true"></div>
+			<div class="container moments-inner" data-reveal>
+				<p class="eyebrow">A Gentle Reminder</p>
+				<blockquote>「願你走過漫長的夜，<br />依然相信星星會亮。」</blockquote>
+				<div class="wave" aria-hidden="true">— ︿ — ﹀ — ︿ — ﹀ —</div>
+				<p>收藏一句話，也收藏被她溫柔接住的那個自己。</p>
+			</div>
+		</section>
+
+		<section id="follow" class="follow section">
+			<div class="container follow-grid">
+				<div data-reveal><p class="eyebrow">Follow the Starlight</p><h2 class="section-title">星光未完，<br />我們也還在路上。</h2></div>
+				<div class="follow-copy" data-reveal><p class="section-copy">這是一個由喜歡開始，也會因喜歡繼續生長的地方。歡迎你帶著自己的故事，和我們一起收藏往後的每一束光。</p><div class="socials"><a href="#" aria-label="YouTube">YT <span>↗</span></a><a href="#" aria-label="X / Twitter">X <span>↗</span></a><a href="#" aria-label="Threads">TH <span>↗</span></a></div></div>
+				<div class="follow-star" aria-hidden="true"><svg viewBox="0 0 200 200"><path d="M100 2c4 61 37 94 98 98-61 4-94 37-98 98-4-61-37-94-98-98 61-4 94-37 98-98Z"/><circle cx="100" cy="100" r="16"/></svg></div>
+			</div>
+		</section>
+	</main>
+
+	<footer><div class="container"><div class="footer-brand">✦ <span>EAR<span>EN</span>DEL</span></div><p>非官方粉絲應援網站 · UNOFFICIAL FAN PROJECT</p><p>Made with grace & starlight.</p></div></footer>
+
+	<script>
+		const header = document.querySelector('[data-header]');
+		const toggle = document.querySelector<HTMLButtonElement>('.menu-toggle');
+		const nav = document.querySelector('.site-nav');
+		const onScroll = () => header?.classList.toggle('is-scrolled', window.scrollY > 30);
+		onScroll(); window.addEventListener('scroll', onScroll, { passive: true });
+		toggle?.addEventListener('click', () => { const open = toggle.getAttribute('aria-expanded') === 'true'; toggle.setAttribute('aria-expanded', String(!open)); nav?.classList.toggle('is-open', !open); });
+		nav?.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => { toggle?.setAttribute('aria-expanded', 'false'); nav.classList.remove('is-open'); }));
+		const items = document.querySelectorAll('[data-reveal]');
+		if ('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+			const observer = new IntersectionObserver((entries) => entries.forEach((entry) => { if (entry.isIntersecting) { entry.target.classList.add('is-visible'); observer.unobserve(entry.target); } }), { threshold: .14 });
+			items.forEach((item) => observer.observe(item));
+		} else { items.forEach((item) => item.classList.add('is-visible')); }
+	</script>
+</BaseLayout>
+
+<style>
+	.sr-only { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0,0,0,0); }
+	.site-header { position: fixed; z-index: 50; inset: 0 0 auto; display:flex; align-items:center; justify-content:space-between; height:92px; padding:0 4vw; color:#f4f1e9; transition:.35s ease; }
+	.site-header.is-scrolled { height:72px; background:rgba(8,19,31,.86); backdrop-filter:blur(14px); border-bottom:1px solid rgba(255,255,255,.08); }
+	.brand { display:flex; align-items:center; gap:.75rem; text-decoration:none; }
+	.brand svg { width:31px; fill:none; stroke:var(--gold-light); stroke-width:1.1; }
+	.brand span { display:grid; line-height:1; } .brand b { font-weight:500; letter-spacing:.2em; font-size:.9rem; } .brand small { margin-top:.45rem; color:var(--gold-light); font:400 .48rem var(--sans); letter-spacing:.32em; }
+	.site-nav { display:flex; gap:2.3rem; } .site-nav a { position:relative; text-decoration:none; font-size:.8rem; letter-spacing:.16em; }
+	.site-nav a::after { content:''; position:absolute; left:0; right:100%; bottom:-9px; height:1px; background:var(--gold-light); transition:right .25s; } .site-nav a:hover::after,.site-nav a:focus-visible::after { right:0; }
+	.menu-toggle { display:none; background:none; border:0; color:inherit; }
+	.hero { position:relative; min-height:100svh; overflow:hidden; color:#f4f1e9; background:radial-gradient(circle at 74% 35%, #29445a 0, #13283c 25%, #08131f 63%); }
+	.hero::after { content:''; position:absolute; inset:0; pointer-events:none; background:linear-gradient(90deg,rgba(8,19,31,.55),transparent 56%),linear-gradient(0deg,rgba(8,19,31,.8),transparent 25%); }
+	.hero-stars { position:absolute; inset:0; opacity:.42; background-image:radial-gradient(circle,#fff 0 1px,transparent 1.4px),radial-gradient(circle,#d9c99d 0 1px,transparent 1.4px); background-position:0 0, 47px 63px; background-size:113px 107px,151px 139px; mask-image:linear-gradient(to right,transparent,black 30%); }
+	.hero-orbit { position:absolute; z-index:1; border:1px solid rgba(218,197,140,.18); border-radius:50%; transform:rotate(-18deg); }
+	.orbit-one { width:730px; height:360px; right:-120px; top:26%; } .orbit-two { width:930px; height:520px; right:-190px; top:14%; }
+	.hero-content { position:relative; z-index:4; width:var(--container); margin:auto; padding-top:24vh; }
+	.hero-kicker { margin:0 0 2rem; color:var(--gold-light); font:400 .68rem var(--sans); letter-spacing:.28em; text-transform:uppercase; }
+	.hero h1 { margin:0; width:max-content; display:grid; font-weight:400; line-height:.88; letter-spacing:.12em; }
+	.hero h1 span { font-size:clamp(3.6rem,8.2vw,8rem); text-shadow:0 10px 40px #07121f; }
+	.hero h1 em { margin-top:1.3rem; margin-left:3.2em; color:var(--gold-light); font-size:clamp(1.3rem,2.6vw,2.6rem); font-style:normal; font-weight:400; letter-spacing:.45em; }
+	.hero-intro { margin:3.5rem 0 0 4rem; color:rgba(244,241,233,.74); line-height:2.1; letter-spacing:.14em; font-size:.9rem; }
+	.hero-cta { display:flex; align-items:center; gap:1.2rem; width:max-content; margin:2.2rem 0 0 4rem; color:var(--gold-light); text-decoration:none; font-size:.78rem; letter-spacing:.16em; }
+	.hero-cta i { display:grid; place-items:center; width:38px; height:38px; border:1px solid rgba(222,208,168,.5); border-radius:50%; font-style:normal; transition:.25s; } .hero-cta:hover i { background:var(--gold-light); color:var(--night); transform:translateY(3px); }
+	.hero-figure { position:absolute; z-index:3; right:5vw; bottom:-4%; width:min(46vw,610px); }
+	.hero-figure svg { position:relative; z-index:2; filter:drop-shadow(0 20px 50px rgba(0,0,0,.28)); }
+	.halo { position:absolute; width:70%; aspect-ratio:1; border:1px solid rgba(222,208,168,.28); border-radius:50%; top:10%; left:18%; box-shadow:0 0 80px rgba(189,163,106,.08),inset 0 0 70px rgba(189,163,106,.06); }
+	.moon { position:absolute; width:37%; aspect-ratio:1; border-radius:50%; top:22%; left:36%; background:#f0e5c9; box-shadow:0 0 50px #e8d8aa55; }
+	.hero-side-note { position:absolute; z-index:4; right:3vw; bottom:4%; margin:0; color:rgba(255,255,255,.45); font:400 .55rem/1.8 var(--sans); letter-spacing:.22em; writing-mode:vertical-rl; }
+	.section { padding:clamp(6rem,11vw,10rem) 0; }
+	.about { background:var(--paper); }
+	.about-grid { display:grid; grid-template-columns:minmax(320px,.9fr) 1fr; gap:clamp(4rem,10vw,9rem); align-items:center; }
+	.about-art { position:relative; min-height:620px; display:grid; place-items:center; }
+	.arch { position:relative; width:min(100%,430px); height:580px; overflow:hidden; border-radius:220px 220px 8px 8px; background:radial-gradient(circle at 55% 43%,#3c6176,#152d40 48%,#091827 100%); box-shadow:22px 25px 0 #e9e3d5; }
+	.arch::before { content:''; position:absolute; inset:0; opacity:.5; background-image:radial-gradient(circle,#fff 0 1px,transparent 1.3px); background-size:67px 71px; }
+	.arch::after { content:'✦'; position:absolute; top:28%; left:50%; color:var(--gold-light); font-size:7rem; transform:translate(-50%,-50%); text-shadow:0 0 30px #e6d6aa; }
+	.arch span { position:absolute; bottom:2rem; width:100%; text-align:center; color:rgba(255,255,255,.35); font:300 .7rem var(--sans); letter-spacing:.45em; }
+	.constellation i { position:absolute; width:5px; height:5px; border-radius:50%; background:#f7e9bd; box-shadow:0 0 12px white; }.constellation i:nth-child(1){left:20%;top:24%}.constellation i:nth-child(2){left:27%;top:58%}.constellation i:nth-child(3){right:18%;top:31%}.constellation i:nth-child(4){right:28%;top:66%}.constellation i:nth-child(5){left:45%;top:74%}
+	.about-art>p { position:absolute; left:-5%; bottom:3%; z-index:2; margin:0; padding:1.3rem 1.7rem; background:rgba(251,250,246,.92); border-left:2px solid var(--gold); font-size:1.1rem; line-height:1.9; letter-spacing:.08em; }
+	.about-copy { max-width:500px; }.about-copy .section-title { margin-bottom:2rem; }.ornament { color:var(--gold); margin:2rem 0; }.about-facts { display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; margin:3.2rem 0 0; padding-top:1.8rem; border-top:1px solid var(--line); }
+	.about-facts div { display:grid; gap:.6rem; }.about-facts dt { color:#8a7953; font:500 .58rem var(--sans); letter-spacing:.18em; }.about-facts dd { margin:0; font:400 .83rem var(--sans); color:#506171; }
+	.projects { background:#ede9df; }.section-heading { display:flex; align-items:end; justify-content:space-between; margin-bottom:4rem; }.section-heading>.section-copy { text-align:right; margin:0; }
+	.project-list { display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem; }.project-card { background:var(--paper); min-width:0; transition:transform .35s,box-shadow .35s; }.project-card:hover { transform:translateY(-8px); box-shadow:0 20px 50px rgba(20,35,50,.1); }
+	.project-visual { position:relative; aspect-ratio:1/.75; overflow:hidden; background:#1c3a4e; }.project-card.gold .project-visual{background:#76684c}.project-card.rose .project-visual{background:#68545b}
+	.project-visual::before,.project-visual::after { content:''; position:absolute; border-radius:50%; }.project-visual::before { width:62%; aspect-ratio:1; left:19%; top:17%; border:1px solid rgba(255,255,255,.35); box-shadow:0 0 0 22px rgba(255,255,255,.03),0 0 0 52px rgba(255,255,255,.025); }.project-visual::after { width:26%; aspect-ratio:1; left:37%; top:35%; background:var(--gold-light); box-shadow:0 0 40px rgba(255,241,199,.35); }
+	.project-celestial { position:absolute; inset:0; transform:rotate(-25deg); border-top:1px solid rgba(255,255,255,.25); top:52%; }.project-celestial i { position:absolute; width:9px; height:9px; border-radius:50%; background:white; left:16%; top:-5px; box-shadow:0 0 16px white; }
+	.project-no { position:absolute; z-index:2; left:1.4rem; top:1.2rem; color:rgba(255,255,255,.7); font:300 .72rem var(--sans); letter-spacing:.15em; }.project-info { padding:2rem; }.project-info>p:first-child { margin:0 0 1rem; color:#9a8357; font:500 .58rem var(--sans); letter-spacing:.2em; }.project-info h3 { margin:0; font-size:1.5rem; font-weight:500; letter-spacing:.1em; }.project-info>span { display:block; margin:.45rem 0 1.5rem; color:#8b959e; font:300 .75rem var(--sans); letter-spacing:.08em; }.project-copy { min-height:6.5em; color:#69747d; font-size:.88rem; line-height:1.85; }.project-info a { display:flex; justify-content:space-between; margin-top:2rem; padding-top:1rem; border-top:1px solid #ddd6c6; text-decoration:none; color:#887447; font-size:.76rem; letter-spacing:.15em; }.project-info a b { font-family:var(--sans); transition:.2s; }.project-info a:hover b { transform:translate(3px,-3px); }
+	.moments { position:relative; overflow:hidden; background:#0a1725; color:#f4f1e9; text-align:center; }.moments::before { content:''; position:absolute; inset:0; opacity:.2; background-image:radial-gradient(circle,#fff 0 1px,transparent 1.2px); background-size:93px 87px; }.moments-glow { position:absolute; width:420px; height:420px; left:50%; top:50%; transform:translate(-50%,-50%); border-radius:50%; background:#31536a; filter:blur(100px); opacity:.35; }.moments-inner { position:relative; z-index:2; }.moments .eyebrow { justify-content:center; }.moments .eyebrow::after { content:''; width:34px; height:1px; background:currentColor; }.moments blockquote { margin:2.5rem 0; font-size:clamp(1.8rem,4vw,3.6rem); font-weight:400; line-height:1.65; letter-spacing:.12em; }.wave { color:var(--gold); letter-spacing:.4em; }.moments-inner>p:last-child { margin:2.4rem 0 0; color:rgba(255,255,255,.52); font-size:.76rem; letter-spacing:.12em; }
+	.follow { background:var(--paper); }.follow-grid { position:relative; display:grid; grid-template-columns:1.1fr .8fr; gap:8rem; align-items:center; }.follow-copy { padding-top:3rem; }.socials { display:flex; gap:.8rem; margin-top:2.2rem; }.socials a { display:flex; align-items:center; justify-content:space-between; width:88px; padding:.8rem; border:1px solid var(--line); text-decoration:none; font:500 .65rem var(--sans); letter-spacing:.12em; transition:.2s; }.socials a:hover { background:var(--night); color:white; border-color:var(--night); }.follow-star { position:absolute; z-index:-1; left:36%; width:140px; color:rgba(189,163,106,.12); }.follow-star svg { fill:none; stroke:currentColor; }
+	footer { padding:2rem 0; background:#07121e; color:rgba(255,255,255,.5); font:300 .57rem var(--sans); letter-spacing:.16em; }.footer-brand { color:white; display:flex; align-items:center; gap:.7rem; font-size:.72rem; }.footer-brand>span { letter-spacing:.3em; }.footer-brand span span { color:var(--gold); }.footer-brand+ p { margin-left:auto; } footer .container { display:flex; align-items:center; gap:2.5rem; }
+	@media (max-width:900px) {
+		.hero-content { padding-top:21vh; }.hero-figure { right:-10vw; width:58vw; opacity:.8; }.hero h1 em { margin-left:1.3em; }.about-grid { grid-template-columns:1fr 1fr; gap:3rem; }.project-list { grid-template-columns:1fr; }.project-card { display:grid; grid-template-columns:1fr 1fr; }.project-visual { aspect-ratio:auto; }.project-copy { min-height:0; }.follow-grid { gap:3rem; }
+	}
+	@media (max-width:720px) {
+		.site-header { height:72px; padding:0 20px; }.menu-toggle { display:grid; width:42px; height:42px; place-content:center; gap:6px; cursor:pointer; }.menu-toggle span:not(.sr-only) { display:block; width:22px; height:1px; background:currentColor; transition:.2s; }.menu-toggle[aria-expanded="true"] span:first-child { transform:translateY(3.5px) rotate(45deg); }.menu-toggle[aria-expanded="true"] span:nth-child(2) { transform:translateY(-3.5px) rotate(-45deg); }
+		.site-nav { position:fixed; inset:72px 0 auto; display:grid; gap:0; padding:1rem 24px 2rem; background:rgba(8,19,31,.96); transform:translateY(-130%); opacity:0; transition:.25s; }.site-nav.is-open { transform:none; opacity:1; }.site-nav a { padding:1rem 0; border-bottom:1px solid rgba(255,255,255,.08); }
+		.hero { min-height:820px; }.hero-content { padding-top:145px; }.hero-kicker { font-size:.55rem; max-width:230px; line-height:1.7; }.hero h1 span { font-size:3.4rem; }.hero h1 em { margin-top:1rem; margin-left:1.8rem; font-size:1.25rem; }.hero-intro { margin:2.2rem 0 0; }.hero-cta { margin:1.6rem 0 0; }.hero-figure { width:94vw; right:-22vw; bottom:-1%; opacity:.62; }.hero::after { background:linear-gradient(90deg,rgba(8,19,31,.7),transparent),linear-gradient(0deg,#08131f,transparent 38%); }.hero-side-note { display:none; }
+		.about-grid { grid-template-columns:1fr; }.about-art { min-height:510px; order:2; }.arch { height:480px; }.about-art>p { left:0; }.about-copy { order:1; }.about-facts { grid-template-columns:1fr 1fr; }.section-heading { display:block; }.section-heading>.section-copy { text-align:left; margin-top:1.5rem; }.project-card { display:block; }.project-visual { aspect-ratio:1/.72; }.follow-grid { grid-template-columns:1fr; }.follow-copy { padding-top:0; }.moments blockquote { line-height:1.8; }.wave { letter-spacing:.1em; }.footer-brand+ p { margin-left:0; } footer .container { align-items:flex-start; flex-direction:column; gap:.8rem; }
+	}
+</style>

@@ -1,0 +1,10 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+<BaseLayout title="找不到這顆星｜厄倫蒂兒好氣質" description="這一頁似乎飄到了星海深處。">
+	<main class="not-found"><div><span>✦</span><p>404 · LOST IN STARLIGHT</p><h1>這顆星，暫時不在航線上。</h1><a href="/">循著星光回去 →</a></div></main>
+</BaseLayout>
+<style>
+	.not-found{min-height:100svh;display:grid;place-items:center;padding:2rem;text-align:center;color:#f4f1e9;background:radial-gradient(circle at 50% 40%,#29445a,#08131f 60%)}
+	.not-found span{display:block;color:#ded0a8;font-size:4rem}.not-found p{color:#bda36a;font:500 .65rem var(--sans);letter-spacing:.25em}.not-found h1{margin:2rem 0;font-size:clamp(1.8rem,5vw,3.5rem);font-weight:400;letter-spacing:.08em}.not-found a{display:inline-block;padding:1rem 1.4rem;border:1px solid #bda36a;color:#ded0a8;text-decoration:none;font-size:.8rem;letter-spacing:.14em}
+</style>
