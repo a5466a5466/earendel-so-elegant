@@ -1,6 +1,6 @@
 # 厄倫蒂兒好氣質網站－Astro 功能實驗室 Phase 0 交接
 
-更新日期：2026-07-14  
+更新日期：2026-07-15
 專案路徑：`C:\Users\Alan_Wu\Documents\earendel-so-elegant`  
 目前分支：`master`  
 Step 1 程式 commit：`9d83101 Phase 0・Step 1：建立 Lab 與首頁入口`
@@ -9,22 +9,22 @@ Step 1 程式 commit：`9d83101 Phase 0・Step 1：建立 Lab 與首頁入口`
 
 目前正式停在：
 
-> **Step 1「實驗室骨架」與 Step 2「Lab Layout」都已完成，目前停在 Step 3「共用控制器」開始前。**
+> **Phase 0・Step 1 已完成；Step 2「共用控制器」已完成開發與技術驗證，正在等待使用者操作驗收。**
 
-調整後的 Step 1 曾把專用 Layout 與 CSS 一起納入實作，所以原始 Step 1、Step 2 的工作在同一次完成。先前對話曾把「下一個共用控制器」簡稱為 Step 2；為避免換機後混亂，本交接檔統一恢復最初六步編號，將共用控制器稱為 Step 3。
+本專案採用使用者核准後的合併版 Step 1：實驗室骨架、首頁入口、專用 Lab Layout 與響應式 CSS 都屬於同一個 Step 1。不能再把 Lab Layout 重複計算成另一個已完成步驟。
 
-Step 1、2 已經完成實作、修正版面、通過 Astro build，並由使用者在本機瀏覽器實際查看 `/lab/` 後確認版面修正完成。
+Step 1 已經完成實作、修正版面、通過 Astro build，並由使用者在本機瀏覽器實際查看 `/lab/` 後確認版面修正完成。
 
-目前尚未開始實作 Step 3 的 viewport、reduced-motion、音效與效能模式控制器。不要因為 Lab 索引頁上出現控制器說明，就誤認為控制器已完成。
+Step 2 已實作 viewport、reduced-motion、音效與效能模式控制器，並通過 Astro build 與靜態輸出檢查。使用者尚未操作確認控制器的版面、選項與偏好保存，因此目前不能進入 Step 3。
 
 ## 2. Step 1～6 狀態表
 
 | Step | 工作 | 狀態 | 說明 |
 |---:|---|---|---|
-| 1 | 建立實驗室骨架與首頁入口 | **完成** | `/lab/`、首頁 Navbar 入口與索引內容皆已完成 |
-| 2 | 建立獨立 Lab Layout | **完成** | 專用 Layout、CSS、導覽、Skip Link 與 noindex 基礎已完成 |
-| 3 | 建立最小共用控制器 | **尚未開始** | 下一個要執行的步驟 |
-| 4 | 建立實驗紀錄模板 | **尚未開始** | 尚未建立 Markdown/YAML 紀錄模板 |
+| 1 | 建立實驗室骨架、首頁入口與 Lab Layout | **完成** | `/lab/`、Navbar、專用 Layout、CSS、導覽與 noindex 基礎皆已完成 |
+| 2 | 建立最小共用控制器 | **待使用者驗收** | 開發與技術驗證完成，等待實際操作確認 |
+| 3 | 建立實驗紀錄模板 | **尚未開始** | 尚未建立 Markdown/YAML 紀錄模板 |
+| 4 | 完善共用 Lab 結構 | **尚未開始** | 讓後續實驗共用控制器、狀態、導覽與索引資料 |
 | 5 | 搜尋引擎與部署隔離 | **部分完成** | `noindex` 已完成；正式部署排除與未來 Sitemap 規則尚未做 |
 | 6 | Phase 0 完整 QA | **尚未正式開始** | 已做 Step 1 基礎驗證，但尚未執行完整 360／768／1440 與跨瀏覽器 QA |
 
@@ -139,9 +139,9 @@ src/styles/lab/lab.css
 
 這些項目留到 Step 6 統一處理。
 
-## 6. 下一步：Step 3 最小共用控制器
+## 6. 目前驗收項目：Step 2 最小共用控制器
 
-下一次開始工作時，只執行 Step 3，不要直接跳到 Navigation、Page Transition 或其他 F01～F26 實驗。
+Step 2 已完成開發，下一個動作是讓使用者實際操作 `/lab/` 右下角的「實驗控制器」。未通過驗收前，不要直接跳到實驗紀錄模板、Navigation、Page Transition 或其他 F01～F26 實驗。
 
 ### 6.1 預計功能
 
@@ -169,14 +169,14 @@ src/styles/lab/lab.css
 
 ### 6.2 建議檔案
 
-實作前仍應先確認命名，建議候選：
+目前使用的檔案：
 
 ```text
 src/components/lab/LabControls.astro
 src/scripts/lab/preferences.ts
 ```
 
-可能需要更新：
+已同步更新：
 
 ```text
 src/layouts/LabLayout.astro
@@ -184,7 +184,7 @@ src/pages/lab/index.astro
 src/styles/lab/lab.css
 ```
 
-### 6.3 Step 3 驗收條件
+### 6.3 Step 2 驗收條件
 
 - 調整瀏覽器尺寸後 viewport 資訊會更新。
 - 重新整理後使用者設定仍保留。
@@ -195,9 +195,11 @@ src/styles/lab/lab.css
 - 不新增 dependency。
 - `pnpm build` 通過。
 
-## 7. Step 4～6 未來工作
+目前已由程式檢查確認最後一項；其餘互動項目等待使用者在瀏覽器驗收。
 
-### Step 4：建立實驗紀錄模板
+## 7. Step 3～6 未來工作
+
+### Step 3：建立實驗紀錄模板
 
 建立例如：
 
@@ -206,6 +208,12 @@ src/data/lab/experiment-record-template.md
 ```
 
 模板需涵蓋：功能範圍、工時、素材、RWD、原生與套件比較、效能、無障礙、相容性、fallback、隱私授權、驗收與最終採用決策。
+
+### Step 4：完善共用 Lab 結構
+
+- 讓未來 `/lab/...` 實驗頁共用 Layout、控制器與導覽。
+- 整理實驗索引資料，避免每個頁面重複維護狀態。
+- 此時仍不開始大量功能實驗。
 
 ### Step 5：完成搜尋引擎與部署隔離
 
@@ -267,14 +275,14 @@ pnpm build
 
 ```text
 分支：master
-HEAD：9d83101 Phase 0・Step 1：建立 Lab 與首頁入口
+HEAD：ae1ae42 Astro功能實驗室－Phase0交接
 遠端：origin/master 與本機 HEAD 同步
-工作樹：乾淨
+工作樹：有 Step 2 程式與本交接檔的未提交變更
 ```
 
-因此 Step 1 程式已經可以從遠端取得。
+因此 Step 1 程式與上一版交接檔已在遠端，但 Step 2 尚未 commit、push。
 
-但本文件 `Astro功能實驗室－Phase0交接.md` 是在上述 commit 之後才建立；建立完成後會是新的未提交檔案。換電腦前必須再 commit 並 push，否則新電腦只會取得 Step 1 程式，不會取得這份交接文件。
+本次 Step 2 新增或修改的控制器、腳本、Layout、索引、CSS 與交接紀錄，在 commit 並 push 前仍只存在目前電腦。
 
 除非使用者明確要求，不要由 Codex 自行 stage、commit 或 push。
 
@@ -288,8 +296,9 @@ HEAD：9d83101 Phase 0・Step 1：建立 Lab 與首頁入口
 4. 執行 `pnpm install`，再確認 `pnpm build`。
 5. 不要修改正式首頁視覺，除非工作確實需要。
 6. 不要新增套件。
-7. 先向使用者確認 Step 3 範圍，再只完成最小共用控制器。
-8. 每完成一步都要讓使用者實際查看並驗收。
+7. 先確認 Step 2 是否已由使用者操作驗收。
+8. Step 2 通過後才規畫 Step 3 實驗紀錄模板。
+9. 每完成一步都要讓使用者實際查看並驗收。
 
 可給新任務的第一句：
 
@@ -297,7 +306,7 @@ HEAD：9d83101 Phase 0・Step 1：建立 Lab 與首頁入口
 請先完整閱讀 Astro功能實驗室－Phase0交接.md 與
 Astro功能實驗室－企劃書.md，核對 Git 和目前專案狀態。
 不要先安裝新套件或修改程式，先告訴我 Phase 0 目前停在哪裡，
-以及 Step 3 準備怎麼執行。
+並確認 Step 2 是否已由我操作驗收。
 ```
 
 ## 11. 已知的非專案問題

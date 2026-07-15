@@ -1,0 +1,65 @@
+<details class="lab-controls" data-lab-controls>
+	<summary>
+		<span class="lab-controls-title"><i aria-hidden="true">✦</i> 實驗控制器</span>
+		<small data-preferences-summary>讀取裝置與偏好中</small>
+	</summary>
+
+	<div class="lab-controls-panel">
+		<div class="lab-controls-heading">
+			<div>
+				<p>Lab Environment</p>
+				<h2>共用測試設定</h2>
+			</div>
+			<span class="lab-controls-state">Phase 0</span>
+		</div>
+
+		<dl class="lab-device-grid" aria-label="目前裝置資訊">
+			<div><dt>Viewport</dt><dd data-viewport-output>等待 JavaScript</dd></div>
+			<div><dt>DPR</dt><dd data-dpr-output>—</dd></div>
+			<div><dt>Pointer</dt><dd data-pointer-output>—</dd></div>
+			<div><dt>Motion</dt><dd data-motion-output>—</dd></div>
+			<div><dt>效能結果</dt><dd data-performance-output>—</dd></div>
+		</dl>
+
+		<form class="lab-preferences-form" data-lab-preferences-form>
+			<label>
+				<span>動態偏好</span>
+				<select name="motion" data-motion-control>
+					<option value="system">跟隨系統</option>
+					<option value="reduce">減少動態</option>
+				</select>
+				<small>系統要求減少動態時，不會被站內設定覆蓋。</small>
+			</label>
+
+			<label>
+				<span>音效偏好</span>
+				<select name="sound" data-sound-control>
+					<option value="off">關閉（預設）</option>
+					<option value="on">開啟</option>
+				</select>
+				<small>這一步只記住偏好，不會播放測試聲音。</small>
+			</label>
+
+			<label>
+				<span>效能模式</span>
+				<select name="performance" data-performance-control>
+					<option value="auto">自動</option>
+					<option value="standard">標準</option>
+					<option value="economy">節能</option>
+				</select>
+				<small>自動模式會參考省流量設定與可用裝置記憶體。</small>
+			</label>
+
+			<button type="button" data-reset-preferences>重設所有偏好</button>
+		</form>
+
+		<p class="lab-controls-status" data-preferences-status aria-live="polite"></p>
+		<noscript><p class="lab-controls-noscript">JavaScript 未啟用；主要內容仍可閱讀，但裝置資訊與偏好控制無法使用。</p></noscript>
+	</div>
+</details>
+
+<script>
+	import { initializeLabPreferences } from '../../scripts/lab/preferences';
+
+	initializeLabPreferences();
+</script>

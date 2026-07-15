@@ -1,5 +1,6 @@
 ---
 import '../styles/lab/lab.css';
+import LabControls from '../components/lab/LabControls.astro';
 
 interface Props {
 	title: string;
@@ -10,7 +11,7 @@ const { title, description } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="zh-Hant">
+<html lang="zh-Hant" data-motion="full" data-motion-setting="system" data-sound="off" data-performance="standard" data-performance-setting="auto">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -37,6 +38,7 @@ const { title, description } = Astro.props;
 				<a href="/lab/" aria-current="page">實驗索引</a>
 			</nav>
 		</header>
+		<LabControls />
 
 		<main id="lab-main">
 			<slot />
