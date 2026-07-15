@@ -62,8 +62,8 @@ export const phaseZeroSteps: LabPhaseStep[] = [
 		step: '06',
 		title: '完整 QA',
 		description: '統一驗證 viewport、鍵盤、偏好、降級、首頁回歸與建置結果。',
-		status: '待執行',
-		state: 'pending',
+		status: '完成',
+		state: 'complete',
 	},
 ];
 
