@@ -1,15 +1,18 @@
 ---
 import '../styles/lab/lab.css';
 import LabControls from '../components/lab/LabControls.astro';
-import { labNavigation, normalizeLabPath } from '../data/lab/catalog';
+import LabNavigation from '../components/lab/LabNavigation.astro';
+import { getLabBreadcrumbs, normalizeLabPath } from '../data/lab/catalog';
 
 interface Props {
 	title: string;
 	description: string;
+	breadcrumbLabel?: string;
 }
 
-const { title, description } = Astro.props;
+const { title, description, breadcrumbLabel } = Astro.props;
 const currentPath = normalizeLabPath(Astro.url.pathname);
+const breadcrumbs = getLabBreadcrumbs(currentPath, breadcrumbLabel);
 ---
 
 <!doctype html>
@@ -27,21 +30,16 @@ const currentPath = normalizeLabPath(Astro.url.pathname);
 	</head>
 	<body>
 		<a class="lab-skip-link" href="#lab-main">跳至主要內容</a>
-		<header class="lab-header">
-			<a class="lab-brand" href="/" aria-label="返回厄倫蒂兒好氣質首頁">
-				<svg viewBox="0 0 48 48" aria-hidden="true">
-					<path d="M24 2 28.4 19.6 46 24l-17.6 4.4L24 46l-4.4-17.6L2 24l17.6-4.4L24 2Z"></path>
-					<circle cx="24" cy="24" r="4.4"></circle>
-				</svg>
-				<span><b>厄倫蒂兒</b><small>FUNCTION LAB</small></span>
-			</a>
-			<nav class="lab-nav" aria-label="實驗室導覽">
-				<a href="/">返回首頁</a>
-				{labNavigation.map((item) => (
-					<a href={item.href} aria-current={currentPath === item.href ? 'page' : undefined}>{item.label}</a>
-				))}
+		<LabNavigation currentPath={currentPath} />
+		{breadcrumbs.length > 0 && (
+			<nav class="lab-breadcrumb" aria-label="麵包屑">
+				<ol>
+					{breadcrumbs.map((item) => (
+						<li>{item.href ? <a href={item.href}>{item.label}</a> : <span aria-current="page">{item.label}</span>}</li>
+					))}
+				</ol>
 			</nav>
-		</header>
+		)}
 		<LabControls />
 
 		<main id="lab-main">

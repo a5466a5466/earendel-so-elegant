@@ -15,6 +15,11 @@ export interface LabNavigationItem {
 	href: string;
 }
 
+export interface LabBreadcrumbItem {
+	label: string;
+	href?: string;
+}
+
 export const labNavigation: LabNavigationItem[] = [
 	{ label: '實驗索引', href: '/lab/' },
 	{ label: '活動資料', href: '/lab/events/' },
@@ -70,15 +75,48 @@ export const phaseZeroSteps: LabPhaseStep[] = [
 ];
 
 export const nextExperiment = {
-	id: 'F26',
-	title: '共用偏好介面與整合驗證',
+	id: 'F03',
+	title: 'Navigation',
 	description:
-		'Phase 1・Step 3 將 Phase 0 控制器整理為單一 Snapshot、HTML data attributes 與變更事件，供後續動畫、音效及媒體功能共同使用。',
-	href: '/lab/preferences/',
-	linkLabel: '開啟 Step 3 偏好契約',
+		'Phase 1・Step 4 使用原生連結、路由前綴、麵包屑與手機 Dialog，驗證列表／詳情往返、深層連結與瀏覽器返回行為。',
+	href: '/lab/events/',
+	linkLabel: '開啟 Step 4 導覽情境',
 };
 
 export const normalizeLabPath = (path: string) => {
 	if (path === '/lab' || path === '/lab/') return '/lab/';
 	return path.endsWith('/') ? path : `${path}/`;
+};
+
+export const isLabNavigationItemCurrent = (path: string, href: string) => {
+	const currentPath = normalizeLabPath(path);
+	const itemPath = normalizeLabPath(href);
+	if (itemPath === '/lab/') return currentPath === itemPath;
+	return currentPath === itemPath || currentPath.startsWith(itemPath);
+};
+
+export const getLabBreadcrumbs = (
+	path: string,
+	currentLabel?: string,
+): LabBreadcrumbItem[] => {
+	const currentPath = normalizeLabPath(path);
+	if (currentPath === '/lab/') return [];
+
+	const breadcrumbs: LabBreadcrumbItem[] = [{ label: '實驗索引', href: '/lab/' }];
+	const section = labNavigation.find(
+		(item) => item.href !== '/lab/' && isLabNavigationItemCurrent(currentPath, item.href),
+	);
+	if (!section) {
+		breadcrumbs.push({ label: currentLabel ?? '目前頁面' });
+		return breadcrumbs;
+	}
+
+	const sectionPath = normalizeLabPath(section.href);
+	if (currentPath === sectionPath) {
+		breadcrumbs.push({ label: currentLabel ?? section.label });
+	} else {
+		breadcrumbs.push({ label: section.label, href: section.href });
+		breadcrumbs.push({ label: currentLabel ?? '活動詳情' });
+	}
+	return breadcrumbs;
 };

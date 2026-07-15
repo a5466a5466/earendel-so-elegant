@@ -1,0 +1,73 @@
+---
+import {
+	isLabNavigationItemCurrent,
+	labNavigation,
+} from '../../data/lab/catalog';
+
+interface Props {
+	currentPath: string;
+}
+
+const { currentPath } = Astro.props;
+const links = [{ label: '返回首頁', href: '/' }, ...labNavigation];
+const currentFor = (href: string) =>
+	href !== '/' && isLabNavigationItemCurrent(currentPath, href) ? 'page' : undefined;
+---
+
+<header class="lab-header" data-lab-navigation>
+	<div class="lab-header-inner">
+		<a class="lab-brand" href="/" aria-label="返回厄倫蒂兒好氣質首頁">
+			<svg viewBox="0 0 48 48" aria-hidden="true">
+				<path d="M24 2 28.4 19.6 46 24l-17.6 4.4L24 46l-4.4-17.6L2 24l17.6-4.4L24 2Z"></path>
+				<circle cx="24" cy="24" r="4.4"></circle>
+			</svg>
+			<span><b>厄倫蒂兒</b><small>FUNCTION LAB</small></span>
+		</a>
+
+		<nav class="lab-nav lab-nav-desktop" aria-label="實驗室導覽">
+			{links.map((item) => (
+				<a href={item.href} aria-current={currentFor(item.href)}>{item.label}</a>
+			))}
+		</nav>
+
+		<button
+			type="button"
+			class="lab-menu-toggle"
+			aria-expanded="false"
+			aria-controls="lab-mobile-menu"
+			data-lab-menu-open
+		>
+			<span>選單</span><i aria-hidden="true"></i>
+		</button>
+	</div>
+
+	<dialog class="lab-mobile-menu" id="lab-mobile-menu" aria-labelledby="lab-mobile-menu-title" data-lab-mobile-menu>
+		<div class="lab-mobile-menu-heading">
+			<div>
+				<p>Astro Function Laboratory</p>
+				<h2 id="lab-mobile-menu-title">實驗室導覽</h2>
+			</div>
+			<button type="button" data-lab-menu-close aria-label="關閉實驗室選單">關閉</button>
+		</div>
+		<nav aria-label="手機實驗室導覽">
+			{links.map((item, index) => (
+				<a href={item.href} aria-current={currentFor(item.href)}>
+					<small>{String(index + 1).padStart(2, '0')}</small>
+					<span>{item.label}</span>
+				</a>
+			))}
+		</nav>
+	</dialog>
+
+	<noscript>
+		<style>.lab-menu-toggle { display: none !important; }</style>
+		<nav class="lab-nav-noscript" aria-label="無 JavaScript 實驗室導覽">
+			{labNavigation.map((item) => <a href={item.href}>{item.label}</a>)}
+		</nav>
+	</noscript>
+</header>
+
+<script>
+	import { initializeLabNavigation } from '../../scripts/lab/navigation';
+	initializeLabNavigation();
+</script>

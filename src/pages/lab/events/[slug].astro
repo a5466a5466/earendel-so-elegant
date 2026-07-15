@@ -37,6 +37,7 @@ const formatDate = new Intl.DateTimeFormat('zh-Hant-TW', {
 <LabLayout
 	title={`${event.data.title}｜活動資料 Prototype`}
 	description={event.data.summary}
+	breadcrumbLabel={event.data.title}
 >
 	<LabPageHero
 		eyebrow={`Phase 1 · Step 1 · ${event.data.theme}`}
