@@ -20,8 +20,9 @@ const foundations = [
 		step: '03',
 		title: '實驗紀錄',
 		description: '統一記錄工時、RWD、無障礙、效能與採用決策。',
-		status: '待建立',
-		state: 'pending',
+		status: '完成',
+		state: 'complete',
+		href: '/lab/record-template/',
 	},
 	{
 		step: '04',
@@ -62,7 +63,7 @@ const foundations = [
 				<p class="lab-eyebrow">Phase 0 · Foundation</p>
 				<h2 id="foundation-title">建立可靠的實驗基礎</h2>
 			</div>
-			<p>實驗入口與共用控制器已通過驗收；下一步將建立一致的實驗紀錄模板。</p>
+			<p>實驗索引、共用控制器與紀錄模板皆已通過驗收；下一步將完善共用 Lab 結構。</p>
 		</div>
 
 		<ol class="foundation-grid">
@@ -74,6 +75,7 @@ const foundations = [
 					</div>
 					<h3>{item.title}</h3>
 					<p>{item.description}</p>
+					{item.href && <a class="foundation-link" href={item.href}>查看模板 <span aria-hidden="true">→</span></a>}
 				</li>
 			))}
 		</ol>

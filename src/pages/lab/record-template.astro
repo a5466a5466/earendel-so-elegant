@@ -1,0 +1,92 @@
+---
+import LabLayout from '../../layouts/LabLayout.astro';
+import { Content as TemplateContent, frontmatter } from '../../data/lab/experiment-record-template.md';
+import templateSource from '../../data/lab/experiment-record-template.md?raw';
+
+const yamlMatch = templateSource.match(/^---\r?\n([\s\S]*?)\r?\n---/);
+const yamlSource = yamlMatch?.[1]?.trim() ?? '無法讀取 YAML frontmatter。';
+const record = frontmatter.record as {
+	id: string;
+	name: string;
+	status: string;
+	demoPath: string;
+};
+---
+
+<LabLayout
+	title="實驗紀錄模板｜功能實驗室"
+	description="Astro 功能實驗室共用的 Markdown 與 YAML 實驗紀錄模板預覽。"
+>
+	<section class="template-hero" aria-labelledby="template-title">
+		<div class="template-hero-inner">
+			<p class="lab-eyebrow">Phase 0 · Step 3</p>
+			<h1 id="template-title">實驗紀錄模板</h1>
+			<p>每項功能實驗都從同一份紀錄格式開始，讓工時、效能、無障礙與採用結論可以被比較，而不是只留下主觀印象。</p>
+			<nav class="template-actions" aria-label="模板頁操作">
+				<a href="#markdown-preview">閱讀模板</a>
+				<a href="#yaml-source">查看 YAML</a>
+				<a href="/lab/">返回實驗索引</a>
+			</nav>
+		</div>
+	</section>
+
+	<div class="template-main">
+		<section class="template-overview" aria-labelledby="overview-title">
+			<div>
+				<p class="lab-eyebrow">Template Overview</p>
+				<h2 id="overview-title">同一份檔案，兩種用途</h2>
+			</div>
+			<div class="template-overview-grid">
+				<article>
+					<span>01</span>
+					<h3>YAML Frontmatter</h3>
+					<p>保存可被程式讀取的狀態、數值、測試結果與最終決策。</p>
+				</article>
+				<article>
+					<span>02</span>
+					<h3>Markdown Report</h3>
+					<p>保存測試步驟、比較理由、畫面證據、問題與人工判斷。</p>
+				</article>
+				<article>
+					<span>03</span>
+					<h3>Copy, Don't Edit</h3>
+					<p>開始實驗時複製模板並命名為 FXX-feature-slug.md，不直接覆寫母版。</p>
+				</article>
+			</div>
+		</section>
+
+		<section class="template-meta" aria-label="模板範例資料">
+			<div><span>ID</span><strong>{record.id}</strong></div>
+			<div><span>名稱</span><strong>{record.name}</strong></div>
+			<div><span>狀態</span><strong>{record.status}</strong></div>
+			<div><span>Demo</span><strong>{record.demoPath}</strong></div>
+		</section>
+
+		<section id="yaml-source" class="template-source" aria-labelledby="yaml-title">
+			<div class="template-section-heading">
+				<div>
+					<p class="lab-eyebrow">Machine-readable</p>
+					<h2 id="yaml-title">YAML 原始欄位</h2>
+				</div>
+				<p>這些欄位未來可以直接交給 Astro Content Collections 驗證，目前不需要安裝或啟用額外系統。</p>
+			</div>
+			<details>
+				<summary>展開完整 YAML frontmatter</summary>
+				<pre tabindex="0"><code>{yamlSource}</code></pre>
+			</details>
+		</section>
+
+		<section id="markdown-preview" class="template-preview" aria-labelledby="preview-title">
+			<div class="template-section-heading">
+				<div>
+					<p class="lab-eyebrow">Human-readable</p>
+					<h2 id="preview-title">Markdown 報告預覽</h2>
+				</div>
+				<p>下方內容直接由實際模板渲染；修改模板檔後，這個預覽頁會同步更新。</p>
+			</div>
+			<article class="template-document">
+				<TemplateContent />
+			</article>
+		</section>
+	</div>
+</LabLayout>
