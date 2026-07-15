@@ -1,5 +1,51 @@
 // @ts-check
+import { readFile, readdir, rm } from 'node:fs/promises';
 import { defineConfig } from 'astro/config';
 
+/**
+ * Keep Lab available during development and explicit Lab builds, while
+ * excluding it from the default production output.
+ *
+ * @returns {import('astro').AstroIntegration}
+ */
+const labOutputGuard = () => {
+	let labEnabled = false;
+	const explicitLabBuild =
+		process.env.npm_lifecycle_event === 'build:lab' ||
+		process.argv.some((argument, index) =>
+			argument === '--mode' && process.argv[index + 1] === 'lab',
+		);
+
+	return {
+		name: 'earendel-lab-output-guard',
+		hooks: {
+			'astro:config:setup': ({ command }) => {
+				labEnabled = command === 'dev' || explicitLabBuild;
+			},
+			'astro:build:done': async ({ dir, logger }) => {
+				if (labEnabled) return;
+
+				await rm(new URL('./lab/', dir), { recursive: true, force: true });
+
+				const outputFiles = await readdir(dir);
+				const sitemapFiles = outputFiles.filter((file) => /^sitemap.*\.xml$/i.test(file));
+
+				for (const sitemapFile of sitemapFiles) {
+					const sitemap = await readFile(new URL(sitemapFile, dir), 'utf8');
+					if (sitemap.includes('/lab/')) {
+						throw new Error(
+							`Production sitemap must not include Lab routes: ${sitemapFile}`,
+						);
+					}
+				}
+
+				logger.info('Excluded /lab/ from the production output.');
+			},
+		},
+	};
+};
+
 // https://astro.build/config
-export default defineConfig({});
+export default defineConfig({
+	integrations: [labOutputGuard()],
+});

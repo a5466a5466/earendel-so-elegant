@@ -55,8 +55,8 @@ export const phaseZeroSteps: LabPhaseStep[] = [
 		step: '05',
 		title: '公開保護',
 		description: '維持 noindex，並在正式部署前確認 Sitemap 與入口策略。',
-		status: '部分完成',
-		state: 'protected',
+		status: '待驗收',
+		state: 'active',
 	},
 	{
 		step: '06',
