@@ -1,0 +1,150 @@
+---
+import LabLayout from '../../layouts/LabLayout.astro';
+import LabPageHero from '../../components/lab/LabPageHero.astro';
+
+const pageActions = [
+	{ label: '查看即時狀態', href: '#preference-state' },
+	{ label: '驗證消費者', href: '#preference-consumers' },
+	{ label: '返回實驗索引', href: '/lab/' },
+];
+---
+
+<LabLayout
+	title="共用偏好契約｜功能實驗室"
+	description="驗證動態、音效與效能模式只透過同一份共用偏好介面讀取與更新。"
+>
+	<LabPageHero
+		eyebrow="Phase 1 · Step 3 · F26"
+		title="共用偏好契約"
+		description="後續功能不直接讀取 localStorage，也不自行建立 reduced-motion 查詢；所有偏好都由同一個 Snapshot 與變更事件提供。"
+		actions={pageActions}
+		headingId="preferences-title"
+	/>
+
+	<div class="preference-lab" data-preference-lab>
+		<section class="preference-contract" aria-labelledby="contract-title">
+			<div>
+				<p class="lab-eyebrow">Single Source of Truth</p>
+				<h2 id="contract-title">一份儲存、一份解析、一個事件</h2>
+			</div>
+			<ol>
+				<li><span>01</span><strong>讀取 Snapshot</strong><p>功能初始化時取得使用者設定與解析後狀態。</p></li>
+				<li><span>02</span><strong>監聽單一事件</strong><p>只訂閱 <code>lab:preferences-change</code>，不監聽第二份狀態。</p></li>
+				<li><span>03</span><strong>CSS 讀取 HTML</strong><p>純樣式使用 <code>data-motion</code>、<code>data-sound</code>、<code>data-performance</code>。</p></li>
+			</ol>
+		</section>
+
+		<section id="preference-state" class="preference-state" aria-labelledby="state-title">
+			<div class="preference-section-heading">
+				<div>
+					<p class="lab-eyebrow">Live Snapshot</p>
+					<h2 id="state-title">目前共用狀態</h2>
+				</div>
+				<p>開啟右下角實驗控制器修改設定；此區應立即更新。重新整理或切換 Lab 頁面後，選擇仍應保留。</p>
+			</div>
+			<dl class="preference-state-grid" aria-live="polite">
+				<div><dt>動態設定</dt><dd data-pref-motion-setting>跟隨系統</dd></div>
+				<div><dt>動態結果</dt><dd data-pref-motion-resolved>完整</dd></div>
+				<div><dt>音效</dt><dd data-pref-sound>靜音</dd></div>
+				<div><dt>效能設定</dt><dd data-pref-performance-setting>自動</dd></div>
+				<div><dt>效能結果</dt><dd data-pref-performance-resolved>標準</dd></div>
+				<div><dt>最後來源</dt><dd data-pref-source>初始化</dd></div>
+			</dl>
+		</section>
+
+		<section id="preference-consumers" class="preference-consumers" aria-labelledby="consumers-title">
+			<div class="preference-section-heading">
+				<div>
+					<p class="lab-eyebrow">Integration Cases</p>
+					<h2 id="consumers-title">三個最小消費者</h2>
+				</div>
+				<p>這些案例不讀 localStorage；CSS 讀取根節點屬性，TypeScript 只訂閱共用事件。</p>
+			</div>
+			<div class="preference-consumer-grid">
+				<article class="preference-consumer motion-consumer">
+					<div class="motion-consumer-visual" aria-hidden="true"><i></i><i></i><i></i></div>
+					<span>Motion Consumer</span>
+					<h3 data-motion-consumer-title>完整動態</h3>
+					<p>完整模式會緩慢旋轉；系統或站內要求減少動態時立即停止。</p>
+				</article>
+				<article class="preference-consumer sound-consumer">
+					<div class="sound-consumer-visual" aria-hidden="true"><i></i><i></i><i></i></div>
+					<span>Sound Consumer</span>
+					<h3 data-sound-consumer-title>靜音保護</h3>
+					<p>此案例只顯示是否允許音效，不會在未操作時自動播放聲音。</p>
+				</article>
+				<article class="preference-consumer performance-consumer">
+					<div class="performance-consumer-visual" aria-hidden="true">
+						{Array.from({ length: 12 }, (_, index) => <i style={`--particle-index:${index}`}></i>)}
+						<strong><b data-performance-particle-count>12</b><small>particles</small></strong>
+					</div>
+					<span>Performance Consumer</span>
+					<h3 data-performance-consumer-title>標準負載</h3>
+					<p>節能模式會把裝飾粒子由十二個降為四個，主要文字保持完整。</p>
+				</article>
+			</div>
+		</section>
+
+		<section class="preference-event-log" aria-labelledby="event-log-title">
+			<div>
+				<p class="lab-eyebrow">Event Contract</p>
+				<h2 id="event-log-title">最近偏好事件</h2>
+				<p>最多保留最近五次，方便確認變更只觸發一條共用通知。</p>
+			</div>
+			<ol data-preference-event-log aria-live="polite"><li>等待共用偏好初始化。</li></ol>
+		</section>
+
+		<noscript>
+			<p class="preference-noscript">JavaScript 未啟用：頁面採用安全預設（完整動態、靜音、標準效能）；主要說明仍可閱讀。</p>
+		</noscript>
+	</div>
+</LabLayout>
+
+<script>
+	import {
+		onLabPreferencesChange,
+		type LabPreferencesChangeDetail,
+	} from '../../scripts/lab/preferences';
+
+	const root = document.querySelector<HTMLElement>('[data-preference-lab]');
+	if (root) {
+		const labels = {
+			motion: { system: '跟隨系統', reduce: '減少動態' },
+			sound: { off: '靜音', on: '音效開啟' },
+			performance: { auto: '自動', standard: '標準', economy: '節能' },
+			source: { initialize: '初始化', control: '控制器', reset: '重設', system: '系統變更', storage: '跨頁同步', api: '程式介面' },
+		} as const;
+		const setText = (selector: string, value: string) => {
+			const element = root.querySelector<HTMLElement>(selector);
+			if (element) element.textContent = value;
+		};
+		const log = root.querySelector<HTMLOListElement>('[data-preference-event-log]');
+		let eventCount = 0;
+
+		const render = (detail: LabPreferencesChangeDetail) => {
+			setText('[data-pref-motion-setting]', labels.motion[detail.preferences.motion]);
+			setText('[data-pref-motion-resolved]', detail.resolvedMotion === 'reduce' ? '減少' : '完整');
+			setText('[data-pref-sound]', labels.sound[detail.preferences.sound]);
+			setText('[data-pref-performance-setting]', labels.performance[detail.preferences.performance]);
+			setText('[data-pref-performance-resolved]', detail.resolvedPerformance === 'economy' ? '節能' : '標準');
+			setText('[data-pref-source]', labels.source[detail.source]);
+			setText('[data-motion-consumer-title]', detail.resolvedMotion === 'reduce' ? '減少動態' : '完整動態');
+			setText('[data-sound-consumer-title]', detail.preferences.sound === 'on' ? '允許音效' : '靜音保護');
+			setText('[data-performance-consumer-title]', detail.resolvedPerformance === 'economy' ? '節能負載' : '標準負載');
+			setText('[data-performance-particle-count]', detail.resolvedPerformance === 'economy' ? '4' : '12');
+
+			if (log) {
+				if (eventCount === 0) log.replaceChildren();
+				eventCount += 1;
+				const item = document.createElement('li');
+				item.textContent = `#${eventCount} ${labels.source[detail.source]}：${detail.resolvedMotion} / ${detail.preferences.sound} / ${detail.resolvedPerformance}`;
+				log.prepend(item);
+				while (log.children.length > 5) log.lastElementChild?.remove();
+			}
+		};
+
+		const stopListening = onLabPreferencesChange(render);
+		document.addEventListener('astro:before-swap', stopListening, { once: true });
+		window.addEventListener('pagehide', stopListening, { once: true });
+	}
+</script>

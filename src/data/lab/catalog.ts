@@ -18,6 +18,7 @@ export interface LabNavigationItem {
 export const labNavigation: LabNavigationItem[] = [
 	{ label: '實驗索引', href: '/lab/' },
 	{ label: '活動資料', href: '/lab/events/' },
+	{ label: '偏好契約', href: '/lab/preferences/' },
 	{ label: '紀錄模板', href: '/lab/record-template/' },
 ];
 
@@ -69,11 +70,12 @@ export const phaseZeroSteps: LabPhaseStep[] = [
 ];
 
 export const nextExperiment = {
-	id: 'F20',
-	title: '圖片最佳化與 Lazy Loading',
+	id: 'F26',
+	title: '共用偏好介面與整合驗證',
 	description:
-		'Phase 1・Step 1 已完成。下一步將使用同一批測試圖片比較輸出格式、responsive sizes、首屏優先與非首屏 Lazy Loading；開始前仍需再次確認範圍。',
-	href: '/lab/events/',
+		'Phase 1・Step 3 將 Phase 0 控制器整理為單一 Snapshot、HTML data attributes 與變更事件，供後續動畫、音效及媒體功能共同使用。',
+	href: '/lab/preferences/',
+	linkLabel: '開啟 Step 3 偏好契約',
 };
 
 export const normalizeLabPath = (path: string) => {
