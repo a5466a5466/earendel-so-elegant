@@ -3,8 +3,10 @@ title: 月光留言牆
 slug: moonlit-message-wall
 date: 2026-03-20
 summary: 欄位最精簡的留言企劃測試資料，用來驗證選填媒體不存在時詳情頁仍能正常產生。
-cover: /lab-assets/events/moonlit-message.svg
+cover: ../../assets/lab/events/raster/moonlit-message-transparent.png
+fallbackCover: /lab-assets/events/moonlit-message.svg
 coverAlt: 月光照在深藍留言卡上的企劃示意圖
+coverPosition: center
 theme: 月光留言
 tags:
   - 留言企劃

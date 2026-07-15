@@ -2,8 +2,11 @@
 import { getCollection, render, type CollectionEntry } from 'astro:content';
 import LabLayout from '../../../layouts/LabLayout.astro';
 import LabPageHero from '../../../components/lab/LabPageHero.astro';
+import OptimizedEventImage from '../../../components/lab/OptimizedEventImage.astro';
 
 export async function getStaticPaths() {
+	if (!import.meta.env.DEV && import.meta.env.MODE !== 'lab') return [];
+
 	const events = await getCollection('events');
 
 	return events.map((event) => ({
@@ -48,8 +51,15 @@ const formatDate = new Intl.DateTimeFormat('zh-Hant-TW', {
 
 	<article class="event-detail-main">
 		<figure class="event-detail-cover">
-			<img src={event.data.cover} alt={event.data.coverAlt} width="1200" height="800" />
-			<figcaption>Step 1 placeholder・圖片最佳化留待 Step 2</figcaption>
+			<OptimizedEventImage
+				src={event.data.cover}
+				fallbackSrc={event.data.fallbackCover}
+				alt={event.data.coverAlt}
+				position={event.data.coverPosition}
+				priority
+				variant="detail"
+			/>
+			<figcaption>Astro Picture・AVIF／WebP／原始格式・Responsive srcset・Priority</figcaption>
 		</figure>
 
 		<section id="event-data" class="event-data-panel" aria-labelledby="event-data-title">

@@ -25,7 +25,18 @@ const labOutputGuard = () => {
 			'astro:build:done': async ({ dir, logger }) => {
 				if (labEnabled) return;
 
-				await rm(new URL('./lab/', dir), { recursive: true, force: true });
+				const astroAssetDirectory = new URL('./_astro/', dir);
+				const labImagePattern = /^(?:starlight-birthday|summer-letter|moonlit-message-transparent)\./;
+				const astroAssets = await readdir(astroAssetDirectory).catch(() => []);
+				const labImageAssets = astroAssets.filter((file) => labImagePattern.test(file));
+
+				await Promise.all([
+					rm(new URL('./lab/', dir), { recursive: true, force: true }),
+					rm(new URL('./lab-assets/', dir), { recursive: true, force: true }),
+					...labImageAssets.map((file) =>
+						rm(new URL(file, astroAssetDirectory), { force: true }),
+					),
+				]);
 
 				const outputFiles = await readdir(dir);
 				const sitemapFiles = outputFiles.filter((file) => /^sitemap.*\.xml$/i.test(file));
@@ -39,7 +50,7 @@ const labOutputGuard = () => {
 					}
 				}
 
-				logger.info('Excluded /lab/ from the production output.');
+				logger.info('Excluded Lab routes and Lab-only image assets from the production output.');
 			},
 		},
 	};

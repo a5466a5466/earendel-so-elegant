@@ -1,0 +1,48 @@
+---
+import { Picture } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+	src: CollectionEntry<'events'>['data']['cover'];
+	fallbackSrc: string;
+	alt: string;
+	position?: string;
+	priority?: boolean;
+	variant: 'card' | 'detail';
+}
+
+const {
+	src,
+	fallbackSrc,
+	alt,
+	position = 'center',
+	priority = false,
+	variant,
+} = Astro.props;
+
+const widths = variant === 'card' ? [360, 540, 720, 900] : [640, 900, 1200];
+const sizes = variant === 'card'
+	? '(max-width: 640px) calc(100vw - 32px), (max-width: 900px) calc((100vw - 64px) / 2), min(352px, 31vw)'
+	: '(max-width: 1152px) calc(100vw - 48px), 1120px';
+const fallbackFormat = src.format === 'png' ? 'png' : 'jpeg';
+---
+
+<span
+	class={`optimized-event-image is-${variant}`}
+	style={`--event-image-position: ${position}; --event-image-fallback: url("${fallbackSrc}")`}
+	data-loading={priority ? 'priority' : 'lazy'}
+>
+	<Picture
+		src={src}
+		formats={['avif', 'webp']}
+		fallbackFormat={fallbackFormat}
+		widths={widths}
+		sizes={sizes}
+		alt={alt}
+		priority={priority}
+		quality="mid"
+		fit="cover"
+		position={position}
+		class="event-optimized-image"
+	/>
+</span>

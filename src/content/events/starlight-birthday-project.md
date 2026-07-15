@@ -3,14 +3,16 @@ title: 星光生日應援企劃
 slug: starlight-birthday-project
 date: 2026-06-15
 summary: 以星光與金色信箋為主題的生日應援測試資料，用來驗證完整媒體欄位。
-cover: /lab-assets/events/starlight-birthday.svg
+cover: ../../assets/lab/events/raster/starlight-birthday.jpg
+fallbackCover: /lab-assets/events/starlight-birthday.svg
 coverAlt: 深藍星空中的金色生日信箋示意圖
+coverPosition: center
 theme: 星光信箋
 tags:
   - 生日應援
   - 線下活動
 gallery:
-  - src: /lab-assets/events/starlight-birthday.svg
+  - src: ../../assets/lab/events/raster/starlight-birthday.jpg
     alt: 星光生日應援主視覺 placeholder
     caption: Step 1 使用的合法測試圖，不代表正式視覺。
     credit:

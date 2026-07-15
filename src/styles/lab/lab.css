@@ -339,9 +339,29 @@ a { color: inherit; }
 .event-records { scroll-margin-top: 2rem; padding-top: clamp(5rem, 9vw, 8rem); }
 .event-section-heading { display: flex; align-items: end; justify-content: space-between; gap: 3rem; margin-bottom: 2.5rem; }
 .event-section-heading > p { max-width: 430px; margin: 0; color: #687887; font-size: .8rem; line-height: 1.8; }
+.image-pipeline-audit { padding-top: clamp(5rem, 9vw, 8rem); }
+.image-audit-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+.image-audit-grid article { min-width: 0; padding: 1.3rem; border: 1px solid rgba(20, 40, 58, .12); background: rgba(255, 255, 255, .55); }
+.image-audit-grid article > span { display: inline-block; margin-top: 1.25rem; color: #9a8357; font: 600 .62rem var(--lab-sans); letter-spacing: .14em; }
+.image-audit-grid h3 { margin: 2rem 0 .8rem; font: 600 .78rem/1.5 var(--lab-sans); letter-spacing: .06em; }
+.image-audit-grid p { margin: 0; color: #687887; font-size: .74rem; line-height: 1.75; }
+.image-audit-preview { overflow: hidden; margin: -1.3rem -1.3rem 0; background: var(--lab-night-soft); }
+.image-audit-preview .optimized-event-image, .image-audit-preview img { aspect-ratio: 3 / 2; }
+.image-audit-preview img { display: block; width: 100%; height: auto; object-fit: cover; }
+.image-audit-preview.has-transparent-source { background: radial-gradient(circle at 72% 28%, #35536a, #10283b 62%, #08131f); }
+.image-failure-card { grid-column: span 1; }
+.image-failure-demo { position: relative; display: grid; overflow: hidden; place-items: center; aspect-ratio: 3 / 2; margin: -1.3rem -1.3rem 0; background: radial-gradient(circle at 72% 28%, #35536a, #10283b 62%, #08131f); color: var(--lab-gold-light); }
+.image-failure-demo::before { content: 'IMAGE FALLBACK'; position: absolute; color: rgba(225, 211, 172, .52); font: 600 .58rem var(--lab-sans); letter-spacing: .18em; }
+.image-failure-demo img { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: cover; color: #f7f3e9; font: 500 .65rem/1.5 var(--lab-sans); text-align: center; }
+.image-failure-card h3 { margin-top: 1.25rem; }
 .event-card-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin: 0; padding: 0; list-style: none; }
 .event-card { height: 100%; border: 1px solid rgba(20, 40, 58, .12); background: #fffdf8; }
 .event-card-cover { display: block; overflow: hidden; background: var(--lab-night-soft); }
+.optimized-event-image { position: relative; display: block; overflow: hidden; background-color: var(--lab-night-soft); background-image: var(--event-image-fallback), radial-gradient(circle at 72% 28%, #35536a, #10283b 62%, #08131f); background-position: var(--event-image-position), center; background-size: cover; }
+.optimized-event-image picture { position: relative; display: block; }
+.optimized-event-image img { background: transparent; object-position: var(--event-image-position); }
+.optimized-event-image.is-card, .optimized-event-image.is-card img { aspect-ratio: 3 / 2; }
+.optimized-event-image.is-detail, .optimized-event-image.is-detail img { aspect-ratio: 3 / 2; }
 .event-card-cover img { display: block; width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: cover; transition: transform .35s ease; }
 .event-card-cover:hover img { transform: scale(1.025); }
 .event-card-body { padding: 1.35rem; }
@@ -392,6 +412,7 @@ a { color: inherit; }
 	.foundation-grid { grid-template-columns: repeat(2, 1fr); }
 	.event-card-grid { grid-template-columns: repeat(2, 1fr); }
 	.event-schema-summary, .event-data-panel { grid-template-columns: 1fr; }
+	.image-audit-grid { grid-template-columns: repeat(2, 1fr); }
 }
 
 @media (max-width: 640px) {
@@ -426,6 +447,7 @@ a { color: inherit; }
 	.event-section-heading { display: block; }
 	.event-section-heading > p { margin-top: 1rem; }
 	.event-schema-summary ul, .event-card-grid, .event-data-panel dl, .event-detail-layout { grid-template-columns: 1fr; }
+	.image-audit-grid { grid-template-columns: 1fr; }
 	.event-schema-summary li { border-right: 0; border-bottom: 1px solid var(--lab-line); }
 	.event-schema-summary li:last-child { border-bottom: 0; }
 	.event-card-body { padding: 1.1rem; }

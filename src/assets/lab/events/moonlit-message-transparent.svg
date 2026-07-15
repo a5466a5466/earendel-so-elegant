@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800">
+  <defs>
+    <radialGradient id="glow" cx="72%" cy="28%" r="70%">
+      <stop offset="0" stop-color="#f2e7bf" stop-opacity=".95"/>
+      <stop offset="1" stop-color="#e1d3ac" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <circle cx="860" cy="210" r="210" fill="url(#glow)"/>
+  <circle cx="880" cy="190" r="115" fill="#f2e7bf"/>
+  <g fill="#f7f3e9" fill-opacity=".94" stroke="#9a8357" stroke-width="5">
+    <rect x="180" y="250" width="360" height="240" rx="12" transform="rotate(-5 360 370)"/>
+    <rect x="540" y="355" width="380" height="250" rx="12" transform="rotate(6 730 480)" fill-opacity=".82"/>
+  </g>
+  <g stroke="#9a8357" stroke-width="7" stroke-linecap="round" opacity=".72">
+    <path d="M250 330h215M250 385h170M615 440h220M615 500h175"/>
+  </g>
+  <text x="600" y="735" fill="#e1d3ac" font-family="serif" font-size="28" letter-spacing="8" text-anchor="middle">TRANSPARENT SOURCE</text>
+</svg>

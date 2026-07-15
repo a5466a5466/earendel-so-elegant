@@ -6,13 +6,6 @@ const mediaCreditSchema = z.object({
 	url: z.string().url().optional(),
 });
 
-const galleryItemSchema = z.object({
-	src: z.string().min(1),
-	alt: z.string().min(1),
-	caption: z.string().min(1).optional(),
-	credit: mediaCreditSchema.optional(),
-});
-
 const videoSchema = z.object({
 	type: z.enum(['self-hosted', 'youtube']),
 	title: z.string().min(1),
@@ -34,22 +27,33 @@ const socialPostSchema = z.object({
 
 const events = defineCollection({
 	loader: glob({ base: './src/content/events', pattern: '**/*.{md,mdx}' }),
-	schema: z.object({
-		title: z.string().min(1),
-		slug: z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/),
-		date: z.coerce.date(),
-		summary: z.string().min(10).max(240),
-		cover: z.string().startsWith('/lab-assets/events/'),
-		coverAlt: z.string().min(1),
-		theme: z.string().min(1),
-		tags: z.array(z.string().min(1)).min(1),
-		gallery: z.array(galleryItemSchema).default([]),
-		videos: z.array(videoSchema).default([]),
-		audio: z.array(audioSchema).default([]),
-		socialPosts: z.array(socialPostSchema).default([]),
-		credits: z.array(mediaCreditSchema).min(1),
-		featured: z.boolean().default(false),
-	}),
+	schema: ({ image }) => {
+		const galleryItemSchema = z.object({
+			src: image(),
+			alt: z.string().min(1),
+			caption: z.string().min(1).optional(),
+			credit: mediaCreditSchema.optional(),
+		});
+
+		return z.object({
+			title: z.string().min(1),
+			slug: z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/),
+			date: z.coerce.date(),
+			summary: z.string().min(10).max(240),
+			cover: image(),
+			fallbackCover: z.string().startsWith('/lab-assets/events/'),
+			coverAlt: z.string().min(1),
+			coverPosition: z.string().min(1).default('center'),
+			theme: z.string().min(1),
+			tags: z.array(z.string().min(1)).min(1),
+			gallery: z.array(galleryItemSchema).default([]),
+			videos: z.array(videoSchema).default([]),
+			audio: z.array(audioSchema).default([]),
+			socialPosts: z.array(socialPostSchema).default([]),
+			credits: z.array(mediaCreditSchema).min(1),
+			featured: z.boolean().default(false),
+		});
+	},
 });
 
 export const collections = { events };

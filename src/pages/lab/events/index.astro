@@ -2,10 +2,15 @@
 import { getCollection } from 'astro:content';
 import LabLayout from '../../../layouts/LabLayout.astro';
 import LabPageHero from '../../../components/lab/LabPageHero.astro';
+import OptimizedEventImage from '../../../components/lab/OptimizedEventImage.astro';
 
-const events = (await getCollection('events')).sort(
+const labContentEnabled = import.meta.env.DEV || import.meta.env.MODE === 'lab';
+const events = (labContentEnabled ? await getCollection('events') : []).sort(
 	(a, b) => b.data.date.getTime() - a.data.date.getTime(),
 );
+const starlightEvent = events.find((event) => event.data.slug === 'starlight-birthday-project');
+const summerEvent = events.find((event) => event.data.slug === 'summer-letter-gallery');
+const moonlitEvent = events.find((event) => event.data.slug === 'moonlit-message-wall');
 
 const formatDate = new Intl.DateTimeFormat('zh-Hant-TW', {
 	year: 'numeric',
@@ -15,13 +20,13 @@ const formatDate = new Intl.DateTimeFormat('zh-Hant-TW', {
 ---
 
 <LabLayout
-	title="活動資料 Prototype｜功能實驗室"
-	description="Phase 1 Step 1：以 Astro Content Collections 產生的活動列表與動態詳情頁。"
+	title="活動圖片管線 Prototype｜功能實驗室"
+	description="Phase 1 Step 2：使用 Astro Picture 產生 AVIF、WebP、responsive srcset 與載入優先序。"
 >
 	<LabPageHero
-		eyebrow="Phase 1 · Step 1 · F18"
-		title="活動資料 Prototype"
-		description="三筆合法 placeholder 共用同一份 schema，並依日期產生列表與獨立詳情網址。這一輪只驗證資料流，不代表正式活動視覺。"
+		eyebrow="Phase 1 · Step 2 · F20"
+		title="活動圖片管線 Prototype"
+		description="沿用 Step 1 的三筆活動，將封面遷移至 Astro 圖片管線，驗證多格式、responsive sizes、首要載入、Lazy Loading 與失敗 fallback。"
 		actions={[
 			{ label: '查看測試資料', href: '#event-records' },
 			{ label: '返回實驗索引', href: '/lab/' },
@@ -32,14 +37,82 @@ const formatDate = new Intl.DateTimeFormat('zh-Hant-TW', {
 	<div class="event-lab-main">
 		<section class="event-schema-summary" aria-labelledby="schema-summary-title">
 			<div>
-				<p class="lab-eyebrow">Schema Baseline</p>
-				<h2 id="schema-summary-title">一份資料，支援後續所有內容功能</h2>
+				<p class="lab-eyebrow">Image Pipeline</p>
+				<h2 id="schema-summary-title">同一張來源圖，依裝置輸出合理版本</h2>
 			</div>
 			<ul>
-				<li><strong>{events.length}</strong><span>合法測試活動</span></li>
-				<li><strong>Build</strong><span>錯誤欄位會阻止建置</span></li>
-				<li><strong>0</strong><span>新增 dependency</span></li>
+				<li><strong>AVIF</strong><span>第一候選格式</span></li>
+				<li><strong>WebP</strong><span>第二候選格式</span></li>
+				<li><strong>JPEG／PNG</strong><span>來源格式 fallback</span></li>
 			</ul>
+		</section>
+
+		<section class="image-pipeline-audit" aria-labelledby="image-audit-title">
+			<div class="event-section-heading">
+				<div>
+					<p class="lab-eyebrow">Loading Contract</p>
+					<h2 id="image-audit-title">輸出與降級規則</h2>
+				</div>
+				<p>本機來源由 Astro 最佳化；遠端圖片未核准前不進入正式資料，必須先設定 allowlist 與可靠尺寸。</p>
+			</div>
+			<div class="image-audit-grid">
+				<article>
+					{summerEvent && (
+						<div class="image-audit-preview">
+							<OptimizedEventImage
+								src={summerEvent.data.cover}
+								fallbackSrc={summerEvent.data.fallbackCover}
+								alt="Responsive widths 示範：盛夏來信圖片"
+								position={summerEvent.data.coverPosition}
+								variant="card"
+							/>
+						</div>
+					)}
+					<span>01</span>
+					<h3>Responsive Widths</h3>
+					<p>卡片輸出 360／540／720／900 px；詳情輸出 640／900／1200 px，並提供對應 sizes。</p>
+				</article>
+				<article>
+					{starlightEvent && (
+						<div class="image-audit-preview">
+							<OptimizedEventImage
+								src={starlightEvent.data.cover}
+								fallbackSrc={starlightEvent.data.fallbackCover}
+								alt="Loading priority 示範：星光生日圖片"
+								position={starlightEvent.data.coverPosition}
+								priority
+								variant="card"
+							/>
+						</div>
+					)}
+					<span>02</span>
+					<h3>Loading Priority</h3>
+					<p>這張示範圖標記 priority；下方活動卡保持 lazy／async，避免多張圖片搶首屏頻寬。</p>
+				</article>
+				<article>
+					{moonlitEvent && (
+						<div class="image-audit-preview has-transparent-source">
+							<OptimizedEventImage
+								src={moonlitEvent.data.cover}
+								fallbackSrc={moonlitEvent.data.fallbackCover}
+								alt="透明來源示範：月光留言圖片"
+								position={moonlitEvent.data.coverPosition}
+								variant="card"
+							/>
+						</div>
+					)}
+					<span>03</span>
+					<h3>Transparent Source</h3>
+					<p>月光留言使用透明 PNG，確認 AVIF／WebP 仍保留 alpha 與底色。</p>
+				</article>
+				<article class="image-failure-card">
+					<div class="image-failure-demo">
+						<img src="/lab-assets/events/__missing-step2-image.webp" alt="刻意載入失敗的圖片測試" width="600" height="400" loading="lazy" />
+					</div>
+					<h3>Failure Fallback</h3>
+					<p>此圖刻意指向不存在的檔案；仍保留固定比例、背景、alt 與說明，不讓版面塌陷。</p>
+				</article>
+			</div>
 		</section>
 
 		<section id="event-records" class="event-records" aria-labelledby="event-records-title">
@@ -48,7 +121,7 @@ const formatDate = new Intl.DateTimeFormat('zh-Hant-TW', {
 					<p class="lab-eyebrow">Generated Collection</p>
 					<h2 id="event-records-title">依日期排序的活動</h2>
 				</div>
-				<p>封面目前直接使用 SVG placeholder；圖片管線與 Lazy Loading 比較保留到 Step 2。</p>
+				<p>Priority 已在上方獨立示範；下方三張活動卡全部維持 lazy loading。</p>
 			</div>
 
 			<ol class="event-card-grid">
@@ -56,7 +129,13 @@ const formatDate = new Intl.DateTimeFormat('zh-Hant-TW', {
 					<li>
 						<article class="event-card">
 							<a class="event-card-cover" href={`/lab/events/${event.data.slug}/`} aria-label={`查看${event.data.title}`}>
-								<img src={event.data.cover} alt={event.data.coverAlt} width="1200" height="800" loading="lazy" />
+								<OptimizedEventImage
+									src={event.data.cover}
+									fallbackSrc={event.data.fallbackCover}
+									alt={event.data.coverAlt}
+									position={event.data.coverPosition}
+									variant="card"
+								/>
 							</a>
 							<div class="event-card-body">
 								<div class="event-card-meta">
