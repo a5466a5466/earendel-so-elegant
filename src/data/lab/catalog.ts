@@ -17,6 +17,7 @@ export interface LabNavigationItem {
 
 export const labNavigation: LabNavigationItem[] = [
 	{ label: '實驗索引', href: '/lab/' },
+	{ label: '活動資料', href: '/lab/events/' },
 	{ label: '紀錄模板', href: '/lab/record-template/' },
 ];
 
@@ -68,10 +69,11 @@ export const phaseZeroSteps: LabPhaseStep[] = [
 ];
 
 export const nextExperiment = {
-	id: 'F03 ＋ F04',
-	title: 'Navigation ＋ Page Transition',
+	id: 'F20',
+	title: '圖片最佳化與 Lazy Loading',
 	description:
-		'Phase 0 完成後，預計先比較多頁導覽、返回行為與頁面轉場；正式開始前仍會再次確認範圍。',
+		'Phase 1・Step 1 已完成。下一步將使用同一批測試圖片比較輸出格式、responsive sizes、首屏優先與非首屏 Lazy Loading；開始前仍需再次確認範圍。',
+	href: '/lab/events/',
 };
 
 export const normalizeLabPath = (path: string) => {

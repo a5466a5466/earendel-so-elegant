@@ -1,9 +1,9 @@
 # Astro 功能實驗室 Phase 1・執行計畫與紀錄
 
-建立日期：2026-07-15  
-目前狀態：規劃完成，尚未開始 Step 1  
-前置狀態：Phase 0・Step 1～Step 6 已完成並由使用者驗收  
-依據文件：`厄倫蒂兒粉絲應援網站－開發計畫書.md`、`Astro功能實驗室－企劃書.md`、`Astro功能實驗室－Phase0-Step6-QA.md`
+- 建立日期：2026-07-15
+- 目前狀態：Step 1 已完成；Step 2 尚未開始
+- 前置狀態：Phase 0・Step 1～Step 6 已完成並由使用者驗收
+- 依據文件：`厄倫蒂兒粉絲應援網站－開發計畫書.md`、`Astro功能實驗室－企劃書.md`、`Astro功能實驗室－Phase0-Step6-QA.md`
 
 ## 1. 文件目的
 
@@ -129,7 +129,7 @@
 
 | Step | Phase | 功能／工作 | 必要前置 | 預估 Prototype | 狀態 |
 |---:|---|---|---|---:|---|
-| 1 | 1A | F18 Content Collections／動態活動頁 | Phase 0 完成、3 筆合法測試資料 | 1～2 天 | 未開始 |
+| 1 | 1A | F18 Content Collections／動態活動頁 | Phase 0 完成、3 筆合法測試資料 | 1～2 天 | 完成 |
 | 2 | 1A | F20 圖片最佳化與 Lazy Loading | Step 1 | 1～2 天 | 未開始 |
 | 3 | 1A | F26 共用偏好介面與整合驗證 | Phase 0 控制器、Step 1 | 1～2 天 | 未開始 |
 | 4 | 1A | F03 Navigation | Step 1 | 0.5～1 天 | 未開始 |
@@ -592,11 +592,11 @@
 
 ## 7. Phase 1 執行紀錄
 
-目前尚未開始任何 Phase 1 Step。
+Step 1 已完成實作、自動／靜態檢查、錯誤 schema 測試與使用者人工頁面驗收。完整結果記錄於 `Astro功能實驗室－Phase1-Step1-F18.md`。Step 2 尚未開始。
 
 | Step | 狀態 | 開始日期 | 完成日期 | 決策／摘要 | 詳細紀錄 |
 |---:|---|---|---|---|---|
-| 1 | 未開始 |  |  | F18 Content Collections | 本文件 Step 1 |
+| 1 | 完成 | 2026-07-15 | 2026-07-15 | 3 筆活動、列表／詳情頁、schema 驗證與人工驗收均通過 | `Astro功能實驗室－Phase1-Step1-F18.md` |
 | 2 | 未開始 |  |  | F20 圖片最佳化 | 本文件 Step 2 |
 | 3 | 未開始 |  |  | F26 共用偏好整合 | 本文件 Step 3 |
 | 4 | 未開始 |  |  | F03 Navigation | 本文件 Step 4 |

@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
+  <title id="title">盛夏來信照片企劃 placeholder</title>
+  <desc id="desc">米色背景、綠葉與金色信封的幾何示意圖。</desc>
+  <rect width="1200" height="800" fill="#eee8d8"/>
+  <circle cx="1000" cy="120" r="260" fill="#b7c4a4" opacity=".65"/>
+  <circle cx="170" cy="690" r="310" fill="#d9c895" opacity=".5"/>
+  <g transform="translate(600 390)">
+    <rect x="-250" y="-150" width="500" height="300" rx="12" fill="#f9f6ec" stroke="#9a8357" stroke-width="7"/>
+    <path d="M-245-135 0 55l245-190" fill="#e8d9b5" stroke="#9a8357" stroke-width="7"/>
+    <path d="M-245 140-30-35M245 140 30-35" fill="none" stroke="#9a8357" stroke-width="7"/>
+  </g>
+  <text x="600" y="735" fill="#4d604b" font-family="serif" font-size="28" letter-spacing="8" text-anchor="middle">STEP 1 PLACEHOLDER</text>
+</svg>

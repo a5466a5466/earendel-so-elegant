@@ -1,0 +1,78 @@
+---
+import { getCollection } from 'astro:content';
+import LabLayout from '../../../layouts/LabLayout.astro';
+import LabPageHero from '../../../components/lab/LabPageHero.astro';
+
+const events = (await getCollection('events')).sort(
+	(a, b) => b.data.date.getTime() - a.data.date.getTime(),
+);
+
+const formatDate = new Intl.DateTimeFormat('zh-Hant-TW', {
+	year: 'numeric',
+	month: 'long',
+	day: 'numeric',
+});
+---
+
+<LabLayout
+	title="活動資料 Prototype｜功能實驗室"
+	description="Phase 1 Step 1：以 Astro Content Collections 產生的活動列表與動態詳情頁。"
+>
+	<LabPageHero
+		eyebrow="Phase 1 · Step 1 · F18"
+		title="活動資料 Prototype"
+		description="三筆合法 placeholder 共用同一份 schema，並依日期產生列表與獨立詳情網址。這一輪只驗證資料流，不代表正式活動視覺。"
+		actions={[
+			{ label: '查看測試資料', href: '#event-records' },
+			{ label: '返回實驗索引', href: '/lab/' },
+		]}
+		headingId="event-index-title"
+	/>
+
+	<div class="event-lab-main">
+		<section class="event-schema-summary" aria-labelledby="schema-summary-title">
+			<div>
+				<p class="lab-eyebrow">Schema Baseline</p>
+				<h2 id="schema-summary-title">一份資料，支援後續所有內容功能</h2>
+			</div>
+			<ul>
+				<li><strong>{events.length}</strong><span>合法測試活動</span></li>
+				<li><strong>Build</strong><span>錯誤欄位會阻止建置</span></li>
+				<li><strong>0</strong><span>新增 dependency</span></li>
+			</ul>
+		</section>
+
+		<section id="event-records" class="event-records" aria-labelledby="event-records-title">
+			<div class="event-section-heading">
+				<div>
+					<p class="lab-eyebrow">Generated Collection</p>
+					<h2 id="event-records-title">依日期排序的活動</h2>
+				</div>
+				<p>封面目前直接使用 SVG placeholder；圖片管線與 Lazy Loading 比較保留到 Step 2。</p>
+			</div>
+
+			<ol class="event-card-grid">
+				{events.map((event) => (
+					<li>
+						<article class="event-card">
+							<a class="event-card-cover" href={`/lab/events/${event.data.slug}/`} aria-label={`查看${event.data.title}`}>
+								<img src={event.data.cover} alt={event.data.coverAlt} width="1200" height="800" loading="lazy" />
+							</a>
+							<div class="event-card-body">
+								<div class="event-card-meta">
+									<time datetime={event.data.date.toISOString().slice(0, 10)}>{formatDate.format(event.data.date)}</time>
+									{event.data.featured && <span>Featured</span>}
+								</div>
+								<h3><a href={`/lab/events/${event.data.slug}/`}>{event.data.title}</a></h3>
+								<p>{event.data.summary}</p>
+								<ul class="event-tags" aria-label={`${event.data.title}標籤`}>
+									{event.data.tags.map((tag) => <li>{tag}</li>)}
+								</ul>
+							</div>
+						</article>
+					</li>
+				))}
+			</ol>
+		</section>
+	</div>
+</LabLayout>
