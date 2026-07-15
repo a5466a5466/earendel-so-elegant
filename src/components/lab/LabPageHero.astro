@@ -1,0 +1,35 @@
+---
+interface Action {
+	label: string;
+	href: string;
+}
+
+interface Props {
+	eyebrow: string;
+	title: string;
+	description: string;
+	actions?: Action[];
+	headingId?: string;
+}
+
+const {
+	eyebrow,
+	title,
+	description,
+	actions = [],
+	headingId = 'lab-page-title',
+} = Astro.props;
+---
+
+<section class="lab-page-hero" aria-labelledby={headingId}>
+	<div class="lab-page-hero-inner">
+		<p class="lab-eyebrow">{eyebrow}</p>
+		<h1 id={headingId}>{title}</h1>
+		<p>{description}</p>
+		{actions.length > 0 && (
+			<nav class="lab-page-actions" aria-label={`${title}頁面操作`}>
+				{actions.map((action) => <a href={action.href}>{action.label}</a>)}
+			</nav>
+		)}
+	</div>
+</section>

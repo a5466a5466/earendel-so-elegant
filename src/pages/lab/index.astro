@@ -1,37 +1,6 @@
 ---
 import LabLayout from '../../layouts/LabLayout.astro';
-
-const foundations = [
-	{
-		step: '01',
-		title: '實驗索引',
-		description: '建立所有功能實驗的共同入口、進度與驗收狀態。',
-		status: '完成',
-		state: 'complete',
-	},
-	{
-		step: '02',
-		title: '共用控制器',
-		description: '集中顯示 viewport、動態偏好、音效與效能模式。',
-		status: '完成',
-		state: 'complete',
-	},
-	{
-		step: '03',
-		title: '實驗紀錄',
-		description: '統一記錄工時、RWD、無障礙、效能與採用決策。',
-		status: '完成',
-		state: 'complete',
-		href: '/lab/record-template/',
-	},
-	{
-		step: '04',
-		title: '公開保護',
-		description: '維持 noindex，並在正式部署前確認 Sitemap 與入口策略。',
-		status: '基礎完成',
-		state: 'protected',
-	},
-];
+import { nextExperiment, phaseZeroSteps } from '../../data/lab/catalog';
 ---
 
 <LabLayout
@@ -67,7 +36,7 @@ const foundations = [
 		</div>
 
 		<ol class="foundation-grid">
-			{foundations.map((item) => (
+			{phaseZeroSteps.map((item) => (
 				<li class={`foundation-card is-${item.state}`}>
 					<div class="card-meta">
 						<span>{item.step}</span>
@@ -75,7 +44,7 @@ const foundations = [
 					</div>
 					<h3>{item.title}</h3>
 					<p>{item.description}</p>
-					{item.href && <a class="foundation-link" href={item.href}>查看模板 <span aria-hidden="true">→</span></a>}
+					{item.href && <a class="foundation-link" href={item.href}>{item.linkLabel ?? '查看內容'} <span aria-hidden="true">→</span></a>}
 				</li>
 			))}
 		</ol>
@@ -84,10 +53,10 @@ const foundations = [
 	<section class="lab-section lab-roadmap" aria-labelledby="roadmap-title">
 		<div>
 			<p class="lab-eyebrow">Next Experiment</p>
-			<h2 id="roadmap-title">Navigation ＋ Page Transition</h2>
-			<p>Phase 0 完成後，預計先比較多頁導覽、返回行為與頁面轉場；正式開始前仍會再次確認範圍。</p>
+			<h2 id="roadmap-title">{nextExperiment.title}</h2>
+			<p>{nextExperiment.description}</p>
 		</div>
-		<span class="roadmap-mark" aria-hidden="true">F03<br />＋<br />F04</span>
+		<span class="roadmap-mark" aria-hidden="true">{nextExperiment.id}</span>
 	</section>
 
 	<div class="lab-home-link">

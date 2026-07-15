@@ -1,5 +1,6 @@
 ---
 import LabLayout from '../../layouts/LabLayout.astro';
+import LabPageHero from '../../components/lab/LabPageHero.astro';
 import { Content as TemplateContent, frontmatter } from '../../data/lab/experiment-record-template.md';
 import templateSource from '../../data/lab/experiment-record-template.md?raw';
 
@@ -11,24 +12,25 @@ const record = frontmatter.record as {
 	status: string;
 	demoPath: string;
 };
+
+const pageActions = [
+	{ label: '閱讀模板', href: '#markdown-preview' },
+	{ label: '查看 YAML', href: '#yaml-source' },
+	{ label: '返回實驗索引', href: '/lab/' },
+];
 ---
 
 <LabLayout
 	title="實驗紀錄模板｜功能實驗室"
 	description="Astro 功能實驗室共用的 Markdown 與 YAML 實驗紀錄模板預覽。"
 >
-	<section class="template-hero" aria-labelledby="template-title">
-		<div class="template-hero-inner">
-			<p class="lab-eyebrow">Phase 0 · Step 3</p>
-			<h1 id="template-title">實驗紀錄模板</h1>
-			<p>每項功能實驗都從同一份紀錄格式開始，讓工時、效能、無障礙與採用結論可以被比較，而不是只留下主觀印象。</p>
-			<nav class="template-actions" aria-label="模板頁操作">
-				<a href="#markdown-preview">閱讀模板</a>
-				<a href="#yaml-source">查看 YAML</a>
-				<a href="/lab/">返回實驗索引</a>
-			</nav>
-		</div>
-	</section>
+	<LabPageHero
+		eyebrow="Phase 0 · Step 3"
+		title="實驗紀錄模板"
+		description="每項功能實驗都從同一份紀錄格式開始，讓工時、效能、無障礙與採用結論可以被比較，而不是只留下主觀印象。"
+		actions={pageActions}
+		headingId="template-title"
+	/>
 
 	<div class="template-main">
 		<section class="template-overview" aria-labelledby="overview-title">
