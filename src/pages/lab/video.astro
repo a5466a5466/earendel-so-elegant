@@ -1,0 +1,129 @@
+---
+import LabLayout from '../../layouts/LabLayout.astro';
+import LabPageHero from '../../components/lab/LabPageHero.astro';
+
+const videoBase = '/lab-assets/video';
+---
+
+<LabLayout
+	title="Self-hosted Video Prototype｜功能實驗室"
+	description="Phase 1 Step 12：以原生 video 驗證內容影片、背景影片、字幕與載入降級。"
+	breadcrumbLabel="Video"
+>
+	<LabPageHero
+		eyebrow="Phase 1 · Step 12 · F09"
+		title="Self-hosted Video"
+		description="用一支本機生成的四秒測試片，同時驗證有聲內容影片與靜音背景影片；不依賴第三方服務或播放器套件。"
+		actions={[
+			{ label: '測試內容影片', href: '#content-video' },
+			{ label: '測試背景影片', href: '#background-video' },
+		]}
+		headingId="video-title"
+	/>
+
+	<div class="video-lab-main" data-video-lab>
+		<section class="video-overview" aria-labelledby="video-overview-title">
+			<div>
+				<p class="lab-eyebrow">Local Media Contract</p>
+				<h2 id="video-overview-title">同一素材，兩種播放責任</h2>
+				<p>內容影片永不自動播放，聲音只能由使用者透過原生控制啟動；背景影片永遠靜音，且在手機、減少動態或節能模式只顯示 poster。</p>
+			</div>
+			<dl>
+				<div><dt>長度</dt><dd>4 秒</dd></div>
+				<div><dt>格式</dt><dd>WebM＋MP4</dd></div>
+				<div><dt>字幕</dt><dd>繁中 VTT</dd></div>
+				<div><dt>Runtime</dt><dd>原生 video</dd></div>
+			</dl>
+		</section>
+
+		<section id="content-video" class="video-section content-video-section" aria-labelledby="content-video-title">
+			<div class="video-section-heading">
+				<div><p class="lab-eyebrow">Editorial Video</p><h2 id="content-video-title">有聲內容影片</h2></div>
+				<p>桌機標準模式只預載 metadata；手機與節能模式先停在 poster，點擊「載入影片」後才加入來源。播放與音量完全交給原生控制。</p>
+			</div>
+			<div class="content-video-layout">
+				<div class="video-frame" data-content-frame>
+					<video
+						controls
+						playsinline
+						preload="none"
+						poster={`${videoBase}/starlight-motion-poster.png`}
+						data-content-video
+						aria-describedby="content-video-description"
+					>
+						<source data-video-source data-src={`${videoBase}/starlight-motion-study.webm`} type="video/webm" />
+						<source data-video-source data-src={`${videoBase}/starlight-motion-study.mp4`} type="video/mp4" />
+						<track src={`${videoBase}/starlight-motion.zh-Hant.vtt`} kind="captions" srclang="zh-Hant" label="繁體中文字幕" default />
+						你的瀏覽器不支援 HTML video。可使用下方 MP4 連結。
+					</video>
+					<button class="video-load-button" type="button" data-content-load>載入內容影片</button>
+					<div class="video-runtime-fallback" data-content-fallback hidden role="status">
+						<strong>內容影片載入失敗</strong>
+						<p>Poster 與說明仍保留，你也可以直接開啟 MP4 測試檔。</p>
+					</div>
+				</div>
+				<div id="content-video-description" class="video-description-card">
+					<p class="lab-eyebrow">Playback Rules</p>
+					<h3>不代替瀏覽器控制</h3>
+					<ul>
+						<li>沒有 `autoplay`，初始不出聲。</li>
+						<li>原生 controls 保留鍵盤、音量、全螢幕與字幕選單。</li>
+						<li>WebM 優先，MP4 作為相容 fallback。</li>
+						<li><a href={`${videoBase}/starlight-motion-study.mp4`}>直接開啟 MP4 測試檔</a></li>
+					</ul>
+					<p data-content-status aria-live="polite">尚未載入影片來源。</p>
+				</div>
+			</div>
+			<noscript><p class="video-noscript">JavaScript 已關閉；請使用<a href={`${videoBase}/starlight-motion-study.mp4`}>直接 MP4 連結</a>觀看。</p></noscript>
+		</section>
+
+		<section id="background-video" class="video-section" aria-labelledby="background-video-title">
+			<div class="video-section-heading">
+				<div><p class="lab-eyebrow">Decorative Motion</p><h2 id="background-video-title">靜音背景影片</h2></div>
+				<p>只有桌機、完整動態與標準效能同時成立才附加來源並嘗試自動播放；其他狀態不下載影片，只保留 poster 與完整文字。</p>
+			</div>
+			<div class="background-video-demo" data-background-demo>
+				<video muted loop playsinline preload="none" poster={`${videoBase}/starlight-motion-poster.png`} data-background-video aria-hidden="true" tabindex="-1">
+					<source data-background-source data-src={`${videoBase}/starlight-motion-study.webm`} type="video/webm" />
+					<source data-background-source data-src={`${videoBase}/starlight-motion-study.mp4`} type="video/mp4" />
+				</video>
+				<div class="background-video-copy">
+					<p>Starlight Archive</p>
+					<h3>動態只是氣氛，內容不依賴播放</h3>
+					<span data-background-status>正在判斷播放條件。</span>
+				</div>
+				<button type="button" data-background-toggle disabled>播放背景影片</button>
+			</div>
+		</section>
+
+		<section class="video-section video-failure-section" aria-labelledby="video-failure-title">
+			<div>
+				<p class="lab-eyebrow">Runtime Failure</p>
+				<h2 id="video-failure-title">影片來源失效</h2>
+				<p>此測試不在初始頁面載入失效檔案；只有按下按鈕後才要求不存在的來源，驗證 poster、說明與替代連結不消失。</p>
+			</div>
+			<div class="failure-video-card" data-failure-video-card>
+				<video controls playsinline preload="none" poster={`${videoBase}/starlight-motion-poster.png`} data-failure-video>
+					<source data-src={`${videoBase}/__missing-video.webm`} type="video/webm" />
+					<source data-src={`${videoBase}/__missing-video.mp4`} type="video/mp4" />
+				</video>
+				<div data-failure-message><strong>尚未觸發失敗測試</strong><p>按下按鈕後，播放器會嘗試載入不存在的 WebM／MP4。</p></div>
+				<button type="button" data-failure-load>載入不存在的影片</button>
+			</div>
+		</section>
+
+		<section class="video-decision" aria-labelledby="video-decision-title">
+			<div><p class="lab-eyebrow">Player Decision</p><h2 id="video-decision-title">原生 video 優先</h2></div>
+			<div role="note">
+				<strong>目前不安裝播放器套件。</strong>
+				<p>內容影片需要的 controls、字幕、全螢幕與鍵盤操作都由瀏覽器提供；背景影片只需要靜音、poster、偏好判斷與播放／暫停。</p>
+				<p>未來只有在 HLS／DASH、自訂 DRM、跨裝置串流品質或一致化進階控制成為正式需求時才重新評估。</p>
+			</div>
+		</section>
+	</div>
+</LabLayout>
+
+<script>
+	import { initializeVideoLab } from '../../scripts/lab/video';
+	initializeVideoLab();
+</script>

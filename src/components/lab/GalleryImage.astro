@@ -7,7 +7,7 @@ type GalleryItem = CollectionEntry<'events'>['data']['gallery'][number];
 interface Props {
 	item: GalleryItem;
 	index: number;
-	variant?: 'grid' | 'carousel';
+	variant?: 'grid' | 'carousel' | 'lightbox';
 }
 
 const { item, index, variant = 'grid' } = Astro.props;
@@ -23,8 +23,15 @@ const creditLabel = item.credit?.name ?? '未提供署名';
 const licenseLabel = item.credit?.license ?? '授權待確認';
 ---
 
-<figure class:list={['gallery-card', `is-${shape}`, { 'is-carousel': variant === 'carousel' }]} data-gallery-item data-gallery-shape={shape}>
-	<a class="gallery-media" href={item.src.src} target="_blank" rel="noreferrer" aria-label={`查看第 ${index + 1} 張原始測試圖：${item.alt}`}>
+<figure class:list={['gallery-card', `is-${shape}`, { 'is-carousel': variant === 'carousel', 'is-lightbox-trigger': variant === 'lightbox' }]} data-gallery-item data-gallery-shape={shape}>
+	<a
+		class="gallery-media"
+		href={item.src.src}
+		target={variant === 'lightbox' ? undefined : '_blank'}
+		rel="noreferrer"
+		data-lightbox-trigger={variant === 'lightbox' ? index : undefined}
+		aria-label={variant === 'lightbox' ? `在燈箱中放大第 ${index + 1} 張圖片：${item.alt}` : `查看第 ${index + 1} 張原始測試圖：${item.alt}`}
+	>
 		<span class="gallery-picture" style={`--gallery-position: ${item.position}`}>
 			<Picture
 				src={item.src}
@@ -40,7 +47,7 @@ const licenseLabel = item.credit?.license ?? '授權待確認';
 				class="gallery-optimized-image"
 			/>
 		</span>
-		<span class="gallery-open-label">查看原圖 <span aria-hidden="true">↗</span></span>
+		<span class="gallery-open-label">{variant === 'lightbox' ? '放大查看' : '查看原圖'} <span aria-hidden="true">{variant === 'lightbox' ? '＋' : '↗'}</span></span>
 	</a>
 	<figcaption>
 		<div><span>{String(index + 1).padStart(2, '0')}</span><span>{item.src.width} × {item.src.height}</span></div>

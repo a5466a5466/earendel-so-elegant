@@ -15,8 +15,8 @@
 | 遠端 | `master` 與 `origin/master` 同步 |
 | 工作樹 | 有未提交變更：已完成的 Phase 1・Step 7 QA、架構基線與紀錄修正 |
 | Phase 0 | Step 1～6 完成 |
-| Phase 1 | Step 1～10 完成 |
-| 下一步 | 取得使用者指示後開始 Step 11・F08 Lightbox |
+| Phase 1 | Step 1～12 完成 |
+| 下一步 | 取得使用者指示後開始 Step 13・F14 YouTube 影片嵌入 |
 
 最近完成的 Phase 1 功能：
 
@@ -139,7 +139,7 @@ pnpm build
 先告訴我目前完成到哪個 Step、工作樹是否乾淨，以及下一個 Step 的範圍。
 ```
 
-## 6. 近期進度與下一步：Phase 1・Step 11
+## 6. 近期進度與下一步：Phase 1・Step 13
 
 Step 6 已由使用者驗收完成。最終決策為保留普通 Astro MPA 與原生 History，採用 native cross-document View Transition，不採用 ClientRouter。
 
@@ -158,7 +158,9 @@ Step 9・F06 Gallery 已於 2026-07-16 完成：Prototype 位於 `/lab/gallery/`
 
 Step 10・F07 Carousel 已於 2026-07-16 完成：Prototype 位於 `/lab/carousel/`，直接沿用 Step 9 Gallery item 與圖片元件，以原生 CSS Scroll Snap 實作觸控滑動、框外 `<`／`>` 上下頁箭頭、8 個分頁、鍵盤、目前位置與手機下一張提示。不自動播放、不循環，並整合 reduced-motion 與可清理生命週期。Lab／production build、正式輸出隔離及使用者人工驗收均通過；最終採用原生 Scroll Snap，不安裝 Embla。
 
-下一步為 Step 11・F08 Lightbox：沿用 Gallery／Carousel 資料，驗證原生 `<dialog>` 的大圖、上下張、caption、焦點管理、手機安全區與失敗 fallback；開始前仍需由使用者明確指示。
+Step 11・F08 Lightbox 已於 2026-07-16 完成：Prototype 位於 `/lab/lightbox/`，沿用 12 筆 Gallery item 與 `GalleryImage.astro`，以原生 `<dialog>` 實作大圖、框外上下張、Esc／方向鍵／Home／End、觸控滑動、caption、作者／授權、焦點返回、背景鎖定、手機 safe-area 與大圖失敗 fixture。無 JavaScript或不支援 dialog 時縮圖仍是原圖連結。Lab／production build、HTTP 200、重複 ID、正式輸出隔離及使用者人工驗收均通過；最終採用原生 `<dialog>`，不安裝 PhotoSwipe。
+
+Step 12・F09 自有 Video 已於 2026-07-16 完成：Prototype 位於 `/lab/video/`，使用本機生成的 4 秒 WebM／MP4、PNG poster 與繁中 VTT，同時測試有聲內容影片與靜音背景影片。內容影片不 autoplay，桌機標準模式只預載 metadata，手機／節能模式等待使用者載入；背景影片只有桌機＋完整動態＋標準效能才附加來源並靜音播放，其餘只顯示 poster。另有不存在來源的 failure fixture、完整 listener cleanup 與無 JavaScript MP4 連結。Lab／production build、HTTP／MIME、正式輸出隔離及使用者人工驗收均通過；最終採用原生 `<video>`，不安裝播放器套件。
 
 ## 7. 目前架構與重要限制
 

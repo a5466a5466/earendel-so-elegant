@@ -29,6 +29,8 @@ export const labNavigation: LabNavigationItem[] = [
 	{ label: '滾動動畫', href: '/lab/scroll/' },
 	{ label: 'Gallery', href: '/lab/gallery/' },
 	{ label: 'Carousel', href: '/lab/carousel/' },
+	{ label: 'Lightbox', href: '/lab/lightbox/' },
+	{ label: 'Video', href: '/lab/video/' },
 	{ label: '紀錄模板', href: '/lab/record-template/' },
 ];
 
@@ -80,10 +82,10 @@ export const phaseZeroSteps: LabPhaseStep[] = [
 ];
 
 export const nextExperiment = {
-	id: 'F07',
-	title: 'Carousel',
+	id: 'F09',
+	title: '自有 Video',
 	description:
-		'Phase 1・Step 10 將直接沿用 Gallery item，以原生 CSS Scroll Snap 驗證鍵盤、觸控、按鈕、分頁與失敗降級。',
+		'Phase 1・Step 12 以原生 video 驗證內容影片、背景影片、poster、字幕、載入策略與動態偏好降級。',
 };
 
 export const normalizeLabPath = (path: string) => {

@@ -1,0 +1,109 @@
+---
+import { getCollection } from 'astro:content';
+import GalleryImage from '../../components/lab/GalleryImage.astro';
+import LabLayout from '../../layouts/LabLayout.astro';
+import LabPageHero from '../../components/lab/LabPageHero.astro';
+
+const labContentEnabled = import.meta.env.DEV || import.meta.env.MODE === 'lab';
+const events = labContentEnabled ? await getCollection('events') : [];
+const galleryEvent = events.find((event) => event.data.slug === 'starlight-birthday-project');
+const lightboxItems = galleryEvent?.data.gallery ?? [];
+const lightboxData = lightboxItems.map((item) => ({
+	src: item.src.src,
+	width: item.src.width,
+	height: item.src.height,
+	alt: item.alt,
+	caption: item.caption ?? item.alt,
+	creditName: item.credit?.name ?? '未提供署名',
+	creditUrl: item.credit?.url ?? null,
+	license: item.credit?.license ?? '授權待確認',
+}));
+const serializedData = JSON.stringify(lightboxData).replaceAll('<', '\\u003c');
+---
+
+<LabLayout
+	title="Lightbox Prototype｜功能實驗室"
+	description="Phase 1 Step 11：以原生 dialog 建立可存取、可降級的 Gallery Lightbox。"
+	breadcrumbLabel="Lightbox"
+>
+	<LabPageHero
+		eyebrow="Phase 1 · Step 11 · F08"
+		title="Native Dialog Lightbox"
+		description="沿用 Gallery 與 Carousel 的同一份圖片資料，驗證原生 dialog 的大圖瀏覽、焦點管理、鍵盤、觸控與失敗降級。"
+		actions={[
+			{ label: '開啟圖片測試', href: '#lightbox-grid' },
+			{ label: '查看原生方案決策', href: '#lightbox-decision' },
+		]}
+		headingId="lightbox-title"
+	/>
+
+	<div class="lightbox-lab-main" data-lightbox-root>
+		<section class="lightbox-overview" aria-labelledby="lightbox-overview-title">
+			<div>
+				<p class="lab-eyebrow">Progressive Enhancement</p>
+				<h2 id="lightbox-overview-title">連結先存在，燈箱再增強</h2>
+				<p>支援時以原生 modal dialog 顯示；沒有 JavaScript 或 dialog 時，十二張縮圖仍是可開啟原圖的普通連結。</p>
+			</div>
+			<dl>
+				<div><dt>圖片</dt><dd>{lightboxItems.length} 張</dd></div>
+				<div><dt>鍵盤</dt><dd>Esc／←／→</dd></div>
+				<div><dt>觸控</dt><dd>左右滑動</dd></div>
+				<div><dt>套件</dt><dd>無</dd></div>
+			</dl>
+		</section>
+
+		<section id="lightbox-grid" class="lightbox-gallery-section" aria-labelledby="lightbox-grid-title">
+			<div class="gallery-section-heading">
+				<div><p class="lab-eyebrow">Shared Gallery Data</p><h2 id="lightbox-grid-title">選擇一張圖片放大</h2></div>
+				<p>關閉後焦點會回到剛才的縮圖；開啟後可使用框外按鈕、左右方向鍵或觸控滑動切換。</p>
+			</div>
+			<ol class="gallery-grid lightbox-trigger-grid">
+				{lightboxItems.map((item, index) => <li><GalleryImage item={item} index={index} variant="lightbox" /></li>)}
+			</ol>
+			<div class="lightbox-failure-test">
+				<div><p class="lab-eyebrow">Runtime Failure</p><h3>大圖不存在時的降級</h3><p>縮圖資料維持合法，只有這個測試入口刻意指向不存在的大圖；燈箱仍保留固定空間、說明、alt 與原圖連結。</p></div>
+				<a href="/lab-assets/events/__missing-lightbox-image.webp" data-lightbox-failure-trigger>開啟失敗降級測試 <span aria-hidden="true">↗</span></a>
+			</div>
+		</section>
+
+		<dialog class="lightbox-dialog" data-lightbox-dialog aria-labelledby="lightbox-dialog-title" aria-describedby="lightbox-dialog-caption">
+			<div class="lightbox-dialog-shell" data-lightbox-panel>
+				<header class="lightbox-dialog-header">
+					<div><p>Gallery Lightbox</p><h2 id="lightbox-dialog-title" data-lightbox-title>圖片 1 / {lightboxItems.length}</h2></div>
+					<button class="lightbox-close" type="button" data-lightbox-close aria-label="關閉圖片燈箱"><span aria-hidden="true">×</span></button>
+				</header>
+				<div class="lightbox-stage" data-lightbox-stage>
+					<button class="lightbox-arrow is-previous" type="button" data-lightbox-previous aria-label="上一張圖片"><span aria-hidden="true">&lt;</span></button>
+					<figure class="lightbox-figure">
+						<div class="lightbox-media" data-lightbox-media>
+							<img data-lightbox-image src="" alt="" width="1600" height="1000" />
+							<p class="lightbox-image-fallback" data-lightbox-fallback role="status" hidden>大圖載入失敗。說明與原圖連結仍可使用。</p>
+						</div>
+						<figcaption id="lightbox-dialog-caption">
+							<p data-lightbox-caption></p>
+							<div><a data-lightbox-credit></a><span aria-hidden="true">・</span><span data-lightbox-license></span></div>
+							<a data-lightbox-original href="" target="_blank" rel="noreferrer">在新分頁開啟原圖 <span aria-hidden="true">↗</span></a>
+						</figcaption>
+					</figure>
+					<button class="lightbox-arrow is-next" type="button" data-lightbox-next aria-label="下一張圖片"><span aria-hidden="true">&gt;</span></button>
+				</div>
+				<p class="lightbox-announcement" data-lightbox-announcement aria-live="polite" aria-atomic="true"></p>
+			</div>
+		</dialog>
+		<script type="application/json" data-lightbox-data set:html={serializedData}></script>
+
+		<section id="lightbox-decision" class="lightbox-decision" aria-labelledby="lightbox-decision-title">
+			<div><p class="lab-eyebrow">Package Gate</p><h2 id="lightbox-decision-title">先驗證原生 dialog</h2></div>
+			<div role="note">
+				<strong>目前不安裝 PhotoSwipe。</strong>
+				<p>原生 dialog 已提供 modal 語意、背景隔離、Escape 與焦點限制；本 Prototype 另外處理焦點返回、上下張、觸控、安全區與載入失敗。</p>
+				<p>若人工驗收確認必須支援複雜手勢縮放、圖片平移或深層連結，再提出 PhotoSwipe 評估。</p>
+			</div>
+		</section>
+	</div>
+</LabLayout>
+
+<script>
+	import { initializeLightbox } from '../../scripts/lab/lightbox';
+	initializeLightbox();
+</script>
