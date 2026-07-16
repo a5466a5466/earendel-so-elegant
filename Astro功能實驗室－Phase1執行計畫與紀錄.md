@@ -1,7 +1,7 @@
 # Astro 功能實驗室 Phase 1・執行計畫與紀錄
 
 - 建立日期：2026-07-15
-- 目前狀態：Step 1～Step 6 已完成；Step 7 技術回歸完成，等待使用者人工驗收
+- 目前狀態：Phase 1A（Step 1～7）已完成；下一步為 Step 8 F05 Scroll Animation
 - 前置狀態：Phase 0・Step 1～Step 6 已完成並由使用者驗收
 - 依據文件：`厄倫蒂兒粉絲應援網站－開發計畫書.md`、`Astro功能實驗室－企劃書.md`、`Astro功能實驗室－Phase0-Step6-QA.md`
 
@@ -612,7 +612,7 @@ Step 6 已完成普通 MPA 與九種原生 cross-document View Transition 比較
 | 4 | 完成 | 2026-07-15 | 2026-07-15 | F03 Navigation 技術驗證與目前 Prototype 使用者驗收通過；延伸裝置 QA 不阻擋 | `Astro功能實驗室－Phase1-Step4-F03.md` |
 | 5 | 完成 | 2026-07-16 | 2026-07-16 | 正式站前延後；固定繁中無 prefix、日文／英文有 prefix 的未來契約 | `Astro功能實驗室－Phase1-Step5-F23.md` |
 | 6 | 完成 | 2026-07-16 | 2026-07-16 | 採用原生 MPA View Transition、不採 ClientRouter；九種效果與返回驗收通過 | `Astro功能實驗室－Phase1-Step6-F04.md` |
-| 7 | 待驗收 | 2026-07-16 |  | 技術回歸與架構凍結完成；等待 Phase 1A 人工驗收 | `Astro功能實驗室－Phase1A-Step7-QA.md` |
+| 7 | 完成 | 2026-07-16 | 2026-07-16 | 雙模式回歸、正式輸出隔離、架構凍結與人工驗收均通過 | `Astro功能實驗室－Phase1A-Step7-QA.md` |
 | 8 | 未開始 |  |  | F05 Scroll Animation | 本文件 Step 8 |
 | 9 | 未開始 |  |  | F06 Gallery | 本文件 Step 9 |
 | 10 | 未開始 |  |  | F07 Carousel | 本文件 Step 10 |

@@ -77,10 +77,10 @@ export const phaseZeroSteps: LabPhaseStep[] = [
 ];
 
 export const nextExperiment = {
-	id: 'QA',
-	title: 'Phase 1A 整合 QA',
+	id: 'F05',
+	title: 'Scroll Animation',
 	description:
-		'Phase 1・Step 7 正在回歸 Step 1～6，並凍結 schema、URL、圖片、偏好、i18n 與轉場契約，完成後才進入 Phase 1B。',
+		'Phase 1・Step 8 將建立原生 scroll reveal 基線，驗證內容先存在、reduced-motion、返回頁面與 observer 清理。',
 };
 
 export const normalizeLabPath = (path: string) => {

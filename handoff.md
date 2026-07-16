@@ -11,12 +11,12 @@
 | 專案 | `earendel-so-elegant` |
 | Repository | `https://github.com/a5466a5466/earendel-so-elegant.git` |
 | 分支 | `master` |
-| HEAD | `255acd6 phase1 step 6 done` |
+| HEAD | `b2f01f9 phase1 step7 done` |
 | 遠端 | `master` 與 `origin/master` 同步 |
-| 工作樹 | 有未提交變更：Phase 1・Step 7 QA、架構基線與紀錄修正 |
+| 工作樹 | 有未提交變更：已完成的 Phase 1・Step 7 QA、架構基線與紀錄修正 |
 | Phase 0 | Step 1～6 完成 |
-| Phase 1 | Step 1～6 完成；Step 7 技術回歸完成、待人工驗收 |
-| 下一步 | 使用者依 `Astro功能實驗室－Phase1A-Step7-QA.md` 完成精簡人工回歸 |
+| Phase 1 | Phase 1A（Step 1～7）完成 |
+| 下一步 | Step 8：F05 Scroll Animation（尚未開始） |
 
 最近完成的 Phase 1 功能：
 
@@ -139,7 +139,7 @@ pnpm build
 先告訴我目前完成到哪個 Step、工作樹是否乾淨，以及下一個 Step 的範圍。
 ```
 
-## 6. 目前進度：Phase 1・Step 7
+## 6. 下一步：Phase 1・Step 8
 
 Step 6 已由使用者驗收完成。最終決策為保留普通 Astro MPA 與原生 History，採用 native cross-document View Transition，不採用 ClientRouter。
 
@@ -150,7 +150,9 @@ Step 6 固定契約：
 - Reduced motion、不支援環境與 JavaScript 關閉時維持普通換頁。
 - 後續 script 維持每份文件初始化一次、可重入並提供 dispose。
 
-Step 7 技術回歸已完成：Lab／正式雙模式、noindex、正式首頁、404、Step 1～6 契約及正式輸出隔離均通過；架構基線已寫入 `src/data/lab/phase1a-architecture-baseline.md`。目前等待使用者依 `Astro功能實驗室－Phase1A-Step7-QA.md` 完成人工驗收，確認後才能把 Step 7 標記完成並進入 Step 8。
+Step 7 已於 2026-07-16 完成：Lab／正式雙模式、noindex、正式首頁、404、Step 1～6 契約及正式輸出隔離均通過；使用者亦已完成人工驗收。架構基線位於 `src/data/lab/phase1a-architecture-baseline.md`，是 Step 8～17 的固定前置。
+
+下一步為 Step 8・F05 Scroll Animation：建立原生 scroll reveal 基線，確認內容先存在於 HTML，並驗證 reduced-motion、返回頁面、版面高度改變與 observer cleanup。Step 8 尚未開始，需由使用者指示後才執行。
 
 ## 7. 目前架構與重要限制
 
