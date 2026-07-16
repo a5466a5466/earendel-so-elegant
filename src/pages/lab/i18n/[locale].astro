@@ -1,0 +1,71 @@
+---
+import LabLayout from '../../../layouts/LabLayout.astro';
+import {
+	i18nPrototypeAlternates,
+	i18nPrototypeDate,
+	i18nPrototypeLocales,
+	i18nPrototypePath,
+	type I18nPrototypeLocale,
+} from '../../../data/lab/i18n-prototype';
+
+export function getStaticPaths() {
+	return i18nPrototypeLocales.map((locale) => ({
+		params: { locale: locale.slug },
+		props: { locale },
+	}));
+}
+
+interface Props {
+	locale: I18nPrototypeLocale;
+}
+
+const { locale } = Astro.props;
+const formattedDate = new Intl.DateTimeFormat(locale.dateLocale, {
+	year: 'numeric',
+	month: 'long',
+	day: 'numeric',
+}).format(i18nPrototypeDate);
+---
+
+<LabLayout
+	title={`${locale.title}｜三語內容原型`}
+	description={locale.summary}
+	breadcrumbLabel={locale.label}
+	lang={locale.code}
+	alternates={i18nPrototypeAlternates}
+>
+	<article class="i18n-locale-page" lang={locale.code}>
+		<nav class="i18n-language-switcher" aria-label="Language switcher">
+			<span>Language</span>
+			{ i18nPrototypeLocales.map((item) => (
+				<a
+					href={i18nPrototypePath(item.slug)}
+					hreflang={item.code}
+					lang={item.code}
+					aria-current={item.code === locale.code ? 'page' : undefined}
+				>
+					{item.label}
+				</a>
+			)) }
+		</nav>
+		<header>
+			<p>{locale.eyebrow}</p>
+			<h1>{locale.title}</h1>
+			<p>{locale.summary}</p>
+		</header>
+		<div class="i18n-localized-card">
+			<div aria-hidden="true"><span>✦</span></div>
+			<dl>
+				<div>
+					<dt>{locale.dateLabel}</dt>
+					<dd><time datetime="2026-08-15">{formattedDate}</time></dd>
+				</div>
+			</dl>
+			<p>{locale.body}</p>
+		</div>
+		<footer>
+			<a href="/lab/i18n/">← 回到路由決策比較</a>
+			<code>html lang=&quot;{locale.code}&quot;</code>
+		</footer>
+	</article>
+</LabLayout>

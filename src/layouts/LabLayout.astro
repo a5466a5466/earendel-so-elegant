@@ -8,15 +8,23 @@ interface Props {
 	title: string;
 	description: string;
 	breadcrumbLabel?: string;
+	lang?: string;
+	alternates?: Array<{ lang: string; href: string }>;
 }
 
-const { title, description, breadcrumbLabel } = Astro.props;
+const {
+	title,
+	description,
+	breadcrumbLabel,
+	lang = 'zh-Hant',
+	alternates = [],
+} = Astro.props;
 const currentPath = normalizeLabPath(Astro.url.pathname);
 const breadcrumbs = getLabBreadcrumbs(currentPath, breadcrumbLabel);
 ---
 
 <!doctype html>
-<html lang="zh-Hant" data-motion="full" data-motion-setting="system" data-sound="off" data-performance="standard" data-performance-setting="auto">
+<html lang={lang} data-motion="full" data-motion-setting="system" data-sound="off" data-performance="standard" data-performance-setting="auto">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -26,6 +34,9 @@ const breadcrumbs = getLabBreadcrumbs(currentPath, breadcrumbLabel);
 		<meta name="generator" content={Astro.generator} />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="icon" href="/favicon.ico" />
+		{alternates.map((alternate) => (
+			<link rel="alternate" hreflang={alternate.lang} href={alternate.href} />
+		))}
 		<title>{title}</title>
 	</head>
 	<body>

@@ -1,7 +1,7 @@
 # Astro 功能實驗室 Phase 1・執行計畫與紀錄
 
 - 建立日期：2026-07-15
-- 目前狀態：Step 1～Step 4 已完成；下一步為 Step 5
+- 目前狀態：Step 1～Step 5 已完成；下一步為 Step 6
 - 前置狀態：Phase 0・Step 1～Step 6 已完成並由使用者驗收
 - 依據文件：`厄倫蒂兒粉絲應援網站－開發計畫書.md`、`Astro功能實驗室－企劃書.md`、`Astro功能實驗室－Phase0-Step6-QA.md`
 
@@ -600,13 +600,15 @@ Step 3 已完成單一共用偏好 API、事件契約、生命週期清理、跨
 
 Step 4 已完成固定 Header、桌機／手機 Navigation、原生 Dialog、巢狀路由目前位置、麵包屑、錨點避讓、生命週期清理與無 JavaScript fallback，正式／Lab 建置皆通過。使用者確認目前 Prototype 可接受，並決定手機、完整鍵盤、深層路由與返回行為不作為本階段追加人工 QA 的阻擋條件。詳細結果記錄於 `Astro功能實驗室－Phase1-Step4-F03.md`。
 
+Step 5 已完成隔離式繁中／日文／英文 Prototype、候選 URL、缺譯 fallback、`lang`、`hreflang` 與日期格式的技術驗證及使用者人工驗收。最終核准結論為「正式站前延後」，未來採用時固定使用「繁中無 prefix，日文／英文有 prefix」；缺譯時明示並連回繁中，不自動依瀏覽器語言跳轉。詳細結果記錄於 `Astro功能實驗室－Phase1-Step5-F23.md`。
+
 | Step | 狀態 | 開始日期 | 完成日期 | 決策／摘要 | 詳細紀錄 |
 |---:|---|---|---|---|---|
 | 1 | 完成 | 2026-07-15 | 2026-07-15 | 3 筆活動、列表／詳情頁、schema 驗證與人工驗收均通過 | `Astro功能實驗室－Phase1-Step1-F18.md` |
 | 2 | 完成 | 2026-07-15 | 2026-07-15 | AVIF／WebP、responsive widths、priority／lazy、fallback 與人工驗收均通過 | `Astro功能實驗室－Phase1-Step2-F20.md` |
 | 3 | 完成 | 2026-07-15 | 2026-07-15 | F26 共用 API、事件、整合測試、雙模式建置與人工驗收均通過 | `Astro功能實驗室－Phase1-Step3-F26.md` |
 | 4 | 完成 | 2026-07-15 | 2026-07-15 | F03 Navigation 技術驗證與目前 Prototype 使用者驗收通過；延伸裝置 QA 不阻擋 | `Astro功能實驗室－Phase1-Step4-F03.md` |
-| 5 | 未開始 |  |  | F23 多語系決策 | 本文件 Step 5 |
+| 5 | 完成 | 2026-07-16 | 2026-07-16 | 正式站前延後；固定繁中無 prefix、日文／英文有 prefix 的未來契約 | `Astro功能實驗室－Phase1-Step5-F23.md` |
 | 6 | 未開始 |  |  | F04 Page Transition | 本文件 Step 6 |
 | 7 | 未開始 |  |  | Phase 1A QA | 本文件 Step 7 |
 | 8 | 未開始 |  |  | F05 Scroll Animation | 本文件 Step 8 |

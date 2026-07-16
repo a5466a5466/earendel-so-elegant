@@ -1,6 +1,6 @@
 # 厄倫蒂兒好氣質網站－通用工作交接
 
-最後更新：2026-07-15（Asia/Taipei）
+最後更新：2026-07-16（Asia/Taipei）
 
 這是本專案跨電腦、跨 Codex 任務與跨工作階段的第一入口。接手者必須先讀本文件，再依「恢復工作流程」核對實際 Git 狀態；本文件的 Git 資訊是更新當下的快照，不可取代現場檢查。
 
@@ -11,12 +11,12 @@
 | 專案 | `earendel-so-elegant` |
 | Repository | `https://github.com/a5466a5466/earendel-so-elegant.git` |
 | 分支 | `master` |
-| HEAD | `bea7449 phase 1 step 4 done` |
+| HEAD | `ab8f81e add handoff doc` |
 | 遠端 | `master` 與 `origin/master` 同步 |
-| 工作樹 | 有未提交變更：本次新增的 `handoff.md` |
+| 工作樹 | 有未提交變更：Phase 1・Step 5 Prototype 與紀錄 |
 | Phase 0 | Step 1～6 完成 |
-| Phase 1 | Step 1～4 完成 |
-| 下一步 | Step 5：F23 多語系路由決策（尚未開始） |
+| Phase 1 | Step 1～5 完成 |
+| 下一步 | Step 6：F04 Page Transition（尚未開始） |
 
 最近完成的 Phase 1 功能：
 
@@ -43,6 +43,7 @@ Astro功能實驗室－Phase1-Step1-F18.md
 Astro功能實驗室－Phase1-Step2-F20.md
 Astro功能實驗室－Phase1-Step3-F26.md
 Astro功能實驗室－Phase1-Step4-F03.md
+Astro功能實驗室－Phase1-Step5-F23.md
 ```
 
 共用技術契約：
@@ -97,6 +98,7 @@ pnpm dev --host 127.0.0.1
 Lab：http://127.0.0.1:4321/lab/
 活動：http://127.0.0.1:4321/lab/events/
 偏好：http://127.0.0.1:4321/lab/preferences/
+語系決策：http://127.0.0.1:4321/lab/i18n/
 紀錄模板：http://127.0.0.1:4321/lab/record-template/
 ```
 
@@ -132,19 +134,18 @@ pnpm build
 先告訴我目前完成到哪個 Step、工作樹是否乾淨，以及下一個 Step 的範圍。
 ```
 
-## 6. 下一步：Phase 1・Step 5
+## 6. 下一步：Phase 1・Step 6
 
-F23 多語系路由決策尚未開始。目標是在頁面繼續增加前，留下「Phase 1 採用」、「正式站前延後」或「不採用」的單一結論。
+Step 5 已由使用者驗收完成。最終決策是正式站前延後啟用多語系；未來固定採候選 A：繁中無 prefix，日文與英文使用 `/ja/`、`/en/`，缺譯明示並連回繁中。
 
-預定範圍：
+下一步為 F04 Page Transition，預定比較：
 
-- 使用最小繁中／日文／英文 placeholder 比較候選 URL。
-- 決定預設語言是否帶 prefix、語言切換與缺翻譯 fallback。
-- 檢查日期、文字長度、字型、換行、`lang` 與 `hreflang`。
-- 評估翻譯、校對與內容維護成本。
-- 優先評估 Astro 內建 i18n，不安裝翻譯套件。
+- 普通 MPA、原生 View Transition，以及必要時才評估 Astro ClientRouter。
+- 列表與詳情頁的前進、返回、重新整理及直接進入。
+- reduced-motion、未支援瀏覽器與 JavaScript 關閉時的降級。
+- 頁面切換後共用 script 的初始化與清理規則。
 
-Step 5 可以採用、延後或不採用，但不能以「之後再看」作結。開始前仍應由使用者確認本輪範圍。
+Step 6 尚未開始；開始前仍應先確認本輪範圍，不提前修改轉場或 ClientRouter。
 
 ## 7. 目前架構與重要限制
 

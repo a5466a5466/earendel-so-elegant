@@ -1,0 +1,95 @@
+---
+import LabLayout from '../../../layouts/LabLayout.astro';
+import LabPageHero from '../../../components/lab/LabPageHero.astro';
+import {
+	i18nPrototypeLocales,
+	i18nPrototypePath,
+} from '../../../data/lab/i18n-prototype';
+---
+
+<LabLayout
+	title="多語系路由決策｜功能實驗室"
+	description="Phase 1 Step 5：比較繁中、日文、英文 URL、切換、fallback 與內容維護策略。"
+>
+	<LabPageHero
+		eyebrow="Phase 1 · Step 5 · F23"
+		title="多語系路由決策"
+		description="先用隔離的三語 placeholder 驗證結構，不讓尚未核准的 i18n 設定改動正式站路由。這一步要留下採用、延後或不採用的單一結論。"
+		actions={[
+			{ label: '開啟三語原型', href: '#locale-prototype' },
+			{ label: '查看決策比較', href: '#route-decision' },
+		]}
+		headingId="i18n-index-title"
+	/>
+
+	<div class="i18n-lab-main">
+		<section id="locale-prototype" class="i18n-section" aria-labelledby="locale-prototype-title">
+			<div class="i18n-section-heading">
+				<div>
+					<p class="lab-eyebrow">Locale Prototype</p>
+					<h2 id="locale-prototype-title">同一內容的三種語系外觀</h2>
+				</div>
+				<p>每頁會實際改變 HTML lang、hreflang、日期格式、字體 fallback 與文字長度；切換使用普通連結，不依賴 JavaScript。</p>
+			</div>
+			<ul class="i18n-locale-grid">
+				{i18nPrototypeLocales.map((locale) => (
+					<li>
+						<span>{locale.code}</span>
+						<h3>{locale.label}</h3>
+						<p>{locale.title}</p>
+						<a href={i18nPrototypePath(locale.slug)}>開啟 {locale.label}頁面 <span aria-hidden="true">→</span></a>
+					</li>
+				))}
+			</ul>
+		</section>
+
+		<section id="route-decision" class="i18n-section" aria-labelledby="route-decision-title">
+			<div class="i18n-section-heading">
+				<div>
+					<p class="lab-eyebrow">Route Candidates</p>
+					<h2 id="route-decision-title">兩種 URL 候選</h2>
+				</div>
+				<p>下列是正式站候選，不是目前 Lab 的實際網址。兩案都能用 Astro 內建 i18n 實作。</p>
+			</div>
+			<div class="i18n-candidate-grid">
+				<article class="is-recommended">
+					<div><span>候選 A</span><strong>建議保留</strong></div>
+					<h3>繁中不帶 prefix</h3>
+					<code>/events/...<br />/ja/events/...<br />/en/events/...</code>
+					<p>保留現在繁中網址；新增日文與英文時才加語系前綴，既有分享連結不用搬家。</p>
+				</article>
+				<article>
+					<div><span>候選 B</span><strong>不建議</strong></div>
+					<h3>所有語系都帶 prefix</h3>
+					<code>/zh-hant/events/...<br />/ja/events/...<br />/en/events/...</code>
+					<p>規則最對稱，但正式導入時必須搬移目前繁中 URL，並維護永久重新導向。</p>
+				</article>
+			</div>
+		</section>
+
+		<section class="i18n-section i18n-fallback" aria-labelledby="fallback-title">
+			<div>
+				<p class="lab-eyebrow">Missing Translation</p>
+				<h2 id="fallback-title">缺譯時，不假裝已翻譯</h2>
+			</div>
+			<div class="i18n-fallback-demo" role="note">
+				<span lang="ja">このページはまだ日本語に翻訳されていません。</span>
+				<strong>此頁尚未提供日文版本。</strong>
+				<p>保留清楚的語系提示，提供繁中原文連結；不以 rewrite 在日文 URL 靜默顯示繁中內容，也不自動依瀏覽器語言跳轉。</p>
+				<a href={i18nPrototypePath('zh-hant')}>閱讀繁中原型 →</a>
+			</div>
+		</section>
+
+		<section class="i18n-section i18n-maintenance" aria-labelledby="maintenance-title">
+			<div>
+				<p class="lab-eyebrow">Maintenance Gate</p>
+				<h2 id="maintenance-title">建議結論：正式站前延後</h2>
+			</div>
+			<ul>
+				<li><strong>現在</strong><span>只有繁中正式內容，先保留單一內容來源與既有路由。</span></li>
+				<li><strong>導入條件</strong><span>至少一個第二語系有固定翻譯、母語校對與同步更新負責人。</span></li>
+				<li><strong>未來契約</strong><span>預設繁中無 prefix；日文與英文加 prefix；缺譯明示並連回繁中。</span></li>
+			</ul>
+		</section>
+	</div>
+</LabLayout>
