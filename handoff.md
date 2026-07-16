@@ -15,8 +15,8 @@
 | 遠端 | `master` 與 `origin/master` 同步 |
 | 工作樹 | 有未提交變更：已完成的 Phase 1・Step 7 QA、架構基線與紀錄修正 |
 | Phase 0 | Step 1～6 完成 |
-| Phase 1 | Step 1～12 完成 |
-| 下一步 | 取得使用者指示後開始 Step 13・F14 YouTube 影片嵌入 |
+| Phase 1 | Step 1～13 完成；下一步為 Step 14・F10 Audio Player |
+| 下一步 | 使用者驗收 `/lab/youtube/` 並決定固定普通 iframe 或評估官方 IFrame API |
 
 最近完成的 Phase 1 功能：
 
@@ -139,7 +139,7 @@ pnpm build
 先告訴我目前完成到哪個 Step、工作樹是否乾淨，以及下一個 Step 的範圍。
 ```
 
-## 6. 近期進度與下一步：Phase 1・Step 13
+## 6. 近期進度與下一步：Phase 1・Step 14
 
 Step 6 已由使用者驗收完成。最終決策為保留普通 Astro MPA 與原生 History，採用 native cross-document View Transition，不採用 ClientRouter。
 
@@ -161,6 +161,10 @@ Step 10・F07 Carousel 已於 2026-07-16 完成：Prototype 位於 `/lab/carouse
 Step 11・F08 Lightbox 已於 2026-07-16 完成：Prototype 位於 `/lab/lightbox/`，沿用 12 筆 Gallery item 與 `GalleryImage.astro`，以原生 `<dialog>` 實作大圖、框外上下張、Esc／方向鍵／Home／End、觸控滑動、caption、作者／授權、焦點返回、背景鎖定、手機 safe-area 與大圖失敗 fixture。無 JavaScript或不支援 dialog 時縮圖仍是原圖連結。Lab／production build、HTTP 200、重複 ID、正式輸出隔離及使用者人工驗收均通過；最終採用原生 `<dialog>`，不安裝 PhotoSwipe。
 
 Step 12・F09 自有 Video 已於 2026-07-16 完成：Prototype 位於 `/lab/video/`，使用本機生成的 4 秒 WebM／MP4、PNG poster 與繁中 VTT，同時測試有聲內容影片與靜音背景影片。內容影片不 autoplay，桌機標準模式只預載 metadata，手機／節能模式等待使用者載入；背景影片只有桌機＋完整動態＋標準效能才附加來源並靜音播放，其餘只顯示 poster。另有不存在來源的 failure fixture、完整 listener cleanup 與無 JavaScript MP4 連結。Lab／production build、HTTP／MIME、正式輸出隔離及使用者人工驗收均通過；最終採用原生 `<video>`，不安裝播放器套件。
+
+Step 13・F14 YouTube 已於 2026-07-16 完成：Prototype 位於 `/lab/youtube/`，初始使用 Step 12 本機 poster、標題與來源說明，不建立 iframe、遠端圖片或 YouTube API script。使用者點擊後才建立 `youtube-nocookie.com` 隱私增強 iframe，同時間最多一個；第二張驗證指定 60 秒開始與切換時清除舊播放器，第三張模擬禁止嵌入／年齡限制／刪除的站內 fallback。每張卡永久保留 YouTube 外部連結，無 JavaScript 時亦可使用。Lab／production build、HTTP 200、初始第三方零請求結構、正式輸出隔離及使用者人工驗收均通過；固定採用直接 iframe，現階段不載入官方 IFrame API。
+
+下一步是 Step 14・F10 Audio Player；開始前先閱讀執行計畫中的 Step 14 範圍與驗收條件，再建立獨立實驗頁。
 
 ## 7. 目前架構與重要限制
 

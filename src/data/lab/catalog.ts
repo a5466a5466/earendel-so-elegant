@@ -31,6 +31,7 @@ export const labNavigation: LabNavigationItem[] = [
 	{ label: 'Carousel', href: '/lab/carousel/' },
 	{ label: 'Lightbox', href: '/lab/lightbox/' },
 	{ label: 'Video', href: '/lab/video/' },
+	{ label: 'YouTube', href: '/lab/youtube/' },
 	{ label: '紀錄模板', href: '/lab/record-template/' },
 ];
 
@@ -82,10 +83,10 @@ export const phaseZeroSteps: LabPhaseStep[] = [
 ];
 
 export const nextExperiment = {
-	id: 'F09',
-	title: '自有 Video',
+	id: 'F14',
+	title: 'YouTube 嵌入',
 	description:
-		'Phase 1・Step 12 以原生 video 驗證內容影片、背景影片、poster、字幕、載入策略與動態偏好降級。',
+		'Phase 1・Step 13 沿用媒體容器，以點擊後才建立的 facade 驗證 YouTube iframe、隱私與失效降級。',
 };
 
 export const normalizeLabPath = (path: string) => {

@@ -1,0 +1,137 @@
+---
+import LabLayout from '../../layouts/LabLayout.astro';
+import LabPageHero from '../../components/lab/LabPageHero.astro';
+
+const poster = '/lab-assets/video/starlight-motion-poster.png';
+const officialSampleId = 'M7lc1UVf-VE';
+const videos = [
+	{
+		id: officialSampleId,
+		title: 'YouTube IFrame API 官方範例',
+		channel: 'Google for Developers sample',
+		description: '官方 IFrame API 文件使用的測試 ID；點擊後從開頭載入隱私增強播放器。',
+		start: 0,
+		mode: 'embed',
+	},
+	{
+		id: officialSampleId,
+		title: '同一影片・指定開始時間',
+		channel: 'Single-player lifecycle test',
+		description: '從 60 秒開始；用來驗證切換卡片時會先移除上一個 iframe，不同時建立兩個播放器。',
+		start: 60,
+		mode: 'embed',
+	},
+	{
+		id: officialSampleId,
+		title: '禁止嵌入／年齡限制模擬',
+		channel: 'Fallback fixture',
+		description: '不建立 iframe，直接顯示實際產品應保留的狀態說明與 YouTube 外部連結。',
+		start: 0,
+		mode: 'blocked',
+	},
+];
+---
+
+<LabLayout
+	title="YouTube Facade Prototype｜功能實驗室"
+	description="Phase 1 Step 13：點擊後才載入 YouTube 隱私增強 iframe 的 facade 實驗。"
+	breadcrumbLabel="YouTube"
+>
+	<LabPageHero
+		eyebrow="Phase 1 · Step 13 · F14"
+		title="Click-to-load YouTube"
+		description="初始 HTML 沒有 iframe、YouTube script 或遠端 thumbnail；只有使用者選擇影片後，才建立一個官方隱私增強播放器。"
+		actions={[
+			{ label: '測試 Facade', href: '#youtube-facades' },
+			{ label: '查看失效降級', href: '#youtube-fallback' },
+		]}
+		headingId="youtube-title"
+	/>
+
+	<div class="youtube-lab-main" data-youtube-lab>
+		<section class="youtube-overview" aria-labelledby="youtube-overview-title">
+			<div>
+				<p class="lab-eyebrow">Zero Third-party Initial Load</p>
+				<h2 id="youtube-overview-title">先取得意圖，再連線 YouTube</h2>
+				<p>本機 poster、標題與頻道資訊先完整呈現；點擊播放前不建立 iframe，也不向 YouTube 或縮圖網域送出請求。</p>
+			</div>
+			<dl>
+				<div><dt>初始 iframe</dt><dd>0</dd></div>
+				<div><dt>同時播放器</dt><dd>最多 1</dd></div>
+				<div><dt>Embed</dt><dd>nocookie</dd></div>
+				<div><dt>套件</dt><dd>無</dd></div>
+			</dl>
+		</section>
+
+		<section id="youtube-facades" class="youtube-section" aria-labelledby="youtube-facades-title">
+			<div class="youtube-section-heading">
+				<div><p class="lab-eyebrow">Facade Collection</p><h2 id="youtube-facades-title">三種載入情境</h2></div>
+				<p>前兩張共用官方文件測試影片，但開始時間不同；第三張只驗證不可嵌入時的 fallback。所有卡片一直保留外部觀看連結。</p>
+			</div>
+			<div class="youtube-card-grid">
+				{videos.map((video, index) => (
+					<article
+						class="youtube-card"
+						data-youtube-card
+						data-video-id={video.id}
+						data-video-start={video.start}
+						data-video-mode={video.mode}
+					>
+						<div class="youtube-facade" id={`youtube-player-${index + 1}`} data-youtube-slot>
+							<img src={poster} alt="抽象星光線條的本機 YouTube facade 測試 poster" width="960" height="540" loading="lazy" />
+							<div class="youtube-facade-shade" aria-hidden="true"></div>
+							<button
+								type="button"
+								data-youtube-load
+								aria-controls={`youtube-player-${index + 1}`}
+								aria-expanded="false"
+								aria-label={`${video.mode === 'blocked' ? '顯示失效降級：' : '載入 YouTube 播放器：'}${video.title}`}
+							>
+								<span aria-hidden="true">▶</span><small>{video.mode === 'blocked' ? '模擬失效' : '連線後播放'}</small>
+							</button>
+						</div>
+						<div class="youtube-card-copy">
+							<p><span>{String(index + 1).padStart(2, '0')}</span><span>{video.channel}</span></p>
+							<h3>{video.title}</h3>
+							<p>{video.description}</p>
+							<div class="youtube-card-actions">
+								<a href={`https://www.youtube.com/watch?v=${video.id}${video.start ? `&t=${video.start}s` : ''}`} target="_blank" rel="noreferrer">前往 YouTube 觀看 <span aria-hidden="true">↗</span></a>
+								<button type="button" data-youtube-reset hidden>關閉播放器</button>
+							</div>
+							<p class="youtube-status" data-youtube-status aria-live="polite">尚未連線第三方服務。</p>
+						</div>
+					</article>
+				))}
+			</div>
+			<noscript>
+				<p class="youtube-noscript">JavaScript 已關閉，不會載入嵌入播放器。請使用各卡片的「前往 YouTube 觀看」連結。</p>
+			</noscript>
+		</section>
+
+		<section id="youtube-fallback" class="youtube-section youtube-fallback-contract" aria-labelledby="youtube-fallback-title">
+			<div><p class="lab-eyebrow">Cross-origin Failure Contract</p><h2 id="youtube-fallback-title">iframe 失效時，站內仍可說明</h2></div>
+			<div>
+				<ol>
+					<li><strong>禁止嵌入／年齡限制</strong><span>播放器可能要求回到 YouTube；外部觀看連結永遠保留。</span></li>
+					<li><strong>影片刪除／私人影片</strong><span>不移除站內標題與來源說明，讓使用者知道原本內容。</span></li>
+					<li><strong>網路／防火牆阻擋</strong><span>iframe 區域維持 16:9；狀態文字提示可嘗試外部連結或稍後再試。</span></li>
+				</ol>
+				<p>跨來源 iframe 的 `load` 只代表播放器文件抵達，不保證影片可播放，因此不能把它誤當成功偵測；正式內容仍需在發布流程驗證可嵌入狀態。</p>
+			</div>
+		</section>
+
+		<section class="youtube-decision" aria-labelledby="youtube-decision-title">
+			<div><p class="lab-eyebrow">Integration Decision</p><h2 id="youtube-decision-title">直接 iframe，不裝 wrapper</h2></div>
+			<div role="note">
+				<strong>目前不載入 IFrame Player API。</strong>
+				<p>Step 13 只需點擊後建立、單一播放器生命週期與 fallback，普通 iframe 已足夠；不為了偵測跨來源內部狀態而增加全域 API script。</p>
+				<p>未來若要站內同步播放狀態、章節控制或與其他播放器互斥，再評估官方 IFrame API，仍不需要框架 wrapper。</p>
+			</div>
+		</section>
+	</div>
+</LabLayout>
+
+<script>
+	import { initializeYouTubeFacades } from '../../scripts/lab/youtube';
+	initializeYouTubeFacades();
+</script>

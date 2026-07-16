@@ -1,7 +1,7 @@
 # Astro 功能實驗室 Phase 1・執行計畫與紀錄
 
 - 建立日期：2026-07-15
-- 目前狀態：Step 1～12 已完成；下一步為 Step 13・F14 YouTube 影片嵌入
+- 目前狀態：Step 1～13 已完成；下一步為 Step 14・F10 Audio Player
 - 前置狀態：Phase 0・Step 1～Step 6 已完成並由使用者驗收
 - 依據文件：`厄倫蒂兒粉絲應援網站－開發計畫書.md`、`Astro功能實驗室－企劃書.md`、`Astro功能實驗室－Phase0-Step6-QA.md`
 
@@ -618,7 +618,7 @@ Step 6 已完成普通 MPA 與九種原生 cross-document View Transition 比較
 | 10 | 完成 | 2026-07-16 | 2026-07-16 | 採用原生 Scroll Snap、不採 Embla；觸控、鍵盤、分頁、框外箭頭與人工驗收均通過 | `Astro功能實驗室－Phase1-Step10-F07.md` |
 | 11 | 完成 | 2026-07-16 | 2026-07-16 | 採用原生 `<dialog>`、不採 PhotoSwipe；大圖、鍵盤、觸控、焦點與失敗降級驗收通過 | `Astro功能實驗室－Phase1-Step11-F08.md` |
 | 12 | 完成 | 2026-07-16 | 2026-07-16 | 採用原生 `<video>`、不裝播放器套件；內容／背景影片、字幕、偏好與失敗降級驗收通過 | `Astro功能實驗室－Phase1-Step12-F09.md` |
-| 13 | 未開始 |  |  | F14 YouTube | 本文件 Step 13 |
+| 13 | 完成 | 2026-07-16 | 2026-07-16 | 點擊後載入的隱私增強 iframe、單一播放器、60 秒起播與 fallback 均通過技術及人工驗收 | `Astro功能實驗室－Phase1-Step13-F14.md` |
 | 14 | 未開始 |  |  | F10 Audio Player | 本文件 Step 14 |
 | 15 | 未開始 |  |  | F17 按鍵音效 | 本文件 Step 15 |
 | 16 | 未開始 |  |  | F22 分享與 QR | 本文件 Step 16 |
