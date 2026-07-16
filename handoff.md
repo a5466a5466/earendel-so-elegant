@@ -15,8 +15,8 @@
 | 遠端 | `master` 與 `origin/master` 同步 |
 | 工作樹 | 有未提交變更：已完成的 Phase 1・Step 7 QA、架構基線與紀錄修正 |
 | Phase 0 | Step 1～6 完成 |
-| Phase 1 | Phase 1A（Step 1～7）完成 |
-| 下一步 | Step 8：F05 Scroll Animation（尚未開始） |
+| Phase 1 | Step 1～8 完成 |
+| 下一步 | Step 9：F06 Gallery（尚未開始） |
 
 最近完成的 Phase 1 功能：
 
@@ -152,7 +152,9 @@ Step 6 固定契約：
 
 Step 7 已於 2026-07-16 完成：Lab／正式雙模式、noindex、正式首頁、404、Step 1～6 契約及正式輸出隔離均通過；使用者亦已完成人工驗收。架構基線位於 `src/data/lab/phase1a-architecture-baseline.md`，是 Step 8～17 的固定前置。
 
-下一步為 Step 8・F05 Scroll Animation：建立原生 scroll reveal 基線，確認內容先存在於 HTML，並驗證 reduced-motion、返回頁面、版面高度改變與 observer cleanup。Step 8 尚未開始，需由使用者指示後才執行。
+Step 8・F05 Scroll Animation 已於 2026-07-16 完成：Prototype 位於 `/lab/scroll/`，原生 CSS、Intersection Observer 與 Scroll Timeline 的 reveal、sticky story、版面高度變更、reduced-motion、節能模式與 observer cleanup 均通過技術及使用者人工驗收。最終決策是不安裝 GSAP／ScrollTrigger。
+
+下一步為 Step 9・F06 Gallery：沿用活動 Content Collection 與 Astro Picture／Sharp 圖片管線，建立不同長寬比、載入失敗、圖片說明與 360 px 都穩定的 Gallery Prototype。Step 9 尚未開始，需由使用者指示後才執行。
 
 ## 7. 目前架構與重要限制
 

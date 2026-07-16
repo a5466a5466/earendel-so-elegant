@@ -1,0 +1,97 @@
+---
+import LabLayout from '../../layouts/LabLayout.astro';
+import LabPageHero from '../../components/lab/LabPageHero.astro';
+
+const revealCases = [
+	{ number: '01', variant: 'up', title: '垂直淡入', copy: '最常用的內容進場，只改變 opacity 與 transform，不參與版面計算。' },
+	{ number: '02', variant: 'left', title: '輕微側移', copy: '用於圖文交錯，但位移限制在 28 px，手機與節能模式再降低。' },
+	{ number: '03', variant: 'scale', title: '卡片聚焦', copy: '僅做 96% 到 100% 的小幅縮放，避免閱讀內容產生強烈暈動感。' },
+	{ number: '04', variant: 'up', title: '接續進場', copy: '同組元素使用 CSS delay；節能模式會取消接續，直接快速顯示。' },
+];
+---
+
+<LabLayout
+	title="Scroll Animation Prototype｜功能實驗室"
+	description="Phase 1 Step 8：以 CSS、Intersection Observer 與 Scroll Timeline 建立原生滾動動畫基線。"
+	breadcrumbLabel="滾動動畫"
+>
+	<div class="scroll-progress" aria-hidden="true"><span></span></div>
+	<LabPageHero
+		eyebrow="Phase 1 · Step 8 · F05"
+		title="Scroll Animation"
+		description="用原生 CSS 與 Intersection Observer 建立閱讀引導；內容預先存在於 HTML，動畫只是漸進增強，reduced-motion 與無 JavaScript 仍完整可讀。"
+		actions={[
+			{ label: '開始 Reveal 測試', href: '#reveal-cases' },
+			{ label: '查看 Sticky Story', href: '#sticky-story' },
+		]}
+		headingId="scroll-title"
+	/>
+
+	<div class="scroll-lab-main" data-scroll-lab>
+		<section class="scroll-overview" aria-labelledby="scroll-overview-title">
+			<div>
+				<p class="lab-eyebrow">Progressive Enhancement</p>
+				<h2 id="scroll-overview-title">先有內容，再加動畫</h2>
+				<p>JavaScript 只在功能可用且允許完整動態時啟用 reveal。所有卡片原本就在 HTML，載入失敗不會變成空白頁。</p>
+			</div>
+			<dl class="scroll-diagnostics">
+				<div><dt>Observer</dt><dd data-scroll-status aria-live="polite">等待初始化</dd></div>
+				<div><dt>Scroll Timeline</dt><dd data-scroll-timeline-status>偵測中</dd></div>
+				<div><dt>Dependency</dt><dd>0；不使用 GSAP</dd></div>
+			</dl>
+			<noscript><p class="scroll-noscript">JavaScript 已關閉：所有內容保持顯示，Reveal 與狀態切換不執行。</p></noscript>
+		</section>
+
+		<section id="reveal-cases" class="scroll-section" aria-labelledby="reveal-title">
+			<div class="scroll-section-heading" data-scroll-reveal data-reveal-variant="up">
+				<div><p class="lab-eyebrow">Intersection Observer</p><h2 id="reveal-title">四種低成本 Reveal</h2></div>
+				<p>往下滾動觀察卡片進場。每個元素只被揭露一次，完成後立即取消觀察，不持續監控位置。</p>
+			</div>
+			<ol class="scroll-reveal-grid">
+				{revealCases.map((item, index) => (
+					<li data-scroll-reveal data-reveal-variant={item.variant} style={`--reveal-order: ${index}`}>
+						<span>{item.number}</span><h3>{item.title}</h3><p>{item.copy}</p>
+					</li>
+				))}
+			</ol>
+		</section>
+
+		<section id="sticky-story" class="scroll-section scroll-story" aria-labelledby="story-title">
+			<div class="scroll-story-visual" aria-hidden="true">
+				<div><i></i><span>01</span><span>02</span><span>03</span></div>
+			</div>
+			<div class="scroll-story-copy">
+				<header data-scroll-reveal data-reveal-variant="up">
+					<p class="lab-eyebrow">Responsive Sticky Story</p>
+					<h2 id="story-title">讓畫面跟著段落改變，不攔截滾輪</h2>
+					<p>桌機左側視覺保持 sticky，右側三段仍是普通垂直文件流；700 px 以下取消 sticky，避免手機產生過長空間。</p>
+				</header>
+				<article data-story-step="1" data-scroll-reveal data-reveal-variant="left"><span>01</span><h3>內容先抵達</h3><p>標題、段落與語意順序都在 HTML 中。動畫尚未觸發時，輔助技術仍可直接讀取。</p></article>
+				<article data-story-step="2" data-scroll-reveal data-reveal-variant="left"><span>02</span><h3>視覺再回應</h3><p>Observer 只切換 class 與目前章節，不寫入高度、不移動 DOM，也不阻止瀏覽器原生捲動。</p></article>
+				<article data-story-step="3" data-scroll-reveal data-reveal-variant="left"><span>03</span><h3>離頁就清理</h3><p>每份文件的 observer、偏好 listener、pagehide 與按鈕事件都有 dispose，重新初始化不會重複綁定。</p></article>
+			</div>
+		</section>
+
+		<section class="scroll-section scroll-layout-test" aria-labelledby="layout-test-title">
+			<div data-scroll-reveal data-reveal-variant="up">
+				<p class="lab-eyebrow">Layout Change Test</p>
+				<h2 id="layout-test-title">展開內容後，後方 Reveal 仍以新位置觸發</h2>
+			</div>
+			<details>
+				<summary>展開一段會改變高度的測試內容</summary>
+				<p>這個原生 details 會增加文件高度。Intersection Observer 由瀏覽器重新計算交集，不保存容易失效的絕對座標，因此後方內容仍能在正確位置揭露。</p>
+			</details>
+			<div class="scroll-final-card" data-scroll-reveal data-reveal-variant="scale">
+				<span>Native Baseline</span>
+				<h3>目前案例不需要 GSAP／ScrollTrigger</h3>
+				<p>Reveal、接續、sticky story、進度與偏好降級都能以原生能力完成。只有未來需要精準 scrub、複雜 pinning 或多段時間軸時，才另開套件核准。</p>
+				<div><button type="button" data-scroll-replay>重播目前頁面的 Reveal</button><a href="/lab/events/">離開到活動頁再測試返回 →</a></div>
+			</div>
+		</section>
+	</div>
+</LabLayout>
+
+<script>
+	import { initializeScrollReveal } from '../../scripts/lab/scroll-reveal';
+	initializeScrollReveal();
+</script>

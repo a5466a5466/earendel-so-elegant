@@ -26,6 +26,7 @@ export const labNavigation: LabNavigationItem[] = [
 	{ label: '偏好契約', href: '/lab/preferences/' },
 	{ label: '語系決策', href: '/lab/i18n/' },
 	{ label: '轉場決策', href: '/lab/transitions/' },
+	{ label: '滾動動畫', href: '/lab/scroll/' },
 	{ label: '紀錄模板', href: '/lab/record-template/' },
 ];
 
@@ -77,10 +78,10 @@ export const phaseZeroSteps: LabPhaseStep[] = [
 ];
 
 export const nextExperiment = {
-	id: 'F05',
-	title: 'Scroll Animation',
+	id: 'F06',
+	title: 'Gallery',
 	description:
-		'Phase 1・Step 8 將建立原生 scroll reveal 基線，驗證內容先存在、reduced-motion、返回頁面與 observer 清理。',
+		'Phase 1・Step 9 將以活動 Collection 與既有圖片管線建立響應式 Gallery，驗證不同長寬比、失敗處理與 360 px 版面。',
 };
 
 export const normalizeLabPath = (path: string) => {
