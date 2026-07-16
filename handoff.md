@@ -15,8 +15,8 @@
 | 遠端 | `master` 與 `origin/master` 同步 |
 | 工作樹 | 有未提交變更：已完成的 Phase 1・Step 7 QA、架構基線與紀錄修正 |
 | Phase 0 | Step 1～6 完成 |
-| Phase 1 | Step 1～8 完成 |
-| 下一步 | Step 9：F06 Gallery（尚未開始） |
+| Phase 1 | Step 1～9 完成 |
+| 下一步 | Step 10：F07 Carousel（尚未開始） |
 
 最近完成的 Phase 1 功能：
 
@@ -154,7 +154,9 @@ Step 7 已於 2026-07-16 完成：Lab／正式雙模式、noindex、正式首頁
 
 Step 8・F05 Scroll Animation 已於 2026-07-16 完成：Prototype 位於 `/lab/scroll/`，原生 CSS、Intersection Observer 與 Scroll Timeline 的 reveal、sticky story、版面高度變更、reduced-motion、節能模式與 observer cleanup 均通過技術及使用者人工驗收。最終決策是不安裝 GSAP／ScrollTrigger。
 
-下一步為 Step 9・F06 Gallery：沿用活動 Content Collection 與 Astro Picture／Sharp 圖片管線，建立不同長寬比、載入失敗、圖片說明與 360 px 都穩定的 Gallery Prototype。Step 9 尚未開始，需由使用者指示後才執行。
+Step 9・F06 Gallery 已於 2026-07-16 完成：Prototype 位於 `/lab/gallery/`，12 張不同比例本機測試圖、AVIF／WebP、responsive grid、caption、alt、作者／授權、裁切焦點、lazy loading、鍵盤原圖連結與失敗降級均通過技術及使用者人工驗收。最終採用響應式 CSS Grid，不採 Masonry 或額外版面套件。
+
+下一步為 Step 10・F07 Carousel：直接沿用 Step 9 Gallery item，以原生 CSS Scroll Snap 驗證鍵盤、觸控、上一張／下一張、分頁狀態與圖片失敗降級，再決定原生方案是否足夠或需要 Embla。Step 10 尚未開始。
 
 ## 7. 目前架構與重要限制
 

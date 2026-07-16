@@ -33,12 +33,22 @@ widths: 640, 900, 1200
 sizes: 小於內容容器時使用 viewport 寬度；桌機上限 1120 px
 ```
 
+Gallery（Step 9 起）：
+
+```text
+widths: 320, 480, 720, 900
+sizes: 窄手機單欄、平板雙欄、桌機四欄；寬幅圖片依跨欄使用較大 sizes
+```
+
+Gallery item 沿用 Content Collection 的 `src`、`alt`、`caption`、`position` 與 `credit`，不得為 Carousel 或 Lightbox 再建立第二份圖片資料。
+
 所有圖片輸出固定 `width`、`height` 與 3:2 容器比例，避免載入完成前版面高度為零。
 
 ## 4. Loading 規則
 
 - 圖片管線頁只保留一張代表性 priority 示範圖，活動詳情主圖也作為獨立頁面的 priority 案例，輸出 eager／sync／high。
 - 活動列表卡全部輸出 lazy／async。
+- Gallery 圖片全部 lazy loading；網格首張不自動升為 priority，避免與頁面 Hero 競爭首屏頻寬。
 - 正式站只應對真正可能成為 LCP 的首屏圖片使用 priority，不得讓大量圖片同時 eager loading。
 - CSS 背景與 public fallback 不取代主要圖片的 alt。
 

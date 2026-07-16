@@ -4,6 +4,7 @@ import { glob } from 'astro/loaders';
 const mediaCreditSchema = z.object({
 	name: z.string().min(1),
 	url: z.string().url().optional(),
+	license: z.string().min(1).optional(),
 });
 
 const videoSchema = z.object({
@@ -32,6 +33,7 @@ const events = defineCollection({
 			src: image(),
 			alt: z.string().min(1),
 			caption: z.string().min(1).optional(),
+			position: z.string().min(1).default('center'),
 			credit: mediaCreditSchema.optional(),
 		});
 

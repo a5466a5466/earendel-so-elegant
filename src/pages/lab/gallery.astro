@@ -1,0 +1,81 @@
+---
+import { getCollection } from 'astro:content';
+import GalleryImage from '../../components/lab/GalleryImage.astro';
+import LabLayout from '../../layouts/LabLayout.astro';
+import LabPageHero from '../../components/lab/LabPageHero.astro';
+
+const labContentEnabled = import.meta.env.DEV || import.meta.env.MODE === 'lab';
+const events = labContentEnabled ? await getCollection('events') : [];
+const galleryEvent = events.find((event) => event.data.slug === 'starlight-birthday-project');
+const galleryItems = galleryEvent?.data.gallery ?? [];
+const shapeCounts = galleryItems.reduce((counts, item) => {
+	const ratio = item.src.width / item.src.height;
+	const shape = ratio >= 1.15 ? 'landscape' : ratio <= 0.78 ? 'portrait' : 'square';
+	counts[shape] += 1;
+	return counts;
+}, { landscape: 0, square: 0, portrait: 0 });
+---
+
+<LabLayout
+	title="Gallery Prototype｜功能實驗室"
+	description="Phase 1 Step 9：以活動 Collection 與 Astro Picture 建立響應式 Gallery。"
+	breadcrumbLabel="Gallery"
+>
+	<LabPageHero
+		eyebrow="Phase 1 · Step 9 · F06"
+		title="Responsive Gallery"
+		description="沿用活動 Collection、caption、alt、焦點、作者與授權資料，建立 Carousel 與 Lightbox 都能直接重用的 CSS Grid 圖片容器。"
+		actions={[
+			{ label: '查看 12 張測試圖', href: '#gallery-grid' },
+			{ label: '查看 Masonry 決策', href: '#gallery-decision' },
+		]}
+		headingId="gallery-title"
+	/>
+
+	<div class="gallery-lab-main">
+		<section class="gallery-overview" aria-labelledby="gallery-overview-title">
+			<div>
+				<p class="lab-eyebrow">Collection Contract</p>
+				<h2 id="gallery-overview-title">同一份資料，供三種容器共用</h2>
+				<p>本頁只負責 Gallery 網格；下一步 Carousel 與之後的 Lightbox 必須直接使用同一個 item，不另外複製 caption、alt 或目前圖片狀態。</p>
+			</div>
+			<dl>
+				<div><dt>總數</dt><dd>{galleryItems.length} 張</dd></div>
+				<div><dt>橫向</dt><dd>{shapeCounts.landscape} 張</dd></div>
+				<div><dt>方形</dt><dd>{shapeCounts.square} 張</dd></div>
+				<div><dt>直式</dt><dd>{shapeCounts.portrait} 張</dd></div>
+			</dl>
+		</section>
+
+		<section id="gallery-grid" class="gallery-section" aria-labelledby="gallery-grid-title">
+			<div class="gallery-section-heading">
+				<div><p class="lab-eyebrow">Responsive CSS Grid</p><h2 id="gallery-grid-title">不同長寬比與裁切焦點</h2></div>
+				<p>桌機四欄、平板兩欄、窄手機一欄；2:1 圖片可跨兩欄。每張圖片有固定 intrinsic 尺寸與 lazy loading，連結可用鍵盤直接開啟原始測試圖。</p>
+			</div>
+			<ol class="gallery-grid">
+				{galleryItems.map((item, index) => <li><GalleryImage item={item} index={index} /></li>)}
+			</ol>
+		</section>
+
+		<section class="gallery-section gallery-failure-section" aria-labelledby="gallery-failure-title">
+			<div>
+				<p class="lab-eyebrow">Runtime Failure</p>
+				<h2 id="gallery-failure-title">圖片失敗時，caption 與網格仍保留</h2>
+				<p>合法 Collection 圖片若不存在會直接令 build 失敗；此處另外用 public 壞路徑模擬瀏覽器執行期失敗。</p>
+			</div>
+			<figure class="gallery-card gallery-failure-card is-landscape">
+				<div class="gallery-media"><span class="gallery-picture"><img src="/lab-assets/events/__missing-gallery-image.webp" alt="刻意載入失敗的 Gallery 測試圖" width="1500" height="1000" loading="lazy" /></span></div>
+				<figcaption><div><span>FAIL</span><span>3:2 reserved</span></div><p>檔案不存在，但固定比例、替代文字、說明與署名區不會消失。</p><small>Failure placeholder・僅供 Lab 測試</small></figcaption>
+			</figure>
+		</section>
+
+		<section id="gallery-decision" class="gallery-section gallery-decision" aria-labelledby="gallery-decision-title">
+			<div><p class="lab-eyebrow">Layout Decision</p><h2 id="gallery-decision-title">目前不需要 Masonry</h2></div>
+			<div role="note">
+				<strong>採用有明確閱讀順序的 CSS Grid。</strong>
+				<p>Masonry 會讓視覺位置與 DOM 閱讀順序較難預測，也會提高圖片載入前後的版面變動。現有 Grid 已能保留不同長寬比、寬圖跨欄與穩定 caption。</p>
+				<p>未來只有在正式素材量大、使用者明確偏好瀑布流，且鍵盤順序與 CLS 測試通過時才重新評估。</p>
+			</div>
+		</section>
+	</div>
+</LabLayout>

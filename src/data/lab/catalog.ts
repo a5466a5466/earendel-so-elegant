@@ -27,6 +27,7 @@ export const labNavigation: LabNavigationItem[] = [
 	{ label: '語系決策', href: '/lab/i18n/' },
 	{ label: '轉場決策', href: '/lab/transitions/' },
 	{ label: '滾動動畫', href: '/lab/scroll/' },
+	{ label: 'Gallery', href: '/lab/gallery/' },
 	{ label: '紀錄模板', href: '/lab/record-template/' },
 ];
 
@@ -78,10 +79,10 @@ export const phaseZeroSteps: LabPhaseStep[] = [
 ];
 
 export const nextExperiment = {
-	id: 'F06',
-	title: 'Gallery',
+	id: 'F07',
+	title: 'Carousel',
 	description:
-		'Phase 1・Step 9 將以活動 Collection 與既有圖片管線建立響應式 Gallery，驗證不同長寬比、失敗處理與 360 px 版面。',
+		'Phase 1・Step 10 將直接沿用 Gallery item，以原生 CSS Scroll Snap 驗證鍵盤、觸控、按鈕、分頁與失敗降級。',
 };
 
 export const normalizeLabPath = (path: string) => {
