@@ -15,8 +15,8 @@
 | 遠端 | `master` 與 `origin/master` 同步 |
 | 工作樹 | 有未提交變更：已完成的 Phase 1・Step 7 QA、架構基線與紀錄修正 |
 | Phase 0 | Step 1～6 完成 |
-| Phase 1 | Step 1～9 完成 |
-| 下一步 | Step 10：F07 Carousel（尚未開始） |
+| Phase 1 | Step 1～10 完成 |
+| 下一步 | 取得使用者指示後開始 Step 11・F08 Lightbox |
 
 最近完成的 Phase 1 功能：
 
@@ -139,7 +139,7 @@ pnpm build
 先告訴我目前完成到哪個 Step、工作樹是否乾淨，以及下一個 Step 的範圍。
 ```
 
-## 6. 下一步：Phase 1・Step 8
+## 6. 近期進度與下一步：Phase 1・Step 11
 
 Step 6 已由使用者驗收完成。最終決策為保留普通 Astro MPA 與原生 History，採用 native cross-document View Transition，不採用 ClientRouter。
 
@@ -156,7 +156,9 @@ Step 8・F05 Scroll Animation 已於 2026-07-16 完成：Prototype 位於 `/lab/
 
 Step 9・F06 Gallery 已於 2026-07-16 完成：Prototype 位於 `/lab/gallery/`，12 張不同比例本機測試圖、AVIF／WebP、responsive grid、caption、alt、作者／授權、裁切焦點、lazy loading、鍵盤原圖連結與失敗降級均通過技術及使用者人工驗收。最終採用響應式 CSS Grid，不採 Masonry 或額外版面套件。
 
-下一步為 Step 10・F07 Carousel：直接沿用 Step 9 Gallery item，以原生 CSS Scroll Snap 驗證鍵盤、觸控、上一張／下一張、分頁狀態與圖片失敗降級，再決定原生方案是否足夠或需要 Embla。Step 10 尚未開始。
+Step 10・F07 Carousel 已於 2026-07-16 完成：Prototype 位於 `/lab/carousel/`，直接沿用 Step 9 Gallery item 與圖片元件，以原生 CSS Scroll Snap 實作觸控滑動、框外 `<`／`>` 上下頁箭頭、8 個分頁、鍵盤、目前位置與手機下一張提示。不自動播放、不循環，並整合 reduced-motion 與可清理生命週期。Lab／production build、正式輸出隔離及使用者人工驗收均通過；最終採用原生 Scroll Snap，不安裝 Embla。
+
+下一步為 Step 11・F08 Lightbox：沿用 Gallery／Carousel 資料，驗證原生 `<dialog>` 的大圖、上下張、caption、焦點管理、手機安全區與失敗 fallback；開始前仍需由使用者明確指示。
 
 ## 7. 目前架構與重要限制
 

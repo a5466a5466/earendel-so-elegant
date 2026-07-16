@@ -28,6 +28,7 @@ export const labNavigation: LabNavigationItem[] = [
 	{ label: '轉場決策', href: '/lab/transitions/' },
 	{ label: '滾動動畫', href: '/lab/scroll/' },
 	{ label: 'Gallery', href: '/lab/gallery/' },
+	{ label: 'Carousel', href: '/lab/carousel/' },
 	{ label: '紀錄模板', href: '/lab/record-template/' },
 ];
 

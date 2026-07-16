@@ -1,0 +1,118 @@
+---
+import { getCollection } from 'astro:content';
+import GalleryImage from '../../components/lab/GalleryImage.astro';
+import LabLayout from '../../layouts/LabLayout.astro';
+import LabPageHero from '../../components/lab/LabPageHero.astro';
+
+const labContentEnabled = import.meta.env.DEV || import.meta.env.MODE === 'lab';
+const events = labContentEnabled ? await getCollection('events') : [];
+const galleryEvent = events.find((event) => event.data.slug === 'starlight-birthday-project');
+const carouselItems = galleryEvent?.data.gallery.slice(0, 8) ?? [];
+---
+
+<LabLayout
+	title="Carousel Prototype｜功能實驗室"
+	description="Phase 1 Step 10：以 Gallery 資料與原生 CSS Scroll Snap 建立可操作的 Carousel。"
+	breadcrumbLabel="Carousel"
+>
+	<LabPageHero
+		eyebrow="Phase 1 · Step 10 · F07"
+		title="Native Carousel"
+		description="直接重用 Step 9 Gallery item，以 CSS Scroll Snap 保留原生觸控滑動，再補上按鈕、分頁、鍵盤與目前位置；不自動播放，也不攔截垂直手勢。"
+		actions={[
+			{ label: '開始操作', href: '#carousel-prototype' },
+			{ label: '查看套件決策', href: '#carousel-decision' },
+		]}
+		headingId="carousel-title"
+	/>
+
+	<div class="carousel-lab-main">
+		<section class="carousel-overview" aria-labelledby="carousel-overview-title">
+			<div><p class="lab-eyebrow">Native First</p><h2 id="carousel-overview-title">捲動是基礎，控制器是增強</h2></div>
+			<ul>
+				<li><strong>Scroll Snap</strong><span>觸控、觸控板與滑鼠水平捲動使用瀏覽器原生慣性。</span></li>
+				<li><strong>No Autoplay</strong><span>不自動換圖，不需要額外暫停按鈕，也不搶走閱讀時間。</span></li>
+				<li><strong>Shared Data</strong><span>8 張內容直接來自 Step 9 Gallery，不複製 caption 或圖片狀態。</span></li>
+			</ul>
+		</section>
+
+		<section id="carousel-prototype" class="carousel-section" aria-labelledby="carousel-prototype-title">
+			<div class="carousel-section-heading">
+				<div><p class="lab-eyebrow">8 Slides · Scroll Snap</p><h2 id="carousel-prototype-title">鍵盤、按鈕、分頁與觸控共用位置</h2></div>
+				<p>將焦點移到圖片軌道後，可使用方向鍵、Home 與 End。手機保留下一張露出；直接左右滑動也會更新目前位置與按鈕狀態。</p>
+			</div>
+
+			<div class="carousel-shell" data-carousel>
+				<div class="carousel-status-line">
+					<span>目前位置</span><output data-carousel-position>1 / {carouselItems.length}</output>
+				</div>
+				<div class="carousel-stage">
+					<div
+						class="carousel-viewport"
+						data-carousel-viewport
+						tabindex="0"
+						role="region"
+						aria-roledescription="carousel"
+						aria-label="星光生日 Gallery 輪播；使用左右方向鍵切換"
+					>
+						<ol class="carousel-track">
+							{carouselItems.map((item, index) => (
+								<li
+									id={`carousel-slide-${index + 1}`}
+									class="carousel-slide"
+									data-carousel-slide
+									aria-label={`第 ${index + 1} 張，共 ${carouselItems.length} 張`}
+									aria-current={index === 0 ? 'true' : undefined}
+								>
+									<GalleryImage item={item} index={index} variant="carousel" />
+								</li>
+							))}
+						</ol>
+					</div>
+					<button class="carousel-arrow is-previous" type="button" data-carousel-previous aria-controls="carousel-prototype" aria-label="上一張" disabled><span aria-hidden="true">&lt;</span></button>
+					<button class="carousel-arrow is-next" type="button" data-carousel-next aria-controls="carousel-prototype" aria-label="下一張"><span aria-hidden="true">&gt;</span></button>
+				</div>
+
+				<div class="carousel-controls">
+					<div class="carousel-pagination" aria-label="選擇輪播圖片">
+						{carouselItems.map((_, index) => (
+							<button
+								type="button"
+								data-carousel-dot
+								aria-label={`前往第 ${index + 1} 張`}
+								aria-controls={`carousel-slide-${index + 1}`}
+								aria-current={index === 0 ? 'true' : undefined}
+							><span>{index + 1}</span></button>
+						))}
+					</div>
+				</div>
+				<p class="carousel-announcement" data-carousel-announcement aria-live="polite"></p>
+				<noscript><p class="carousel-noscript">JavaScript 已關閉：仍可水平捲動所有圖片；按鈕、分頁與目前位置不更新。</p></noscript>
+			</div>
+		</section>
+
+		<section class="carousel-section carousel-behavior" aria-labelledby="carousel-behavior-title">
+			<div><p class="lab-eyebrow">Boundary Behavior</p><h2 id="carousel-behavior-title">不循環、不自動播放、不藏內容</h2></div>
+			<dl>
+				<div><dt>第一張</dt><dd>上一張 disabled，不跳到最後一張。</dd></div>
+				<div><dt>最後一張</dt><dd>下一張 disabled，不偽造無限循環複本。</dd></div>
+				<div><dt>Reduced motion</dt><dd>按鈕切換改為立即定位，不平滑捲動。</dd></div>
+				<div><dt>返回／Resize</dt><dd>重新計算目前 slide，listener 與 frame 可清理。</dd></div>
+			</dl>
+		</section>
+
+		<section id="carousel-decision" class="carousel-section carousel-decision" aria-labelledby="carousel-decision-title">
+			<div><p class="lab-eyebrow">Package Gate</p><h2 id="carousel-decision-title">目前建議保留原生 Scroll Snap</h2></div>
+			<div role="note">
+				<strong>目前需求不需要 Embla Carousel。</strong>
+				<p>原生方案已涵蓋滑動、按鈕、分頁、鍵盤、目前位置與響應式下一張提示。它沒有 loop、拖曳進度或複雜對齊狀態；目前也沒有這些正式需求。</p>
+				<p>若人工驗收發現觸控對齊、不同尺寸 slide 或跨瀏覽器慣性無法接受，再另開 Embla 核准，不在本 Step 預先安裝。</p>
+			</div>
+		</section>
+	</div>
+</LabLayout>
+
+<script>
+	import { initializeCarousel } from '../../scripts/lab/carousel';
+	initializeCarousel();
+</script>

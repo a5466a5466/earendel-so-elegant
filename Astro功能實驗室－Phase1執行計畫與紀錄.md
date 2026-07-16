@@ -1,7 +1,7 @@
 # Astro 功能實驗室 Phase 1・執行計畫與紀錄
 
 - 建立日期：2026-07-15
-- 目前狀態：Step 1～9 已完成；下一步為 Step 10 F07 Carousel
+- 目前狀態：Step 1～10 已完成；下一步為 Step 11・F08 Lightbox
 - 前置狀態：Phase 0・Step 1～Step 6 已完成並由使用者驗收
 - 依據文件：`厄倫蒂兒粉絲應援網站－開發計畫書.md`、`Astro功能實驗室－企劃書.md`、`Astro功能實驗室－Phase0-Step6-QA.md`
 
@@ -615,7 +615,7 @@ Step 6 已完成普通 MPA 與九種原生 cross-document View Transition 比較
 | 7 | 完成 | 2026-07-16 | 2026-07-16 | 雙模式回歸、正式輸出隔離、架構凍結與人工驗收均通過 | `Astro功能實驗室－Phase1A-Step7-QA.md` |
 | 8 | 完成 | 2026-07-16 | 2026-07-16 | 採用原生 CSS／Intersection Observer；不安裝 GSAP，技術與人工驗收均通過 | `Astro功能實驗室－Phase1-Step8-F05.md` |
 | 9 | 完成 | 2026-07-16 | 2026-07-16 | 採響應式 CSS Grid、不採 Masonry；12 張圖片與人工驗收均通過 | `Astro功能實驗室－Phase1-Step9-F06.md` |
-| 10 | 未開始 |  |  | F07 Carousel | 本文件 Step 10 |
+| 10 | 完成 | 2026-07-16 | 2026-07-16 | 採用原生 Scroll Snap、不採 Embla；觸控、鍵盤、分頁、框外箭頭與人工驗收均通過 | `Astro功能實驗室－Phase1-Step10-F07.md` |
 | 11 | 未開始 |  |  | F08 Lightbox | 本文件 Step 11 |
 | 12 | 未開始 |  |  | F09 自有 Video | 本文件 Step 12 |
 | 13 | 未開始 |  |  | F14 YouTube | 本文件 Step 13 |

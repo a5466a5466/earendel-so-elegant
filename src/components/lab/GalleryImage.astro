@@ -7,12 +7,15 @@ type GalleryItem = CollectionEntry<'events'>['data']['gallery'][number];
 interface Props {
 	item: GalleryItem;
 	index: number;
+	variant?: 'grid' | 'carousel';
 }
 
-const { item, index } = Astro.props;
+const { item, index, variant = 'grid' } = Astro.props;
 const ratio = item.src.width / item.src.height;
 const shape = ratio >= 1.7 ? 'wide' : ratio >= 1.15 ? 'landscape' : ratio <= 0.78 ? 'portrait' : 'square';
-const sizes = shape === 'wide'
+const sizes = variant === 'carousel'
+	? '(max-width: 700px) 88vw, min(720px, 70vw)'
+	: shape === 'wide'
 	? '(max-width: 480px) calc(100vw - 32px), (max-width: 900px) calc(100vw - 48px), min(552px, 48vw)'
 	: '(max-width: 480px) calc(100vw - 32px), (max-width: 900px) calc((100vw - 48px) / 2), min(270px, 23vw)';
 const fallbackFormat = item.src.format === 'png' ? 'png' : 'jpeg';
@@ -20,7 +23,7 @@ const creditLabel = item.credit?.name ?? '未提供署名';
 const licenseLabel = item.credit?.license ?? '授權待確認';
 ---
 
-<figure class:list={['gallery-card', `is-${shape}`]} data-gallery-item data-gallery-shape={shape}>
+<figure class:list={['gallery-card', `is-${shape}`, { 'is-carousel': variant === 'carousel' }]} data-gallery-item data-gallery-shape={shape}>
 	<a class="gallery-media" href={item.src.src} target="_blank" rel="noreferrer" aria-label={`查看第 ${index + 1} 張原始測試圖：${item.alt}`}>
 		<span class="gallery-picture" style={`--gallery-position: ${item.position}`}>
 			<Picture
