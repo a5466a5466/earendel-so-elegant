@@ -32,6 +32,7 @@ export const labNavigation: LabNavigationItem[] = [
 	{ label: 'Lightbox', href: '/lab/lightbox/' },
 	{ label: 'Video', href: '/lab/video/' },
 	{ label: 'YouTube', href: '/lab/youtube/' },
+	{ label: 'Audio', href: '/lab/audio/' },
 	{ label: '紀錄模板', href: '/lab/record-template/' },
 ];
 
@@ -83,10 +84,10 @@ export const phaseZeroSteps: LabPhaseStep[] = [
 ];
 
 export const nextExperiment = {
-	id: 'F14',
-	title: 'YouTube 嵌入',
+	id: 'F10',
+	title: 'Audio Player',
 	description:
-		'Phase 1・Step 13 沿用媒體容器，以點擊後才建立的 facade 驗證 YouTube iframe、隱私與失效降級。',
+		'Phase 1・Step 14 以原生 audio 與共用 manager 驗證互斥播放、全站靜音偏好、生命週期與失效降級。',
 };
 
 export const normalizeLabPath = (path: string) => {

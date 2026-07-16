@@ -15,7 +15,7 @@
 | 遠端 | `master` 與 `origin/master` 同步 |
 | 工作樹 | 有未提交變更：已完成的 Phase 1・Step 7 QA、架構基線與紀錄修正 |
 | Phase 0 | Step 1～6 完成 |
-| Phase 1 | Step 1～13 完成；下一步為 Step 14・F10 Audio Player |
+| Phase 1 | Step 1～14 完成；下一步為 Step 15・F17 按鍵音效 |
 | 下一步 | 使用者驗收 `/lab/youtube/` 並決定固定普通 iframe 或評估官方 IFrame API |
 
 最近完成的 Phase 1 功能：
@@ -139,7 +139,7 @@ pnpm build
 先告訴我目前完成到哪個 Step、工作樹是否乾淨，以及下一個 Step 的範圍。
 ```
 
-## 6. 近期進度與下一步：Phase 1・Step 14
+## 6. 近期進度與下一步：Phase 1・Step 15
 
 Step 6 已由使用者驗收完成。最終決策為保留普通 Astro MPA 與原生 History，採用 native cross-document View Transition，不採用 ClientRouter。
 
@@ -164,7 +164,9 @@ Step 12・F09 自有 Video 已於 2026-07-16 完成：Prototype 位於 `/lab/vid
 
 Step 13・F14 YouTube 已於 2026-07-16 完成：Prototype 位於 `/lab/youtube/`，初始使用 Step 12 本機 poster、標題與來源說明，不建立 iframe、遠端圖片或 YouTube API script。使用者點擊後才建立 `youtube-nocookie.com` 隱私增強 iframe，同時間最多一個；第二張驗證指定 60 秒開始與切換時清除舊播放器，第三張模擬禁止嵌入／年齡限制／刪除的站內 fallback。每張卡永久保留 YouTube 外部連結，無 JavaScript 時亦可使用。Lab／production build、HTTP 200、初始第三方零請求結構、正式輸出隔離及使用者人工驗收均通過；固定採用直接 iframe，現階段不載入官方 IFrame API。
 
-下一步是 Step 14・F10 Audio Player；開始前先閱讀執行計畫中的 Step 14 範圍與驗收條件，再建立獨立實驗頁。
+Step 14・F10 Audio Player 已於 2026-07-16 完成：Prototype 位於 `/lab/audio/`，以兩個本機生成的八秒 WAV 驗證播放／暫停、進度、單曲音量與曲目資訊。所有主要音源共用 `audio-manager.ts`，同時間最多播放一首；沿用全站音效偏好，預設 off、只能由使用者手勢啟動，切回 off 時立即暫停。播放器離開可視範圍、頁籤隱藏或 MPA pagehide 時亦暫停且不自動恢復。另有延遲要求不存在 WAV 的 failure fixture。Lab／production build、HTTP／MIME、初始無 autoplay、正式輸出隔離及使用者人工驗收均通過；固定採用原生 audio，現階段不需要真實波形或 WaveSurfer。
+
+下一步是 Step 15・F17 按鍵音效；應沿用 Step 14 的 audio manager 與全站音效偏好，驗證少量操作回饋，不為每個按鈕建立獨立 Audio 實例。
 
 ## 7. 目前架構與重要限制
 

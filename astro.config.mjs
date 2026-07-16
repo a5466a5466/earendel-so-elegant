@@ -26,7 +26,7 @@ const labOutputGuard = () => {
 				if (labEnabled) return;
 
 				const astroAssetDirectory = new URL('./_astro/', dir);
-				const labAssetPattern = /^(?:LabLayout\.|LabControls\.|LabNavigation\.|preferences(?:\.astro[^.]*)?\.|navigation(?:\.astro[^.]*)?\.|scroll(?:\.astro[^.]*)?\.|carousel(?:\.astro[^.]*)?\.|lightbox(?:\.astro[^.]*)?\.|video(?:\.astro[^.]*)?\.|youtube(?:\.astro[^.]*)?\.|gallery-|starlight-birthday\.|summer-letter\.|moonlit-message-transparent\.)/;
+				const labAssetPattern = /^(?:LabLayout\.|LabControls\.|LabNavigation\.|preferences(?:\.astro[^.]*)?\.|navigation(?:\.astro[^.]*)?\.|scroll(?:\.astro[^.]*)?\.|carousel(?:\.astro[^.]*)?\.|lightbox(?:\.astro[^.]*)?\.|video(?:\.astro[^.]*)?\.|youtube(?:\.astro[^.]*)?\.|audio(?:\.astro[^.]*)?\.|audio-manager\.|gallery-|starlight-birthday\.|summer-letter\.|moonlit-message-transparent\.)/;
 				const astroAssets = await readdir(astroAssetDirectory).catch(() => []);
 				const labOnlyAssets = astroAssets.filter((file) => labAssetPattern.test(file));
 

@@ -1,0 +1,135 @@
+---
+import LabLayout from '../../layouts/LabLayout.astro';
+import LabPageHero from '../../components/lab/LabPageHero.astro';
+
+const audioBase = '/lab-assets/audio';
+const tracks = [
+	{
+		id: 'starlight-letter',
+		eyebrow: 'Main Track 01',
+		title: '星光來信',
+		description: '八秒單聲道 WAV 測試素材；用來驗證播放、暫停、進度與曲目切換。',
+		file: `${audioBase}/starlight-letter.wav`,
+	},
+	{
+		id: 'moonlit-reply',
+		eyebrow: 'Main Track 02',
+		title: '月光回音',
+		description: '第二組八秒測試旋律；開始播放時應自動暫停上一個主要音源。',
+		file: `${audioBase}/moonlit-reply.wav`,
+	},
+];
+---
+
+<LabLayout
+	title="Audio Player Prototype｜功能實驗室"
+	description="Phase 1 Step 14：以原生 audio 驗證主要音訊管理、進度、音量偏好與失敗降級。"
+	breadcrumbLabel="Audio"
+>
+	<LabPageHero
+		eyebrow="Phase 1 · Step 14 · F10"
+		title="Audio Player"
+		description="兩個主要音源共用同一個 manager：不自動出聲、一次只播一首，並在離開可視範圍或切頁時可靠暫停。"
+		actions={[
+			{ label: '測試主要音訊', href: '#audio-players' },
+			{ label: '查看生命週期', href: '#audio-lifecycle' },
+		]}
+		headingId="audio-title"
+	/>
+
+	<div class="audio-lab-main" data-audio-lab>
+		<section class="audio-overview" aria-labelledby="audio-overview-title">
+			<div>
+				<p class="lab-eyebrow">Shared Audio Contract</p>
+				<h2 id="audio-overview-title">主要音訊只有一個管理入口</h2>
+				<p>全站音效預設關閉。即使開啟偏好，播放器也必須等使用者按下播放；切換曲目只暫停上一首，不偷改播放位置。</p>
+			</div>
+			<dl>
+				<div><dt>素材</dt><dd>2 × WAV</dd></div>
+				<div><dt>長度</dt><dd>各 8 秒</dd></div>
+				<div><dt>同時播放</dt><dd>最多 1 首</dd></div>
+				<div><dt>Runtime</dt><dd>原生 audio</dd></div>
+			</dl>
+		</section>
+
+		<section id="audio-players" class="audio-section" data-audio-player-section aria-labelledby="audio-player-title">
+			<div class="audio-section-heading">
+				<div><p class="lab-eyebrow">Primary Playback</p><h2 id="audio-player-title">兩首曲目的互斥播放</h2></div>
+				<div>
+					<p>先在頁首把「音效」改為開啟，再操作任一播放器。重新整理、切頁、頁籤進入背景或整個播放器區離開畫面，都不會自動續播。</p>
+					<p class="audio-page-status" data-audio-page-status aria-live="polite">正在讀取全站音效偏好。</p>
+				</div>
+			</div>
+			<div class="audio-player-grid">
+				{tracks.map((track) => (
+					<article class="audio-player-card" data-audio-player>
+						<div class="audio-track-index" aria-hidden="true">{track.id === 'starlight-letter' ? '01' : '02'}</div>
+						<div class="audio-track-copy">
+							<p class="lab-eyebrow">{track.eyebrow}</p>
+							<h3>{track.title}</h3>
+							<p>{track.description}</p>
+						</div>
+						<audio preload="metadata" data-primary-audio>
+							<source src={track.file} type="audio/wav" />
+							你的瀏覽器不支援 HTML audio。
+						</audio>
+						<div class="audio-player-controls">
+							<button type="button" data-audio-toggle aria-pressed="false">播放</button>
+							<label class="audio-progress-control">
+								<span class="sr-only">{track.title}播放進度</span>
+								<input type="range" min="0" max="1" value="0" step="0.01" data-audio-progress />
+							</label>
+							<p class="audio-time"><span data-audio-elapsed>0:00</span><span aria-hidden="true">／</span><span data-audio-duration>0:00</span></p>
+							<label class="audio-volume-control">
+								<span>音量</span>
+								<input type="range" min="0" max="1" value="0.75" step="0.05" data-audio-volume aria-label={`${track.title}音量`} />
+							</label>
+						</div>
+						<div class="audio-card-footer">
+							<p data-audio-status aria-live="polite">尚未播放。</p>
+							<a href={track.file}>開啟 WAV 原始檔</a>
+						</div>
+					</article>
+				))}
+			</div>
+			<noscript><p class="audio-noscript">JavaScript 已關閉；主要管理器無法運作，但仍可使用上方 WAV 原始檔連結。</p></noscript>
+		</section>
+
+		<section id="audio-lifecycle" class="audio-section audio-lifecycle" aria-labelledby="audio-lifecycle-title">
+			<div><p class="lab-eyebrow">Lifecycle Decisions</p><h2 id="audio-lifecycle-title">暫停，不擅自恢復</h2></div>
+			<ol>
+				<li><strong>使用者手勢</strong><span>音效開啟後仍需按下播放，不因載入、返回或偏好改變而自動出聲。</span></li>
+				<li><strong>曲目切換</strong><span>新曲開始前暫停舊曲；舊曲保留進度，方便之後手動繼續。</span></li>
+				<li><strong>不可見與切頁</strong><span>播放器離開視窗、頁籤隱藏或 MPA 換頁時全部暫停，不記錄自動續播狀態。</span></li>
+				<li><strong>全站靜音</strong><span>偏好切回關閉時立即暫停並靜音；重新開啟也不會自行恢復。</span></li>
+			</ol>
+		</section>
+
+		<section class="audio-section audio-failure-section" aria-labelledby="audio-failure-title">
+			<div>
+				<p class="lab-eyebrow">Runtime Failure</p>
+				<h2 id="audio-failure-title">音訊來源失效</h2>
+				<p>不存在的來源不會在初始頁面要求；按下按鈕後才觸發錯誤，確認控制卡與說明不會消失。</p>
+			</div>
+			<div class="audio-failure-card">
+				<audio preload="none" data-failure-audio><source data-src={`${audioBase}/__missing-audio.wav`} type="audio/wav" /></audio>
+				<p data-failure-audio-status role="status"><strong>尚未觸發失敗測試。</strong><span>這裡會保留可理解的降級結果。</span></p>
+				<button type="button" data-failure-audio-load>載入不存在的音訊</button>
+			</div>
+		</section>
+
+		<section class="audio-decision" aria-labelledby="audio-decision-title">
+			<div><p class="lab-eyebrow">Player Decision</p><h2 id="audio-decision-title">原生 audio 足夠</h2></div>
+			<div role="note">
+				<strong>目前不安裝 WaveSurfer 或播放器套件。</strong>
+				<p>播放、暫停、進度、音量、曲目資訊、互斥播放與生命週期都可用原生 API 完成。現在沒有逐字稿對齊、音訊剪輯或可縮放波形需求。</p>
+				<p>未來若正式內容需要可操作波形，再另外提出套件、檔案分析成本與無障礙替代方案的核准。</p>
+			</div>
+		</section>
+	</div>
+</LabLayout>
+
+<script>
+	import { initializeAudioLab } from '../../scripts/lab/audio';
+	initializeAudioLab();
+</script>
