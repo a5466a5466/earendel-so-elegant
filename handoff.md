@@ -11,12 +11,12 @@
 | 專案 | `earendel-so-elegant` |
 | Repository | `https://github.com/a5466a5466/earendel-so-elegant.git` |
 | 分支 | `master` |
-| HEAD | `14da708 phase1 step 5 done` |
+| HEAD | `255acd6 phase1 step 6 done` |
 | 遠端 | `master` 與 `origin/master` 同步 |
-| 工作樹 | 有未提交變更：Phase 1・Step 6 Prototype、契約與紀錄 |
+| 工作樹 | 有未提交變更：Phase 1・Step 7 QA、架構基線與紀錄修正 |
 | Phase 0 | Step 1～6 完成 |
-| Phase 1 | Step 1～6 完成 |
-| 下一步 | Step 7：Phase 1A 整合 QA 與架構凍結（尚未開始） |
+| Phase 1 | Step 1～6 完成；Step 7 技術回歸完成、待人工驗收 |
+| 下一步 | 使用者依 `Astro功能實驗室－Phase1A-Step7-QA.md` 完成精簡人工回歸 |
 
 最近完成的 Phase 1 功能：
 
@@ -24,6 +24,8 @@
 - Step 2／F20：Astro Picture、Sharp、響應式圖片、Lazy Loading 與 fallback。
 - Step 3／F26：動態、音效、效能的共用偏好 API 與整合頁。
 - Step 4／F03：共用 Navigation、手機 Dialog、路由目前位置與麵包屑。
+- Step 5／F23：完成多語 Prototype，決策延後至正式站前採用。
+- Step 6／F04：採用原生 MPA View Transition，不採 ClientRouter。
 
 每個 Step 都已完成技術檢查與使用者確認。詳細決策不能只從程式碼推測，應讀取對應紀錄。
 
@@ -54,6 +56,7 @@ src/data/lab/image-policy.md
 src/data/lab/preferences-contract.md
 src/data/lab/navigation-contract.md
 src/data/lab/deployment-policy.md
+src/data/lab/phase1a-architecture-baseline.md
 ```
 
 ## 3. 換電腦後的環境準備
@@ -136,7 +139,7 @@ pnpm build
 先告訴我目前完成到哪個 Step、工作樹是否乾淨，以及下一個 Step 的範圍。
 ```
 
-## 6. 下一步：Phase 1・Step 7
+## 6. 目前進度：Phase 1・Step 7
 
 Step 6 已由使用者驗收完成。最終決策為保留普通 Astro MPA 與原生 History，採用 native cross-document View Transition，不採用 ClientRouter。
 
@@ -147,7 +150,7 @@ Step 6 固定契約：
 - Reduced motion、不支援環境與 JavaScript 關閉時維持普通換頁。
 - 後續 script 維持每份文件初始化一次、可重入並提供 dispose。
 
-下一步為 Phase 1A 整合 QA 與架構凍結：回歸 Step 1～6、驗證正式／Lab 雙模式、noindex、首頁與 404，並把 schema、URL、圖片、偏好、i18n 與轉場決策凍結為 Phase 1B 基線。Step 7 尚未開始。
+Step 7 技術回歸已完成：Lab／正式雙模式、noindex、正式首頁、404、Step 1～6 契約及正式輸出隔離均通過；架構基線已寫入 `src/data/lab/phase1a-architecture-baseline.md`。目前等待使用者依 `Astro功能實驗室－Phase1A-Step7-QA.md` 完成人工驗收，確認後才能把 Step 7 標記完成並進入 Step 8。
 
 ## 7. 目前架構與重要限制
 

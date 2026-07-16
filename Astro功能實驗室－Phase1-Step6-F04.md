@@ -29,7 +29,7 @@
 
 ## 驗收狀態
 
-- [x] Lab build 通過，三個 Step 6 路由存在
+- [x] Lab build 通過，九個 Step 6 路由存在
 - [x] 正式 build 不含 Step 6 路由或資產
 - [x] 靜態確認 opt-in、共享名稱唯一、reduced-motion 與普通連結
 - [x] 前進、返回、重整、深層網址與 HTTP 狀態通過
@@ -40,14 +40,14 @@
 
 | 項目 | 結果 | 證據 |
 |---|---|---|
-| `pnpm build:lab` | 通過 | 16 個輸出頁面，含 3 個 Step 6 路由 |
+| `pnpm build:lab` | 通過 | 最終版本為 22 個輸出頁面，含 9 個 Step 6 路由 |
 | `pnpm build` | 通過 | 正式首頁保留；Lab、Step 6 路由與命名資產均為 0 |
 | 原生 opt-in | 通過 | 列表、fade、shared 含 `@view-transition`；無轉場活動詳情不含 |
 | 共享元素 | 通過 | 列表與 shared 詳情各 1 個；fade 詳情為 0 |
 | Reduced motion | 通過 | system media query 與 Lab `data-motion='reduce'` 均停用動畫 |
 | ClientRouter | 未採用 | 無 `astro:transitions` import、Router 元件、History 攔截或 client lifecycle 程式 |
-| HTML 基線 | 通過 | 14 個 Lab HTML；重複 ID 0；缺少共用 Navigation 0 |
-| 本機 HTTP | 通過 | Step 6 三頁與無轉場基線皆回應 200 |
+| HTML 基線 | 通過 | 最終版本為 20 個 Lab HTML；重複 ID 0；缺少共用 Navigation 0 |
+| 本機 HTTP | 通過 | Step 6 九個路由與無轉場基線皆回應 200 |
 | `git diff --check` | 通過 | 無 whitespace error；僅 Windows 換行提示 |
 
 第一次 Lab build 曾因 `getStaticPaths()` 無法讀取頁面本地 `modes` 常數而失敗；模式資料已移至 `src/data/lab/transition-prototype.ts`，建置期與頁面渲染改用同一資料來源，後續 Lab／正式 build 均通過。

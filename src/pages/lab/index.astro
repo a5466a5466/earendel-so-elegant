@@ -55,7 +55,9 @@ import { nextExperiment, phaseZeroSteps } from '../../data/lab/catalog';
 			<p class="lab-eyebrow">Phase 1 · Next Step</p>
 			<h2 id="roadmap-title">{nextExperiment.title}</h2>
 			<p>{nextExperiment.description}</p>
-			<a class="roadmap-link" href={nextExperiment.href}>{nextExperiment.linkLabel} <span aria-hidden="true">→</span></a>
+			{'href' in nextExperiment && nextExperiment.href && (
+				<a class="roadmap-link" href={nextExperiment.href}>{nextExperiment.linkLabel} <span aria-hidden="true">→</span></a>
+			)}
 		</div>
 		<span class="roadmap-mark" aria-hidden="true">{nextExperiment.id}</span>
 	</section>

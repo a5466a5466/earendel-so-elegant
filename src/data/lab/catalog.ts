@@ -77,12 +77,10 @@ export const phaseZeroSteps: LabPhaseStep[] = [
 ];
 
 export const nextExperiment = {
-	id: 'F04',
-	title: 'Page Transition',
+	id: 'QA',
+	title: 'Phase 1A 整合 QA',
 	description:
-		'Phase 1・Step 6 比較普通 MPA、原生跨文件短淡入與共享元素，驗證 reduced-motion 與無 JavaScript 降級。',
-	href: '/lab/transitions/',
-	linkLabel: '開啟 Step 6 轉場實驗',
+		'Phase 1・Step 7 正在回歸 Step 1～6，並凍結 schema、URL、圖片、偏好、i18n 與轉場契約，完成後才進入 Phase 1B。',
 };
 
 export const normalizeLabPath = (path: string) => {
