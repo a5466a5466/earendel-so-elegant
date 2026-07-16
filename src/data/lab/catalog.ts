@@ -25,6 +25,7 @@ export const labNavigation: LabNavigationItem[] = [
 	{ label: '活動資料', href: '/lab/events/' },
 	{ label: '偏好契約', href: '/lab/preferences/' },
 	{ label: '語系決策', href: '/lab/i18n/' },
+	{ label: '轉場決策', href: '/lab/transitions/' },
 	{ label: '紀錄模板', href: '/lab/record-template/' },
 ];
 
@@ -76,12 +77,12 @@ export const phaseZeroSteps: LabPhaseStep[] = [
 ];
 
 export const nextExperiment = {
-	id: 'F23',
-	title: '多語系路由決策',
+	id: 'F04',
+	title: 'Page Transition',
 	description:
-		'Phase 1・Step 5 以繁中、日文、英文 placeholder 比較 URL、語言切換、缺譯 fallback、日期格式與文字伸縮。',
-	href: '/lab/i18n/',
-	linkLabel: '開啟 Step 5 語系實驗',
+		'Phase 1・Step 6 比較普通 MPA、原生跨文件短淡入與共享元素，驗證 reduced-motion 與無 JavaScript 降級。',
+	href: '/lab/transitions/',
+	linkLabel: '開啟 Step 6 轉場實驗',
 };
 
 export const normalizeLabPath = (path: string) => {

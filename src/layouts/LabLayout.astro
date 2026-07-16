@@ -10,6 +10,9 @@ interface Props {
 	breadcrumbLabel?: string;
 	lang?: string;
 	alternates?: Array<{ lang: string; href: string }>;
+	nativeViewTransitions?: boolean;
+	viewTransitionEffect?: 'fade' | 'slide' | 'scale' | 'wipe' | 'shared' | 'stagger' | 'push' | 'circle';
+	viewTransitionEffectFromQuery?: boolean;
 }
 
 const {
@@ -18,13 +21,16 @@ const {
 	breadcrumbLabel,
 	lang = 'zh-Hant',
 	alternates = [],
+	nativeViewTransitions = false,
+	viewTransitionEffect = 'fade',
+	viewTransitionEffectFromQuery = false,
 } = Astro.props;
 const currentPath = normalizeLabPath(Astro.url.pathname);
 const breadcrumbs = getLabBreadcrumbs(currentPath, breadcrumbLabel);
 ---
 
 <!doctype html>
-<html lang={lang} data-motion="full" data-motion-setting="system" data-sound="off" data-performance="standard" data-performance-setting="auto">
+<html lang={lang} data-motion="full" data-motion-setting="system" data-sound="off" data-performance="standard" data-performance-setting="auto" data-transition-effect={nativeViewTransitions ? viewTransitionEffect : undefined}>
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -37,6 +43,78 @@ const breadcrumbs = getLabBreadcrumbs(currentPath, breadcrumbLabel);
 		{alternates.map((alternate) => (
 			<link rel="alternate" hreflang={alternate.lang} href={alternate.href} />
 		))}
+		{nativeViewTransitions && (
+			viewTransitionEffectFromQuery && (
+				<script is:inline>
+					const params = new URLSearchParams(window.location.search);
+					const effect = params.get('effect');
+					if (['fade', 'slide', 'scale', 'wipe', 'shared', 'stagger', 'push', 'circle'].includes(effect)) {
+						document.documentElement.dataset.transitionEffect = effect;
+					}
+					if (params.get('direction') === 'back') {
+						document.documentElement.dataset.transitionDirection = 'back';
+					}
+				</script>
+			)
+		)}
+		{nativeViewTransitions && (
+			<script is:inline>
+				const transitionParams = new URLSearchParams(window.location.search);
+				const transitionX = Number.parseFloat(transitionParams.get('x') ?? '');
+				const transitionY = Number.parseFloat(transitionParams.get('y') ?? '');
+				if (Number.isFinite(transitionX) && transitionX >= 0 && transitionX <= 100) {
+					document.documentElement.style.setProperty('--transition-origin-x', `${transitionX}%`);
+				}
+				if (Number.isFinite(transitionY) && transitionY >= 0 && transitionY <= 100) {
+					document.documentElement.style.setProperty('--transition-origin-y', `${transitionY}%`);
+				}
+			</script>
+		)}
+		{nativeViewTransitions && (
+			<style is:inline>
+				@view-transition { navigation: auto; }
+				::view-transition-old(root) { animation: 260ms ease-out both lab-page-out; }
+				::view-transition-new(root) { animation: 650ms cubic-bezier(.2, .7, .2, 1) both lab-page-in; }
+				html[data-transition-effect='slide']::view-transition-new(root) { animation: 420ms cubic-bezier(.2, .75, .2, 1) both lab-page-slide-in; }
+				html[data-transition-effect='slide'][data-transition-direction='back']::view-transition-new(root) { animation-name: lab-page-slide-back; }
+				html[data-transition-effect='scale']::view-transition-new(root) { animation: 520ms cubic-bezier(.2, .75, .2, 1) both lab-page-scale-in; }
+				html[data-transition-effect='wipe']::view-transition-new(root) { animation: 620ms cubic-bezier(.35, .8, .2, 1) both lab-page-wipe-in; }
+				html[data-transition-effect='push']::view-transition-new(root) { animation: 480ms cubic-bezier(.2, .75, .2, 1) both lab-page-push-in; }
+				html[data-transition-effect='circle']::view-transition-new(root) { animation: 720ms cubic-bezier(.25, .8, .2, 1) both lab-page-circle-in; }
+				@keyframes lab-page-out { to { opacity: 0; } }
+				@keyframes lab-page-in { from { opacity: 0; } }
+				@keyframes lab-page-slide-in { from { opacity: 0; transform: translateX(70px); } }
+				@keyframes lab-page-slide-back { from { opacity: 0; transform: translateX(-70px); } }
+				@keyframes lab-page-scale-in { from { opacity: 0; transform: scale(.88); } }
+				@keyframes lab-page-wipe-in { from { clip-path: inset(0 50%); } to { clip-path: inset(0); } }
+				@keyframes lab-page-push-in { from { opacity: 0; transform: translateY(90px); } }
+				@keyframes lab-page-circle-in { from { clip-path: circle(0 at var(--transition-origin-x, 50%) var(--transition-origin-y, 50%)); } to { clip-path: circle(150vmax at var(--transition-origin-x, 50%) var(--transition-origin-y, 50%)); } }
+				::view-transition-group(lab-stagger-visual) { animation-duration: 360ms; }
+				::view-transition-group(lab-stagger-title) { animation-duration: 360ms; animation-delay: 110ms; }
+				::view-transition-group(lab-stagger-copy) { animation-duration: 360ms; animation-delay: 220ms; }
+				::view-transition-new(lab-stagger-title),
+				::view-transition-new(lab-stagger-copy) { animation: 360ms ease-out both lab-stagger-in; }
+				@keyframes lab-stagger-in { from { opacity: 0; transform: translateY(18px); } }
+				@media (prefers-reduced-motion: reduce) {
+					::view-transition-old(root),
+					::view-transition-new(root),
+					::view-transition-group(lab-transition-postcard),
+					::view-transition-group(lab-stagger-visual),
+					::view-transition-group(lab-stagger-title),
+					::view-transition-group(lab-stagger-copy),
+					::view-transition-new(lab-stagger-title),
+					::view-transition-new(lab-stagger-copy) { animation: none; }
+				}
+				html[data-motion='reduce']::view-transition-old(root),
+				html[data-motion='reduce']::view-transition-new(root),
+				html[data-motion='reduce']::view-transition-group(lab-transition-postcard),
+				html[data-motion='reduce']::view-transition-group(lab-stagger-visual),
+				html[data-motion='reduce']::view-transition-group(lab-stagger-title),
+				html[data-motion='reduce']::view-transition-group(lab-stagger-copy),
+				html[data-motion='reduce']::view-transition-new(lab-stagger-title),
+				html[data-motion='reduce']::view-transition-new(lab-stagger-copy) { animation: none; }
+			</style>
+		)}
 		<title>{title}</title>
 	</head>
 	<body>

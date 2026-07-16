@@ -11,12 +11,12 @@
 | 專案 | `earendel-so-elegant` |
 | Repository | `https://github.com/a5466a5466/earendel-so-elegant.git` |
 | 分支 | `master` |
-| HEAD | `ab8f81e add handoff doc` |
+| HEAD | `14da708 phase1 step 5 done` |
 | 遠端 | `master` 與 `origin/master` 同步 |
-| 工作樹 | 有未提交變更：Phase 1・Step 5 Prototype 與紀錄 |
+| 工作樹 | 有未提交變更：Phase 1・Step 6 Prototype、契約與紀錄 |
 | Phase 0 | Step 1～6 完成 |
-| Phase 1 | Step 1～5 完成 |
-| 下一步 | Step 6：F04 Page Transition（尚未開始） |
+| Phase 1 | Step 1～6 完成 |
+| 下一步 | Step 7：Phase 1A 整合 QA 與架構凍結（尚未開始） |
 
 最近完成的 Phase 1 功能：
 
@@ -44,6 +44,7 @@ Astro功能實驗室－Phase1-Step2-F20.md
 Astro功能實驗室－Phase1-Step3-F26.md
 Astro功能實驗室－Phase1-Step4-F03.md
 Astro功能實驗室－Phase1-Step5-F23.md
+Astro功能實驗室－Phase1-Step6-F04.md
 ```
 
 共用技術契約：
@@ -99,6 +100,7 @@ Lab：http://127.0.0.1:4321/lab/
 活動：http://127.0.0.1:4321/lab/events/
 偏好：http://127.0.0.1:4321/lab/preferences/
 語系決策：http://127.0.0.1:4321/lab/i18n/
+轉場決策：http://127.0.0.1:4321/lab/transitions/
 紀錄模板：http://127.0.0.1:4321/lab/record-template/
 ```
 
@@ -134,18 +136,18 @@ pnpm build
 先告訴我目前完成到哪個 Step、工作樹是否乾淨，以及下一個 Step 的範圍。
 ```
 
-## 6. 下一步：Phase 1・Step 6
+## 6. 下一步：Phase 1・Step 7
 
-Step 5 已由使用者驗收完成。最終決策是正式站前延後啟用多語系；未來固定採候選 A：繁中無 prefix，日文與英文使用 `/ja/`、`/en/`，缺譯明示並連回繁中。
+Step 6 已由使用者驗收完成。最終決策為保留普通 Astro MPA 與原生 History，採用 native cross-document View Transition，不採用 ClientRouter。
 
-下一步為 F04 Page Transition，預定比較：
+Step 6 固定契約：
 
-- 普通 MPA、原生 View Transition，以及必要時才評估 Astro ClientRouter。
-- 列表與詳情頁的前進、返回、重新整理及直接進入。
-- reduced-motion、未支援瀏覽器與 JavaScript 關閉時的降級。
-- 頁面切換後共用 script 的初始化與清理規則。
+- 長淡入是預設候選；其餘七種動畫依內容語意個別採用。
+- 所有效果是漸進增強，不得承擔導覽或狀態傳遞。
+- Reduced motion、不支援環境與 JavaScript 關閉時維持普通換頁。
+- 後續 script 維持每份文件初始化一次、可重入並提供 dispose。
 
-Step 6 尚未開始；開始前仍應先確認本輪範圍，不提前修改轉場或 ClientRouter。
+下一步為 Phase 1A 整合 QA 與架構凍結：回歸 Step 1～6、驗證正式／Lab 雙模式、noindex、首頁與 404，並把 schema、URL、圖片、偏好、i18n 與轉場決策凍結為 Phase 1B 基線。Step 7 尚未開始。
 
 ## 7. 目前架構與重要限制
 

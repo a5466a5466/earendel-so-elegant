@@ -1,0 +1,46 @@
+---
+import LabLayout from '../../../layouts/LabLayout.astro';
+import {
+	transitionPrototypeModes,
+	type TransitionPrototypeMode,
+} from '../../../data/lab/transition-prototype';
+
+export function getStaticPaths() {
+	return transitionPrototypeModes.map((mode) => ({ params: { mode: mode.slug }, props: { mode } }));
+}
+
+interface Props {
+	mode: TransitionPrototypeMode;
+}
+
+const { mode } = Astro.props;
+---
+
+<LabLayout
+	title={`${mode.title}｜Page Transition Prototype`}
+	description={mode.description}
+	breadcrumbLabel={mode.title}
+	nativeViewTransitions
+	viewTransitionEffect={mode.effect}
+>
+	<article class="transition-detail">
+		<header class="transition-detail-header">
+			<div>
+				<p class="lab-eyebrow">{mode.eyebrow}</p>
+				<h1 class:list={{ 'is-stagger-title': mode.effect === 'stagger' }}>{mode.title}</h1>
+				<p class:list={{ 'is-stagger-copy': mode.effect === 'stagger' }}>{mode.description}</p>
+			</div>
+			<div class:list={['transition-demo-visual', 'transition-detail-visual', { 'is-shared': mode.shared, 'is-stagger-visual': mode.effect === 'stagger' }]}>
+				<span aria-hidden="true">{mode.symbol}</span>
+			</div>
+		</header>
+
+		<ul class="transition-detail-note">
+			<li><strong>重新整理</strong><span>此頁可直接作為完整文件載入，不依賴上一頁狀態。</span></li>
+			<li><strong>瀏覽器返回</strong><span>使用原生 History；返回列表時由瀏覽器決定是否顯示反向轉場。</span></li>
+			<li><strong>降級</strong><span>不支援 API、關閉 JavaScript 或 reduced-motion 時直接完成普通換頁。</span></li>
+		</ul>
+
+		<a href={`/lab/transitions/?effect=${mode.effect}&direction=back`}>← 返回九種轉場比較</a>
+	</article>
+</LabLayout>

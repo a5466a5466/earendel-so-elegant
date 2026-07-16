@@ -1,0 +1,95 @@
+---
+import LabLayout from '../../../layouts/LabLayout.astro';
+import LabPageHero from '../../../components/lab/LabPageHero.astro';
+import { transitionPrototypeModes } from '../../../data/lab/transition-prototype';
+---
+
+<LabLayout
+	title="Page Transition 決策｜功能實驗室"
+	description="Phase 1 Step 6：比較普通 MPA、原生跨文件淡入與共享元素。"
+	nativeViewTransitions
+	viewTransitionEffectFromQuery
+>
+	<LabPageHero
+		eyebrow="Phase 1 · Step 6 · F04"
+		title="Page Transition"
+		description="保留 Astro 多頁架構與普通連結，比較九種常用原生跨文件轉場。支援瀏覽器會顯示動畫；不支援或減少動態時仍是正常換頁。"
+		actions={[
+			{ label: '開始九種比較', href: '#transition-candidates' },
+			{ label: '查看建議決策', href: '#transition-decision' },
+		]}
+		headingId="transition-index-title"
+	/>
+
+	<div class="transition-lab-main">
+		<section class="transition-overview" aria-labelledby="transition-overview-title">
+			<div>
+				<p class="lab-eyebrow">Architecture Baseline</p>
+				<h2 id="transition-overview-title">動畫不改變路由本質</h2>
+			</div>
+			<ul>
+				<li><strong>MPA</strong><span>每次都載入新文件，普通連結、返回與深層網址維持瀏覽器原生行為。</span></li>
+				<li><strong>CSS ONLY</strong><span>原生跨文件轉場只需 CSS opt-in，不需要導覽 JavaScript。</span></li>
+				<li><strong>FALLBACK</strong><span>不支援、關閉 JavaScript 或 reduced-motion 時仍可正常換頁。</span></li>
+			</ul>
+		</section>
+
+		<section id="transition-candidates" class="transition-section" aria-labelledby="transition-candidates-title">
+			<div class="transition-section-heading">
+				<div>
+					<p class="lab-eyebrow">Three Candidates</p>
+				<h2 id="transition-candidates-title">九種常用換頁比較</h2>
+				</div>
+				<p>請分別進入九張卡，再使用頁面返回連結或瀏覽器返回。頁面返回連結會播放對應效果；重新整理與直接網址仍須保持可用。</p>
+			</div>
+			<ol class="transition-demo-grid">
+				<li>
+					<article class="transition-demo-card">
+						<div class="transition-demo-visual"><span aria-hidden="true">○</span></div>
+						<div class="transition-demo-body">
+							<span>Baseline</span>
+							<h3>普通 MPA，無轉場</h3>
+							<p>前往未 opt-in 的既有活動詳情頁，瀏覽器完整載入新文件。</p>
+							<a href="/lab/events/starlight-birthday-project/">測試無轉場 →</a>
+						</div>
+					</article>
+				</li>
+				{transitionPrototypeModes.map((mode) => (
+					<li>
+						<article class="transition-demo-card">
+							<div class:list={['transition-demo-visual', { 'is-shared': mode.shared, 'is-stagger-visual': mode.effect === 'stagger' }]}><span aria-hidden="true">{mode.symbol}</span></div>
+							<div class="transition-demo-body">
+								<span>{mode.label}</span>
+								<h3 class:list={{ 'is-stagger-title': mode.effect === 'stagger' }}>{mode.title}</h3>
+								<p class:list={{ 'is-stagger-copy': mode.effect === 'stagger' }}>{mode.cardDescription}</p>
+								<a href={`/lab/transitions/${mode.slug}/`} data-circle-transition={mode.effect === 'circle' ? true : undefined}>測試{mode.title} →</a>
+							</div>
+						</article>
+					</li>
+				))}
+			</ol>
+		</section>
+
+		<section id="transition-decision" class="transition-section transition-decision" aria-labelledby="transition-decision-title">
+			<div>
+				<p class="lab-eyebrow">Recommended Contract</p>
+				<h2 id="transition-decision-title">建議採用原生 MPA View Transition</h2>
+			</div>
+			<div role="note">
+				<strong>長淡入為目前預設候選，共享元素只用在少數明確情境。</strong>
+				<p>目前不採用 <code>ClientRouter</code>：網站沒有必須跨頁持續的播放器或共享狀態，不值得為動畫改成客戶端路由並增加 script 重建、焦點與捲動管理成本。</p>
+				<p>所有後續 script 維持「每份文件初始化一次、初始化可重入、離頁可清理」的契約。</p>
+			</div>
+		</section>
+	</div>
+</LabLayout>
+
+<script>
+	const circleLink = document.querySelector<HTMLAnchorElement>('[data-circle-transition]');
+	circleLink?.addEventListener('pointerdown', (event) => {
+		const url = new URL(circleLink.href);
+		url.searchParams.set('x', ((event.clientX / window.innerWidth) * 100).toFixed(2));
+		url.searchParams.set('y', ((event.clientY / window.innerHeight) * 100).toFixed(2));
+		circleLink.href = url.toString();
+	});
+</script>
