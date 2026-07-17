@@ -1,6 +1,6 @@
 # 厄倫蒂兒好氣質網站－通用工作交接
 
-最後更新：2026-07-16（Asia/Taipei）
+最後更新：2026-07-18（Asia/Taipei）
 
 這是本專案跨電腦、跨 Codex 任務與跨工作階段的第一入口。接手者必須先讀本文件，再依「恢復工作流程」核對實際 Git 狀態；本文件的 Git 資訊是更新當下的快照，不可取代現場檢查。
 
@@ -11,12 +11,12 @@
 | 專案 | `earendel-so-elegant` |
 | Repository | `https://github.com/a5466a5466/earendel-so-elegant.git` |
 | 分支 | `master` |
-| HEAD | `b2f01f9 phase1 step7 done` |
+| HEAD | `068ee3e phase 0 step 14 done` |
 | 遠端 | `master` 與 `origin/master` 同步 |
-| 工作樹 | 有未提交變更：已完成的 Phase 1・Step 7 QA、架構基線與紀錄修正 |
+| 工作樹 | 有未提交變更：已完成並通過驗收的 Phase 1・Step 15 實作與紀錄 |
 | Phase 0 | Step 1～6 完成 |
-| Phase 1 | Step 1～14 完成；下一步為 Step 15・F17 按鍵音效 |
-| 下一步 | 使用者驗收 `/lab/youtube/` 並決定固定普通 iframe 或評估官方 IFrame API |
+| Phase 1 | Step 1～15 完成 |
+| 下一步 | 取得使用者指示後開始 Step 16・F22 分享與 QR |
 
 最近完成的 Phase 1 功能：
 
@@ -139,7 +139,7 @@ pnpm build
 先告訴我目前完成到哪個 Step、工作樹是否乾淨，以及下一個 Step 的範圍。
 ```
 
-## 6. 近期進度與下一步：Phase 1・Step 15
+## 6. 近期進度與下一步：Phase 1・Step 16
 
 Step 6 已由使用者驗收完成。最終決策為保留普通 Astro MPA 與原生 History，採用 native cross-document View Transition，不採用 ClientRouter。
 
@@ -166,7 +166,9 @@ Step 13・F14 YouTube 已於 2026-07-16 完成：Prototype 位於 `/lab/youtube/
 
 Step 14・F10 Audio Player 已於 2026-07-16 完成：Prototype 位於 `/lab/audio/`，以兩個本機生成的八秒 WAV 驗證播放／暫停、進度、單曲音量與曲目資訊。所有主要音源共用 `audio-manager.ts`，同時間最多播放一首；沿用全站音效偏好，預設 off、只能由使用者手勢啟動，切回 off 時立即暫停。播放器離開可視範圍、頁籤隱藏或 MPA pagehide 時亦暫停且不自動恢復。另有延遲要求不存在 WAV 的 failure fixture。Lab／production build、HTTP／MIME、初始無 autoplay、正式輸出隔離及使用者人工驗收均通過；固定採用原生 audio，現階段不需要真實波形或 WaveSurfer。
 
-下一步是 Step 15・F17 按鍵音效；應沿用 Step 14 的 audio manager 與全站音效偏好，驗證少量操作回饋，不為每個按鈕建立獨立 Audio 實例。
+Step 15・F17 按鍵音效已於 2026-07-18 完成：Prototype 位於 `/lab/sound-effects/`，以單一 effect channel 播放成功、取消與 hover 三種短 WAV，包含快速觸發節流、節能模式、持久靜音、同區重新開啟、頁首偏好同步及切頁清理。Lab／production build、正式輸出隔離與使用者人工驗收均通過；最終採用原生 Audio 與 Step 14 共用 manager，不安裝 Howler。
+
+下一步是 Step 16・F22 分享與 QR；開始前仍需由使用者確認範圍，預計比較 Web Share、Clipboard、靜態／動態 QR、下載與 API 不支援 fallback，不得自行加入 QR 套件。
 
 ## 7. 目前架構與重要限制
 

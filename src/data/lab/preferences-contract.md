@@ -37,6 +37,8 @@ html[data-performance='economy'] .optional-particle { display: none; }
 
 只有偏好控制 UI 可呼叫 `writeLabPreferences()`、`resetLabPreferences()` 與 `applyLabPreferences()`。所有套用結果都發送 `lab:preferences-change`，事件 detail 同時提供使用者設定、解析結果與來源。
 
+同一頁若有第二個經核准的偏好控制入口，仍必須透過上述 API 寫入；共用 `LabControls` 會監聽 `lab:preferences-change` 並同步下拉選單與摘要，不得讓頁首與頁面內控制顯示不同狀態。
+
 ## 優先序與 fallback
 
 - 動態：系統 reduced-motion 永遠可以把結果降為 reduce；站內設定不提供強迫完整動態的選項。

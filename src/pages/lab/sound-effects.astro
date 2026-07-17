@@ -1,0 +1,108 @@
+---
+import LabLayout from '../../layouts/LabLayout.astro';
+import LabPageHero from '../../components/lab/LabPageHero.astro';
+
+const audioBase = '/lab-assets/audio';
+---
+
+<LabLayout
+	title="Button Sound Effects Prototype｜功能實驗室"
+	description="Phase 1 Step 15：沿用共用 audio manager 驗證成功、取消、hover、快速連點與永久靜音。"
+	breadcrumbLabel="按鍵音效"
+>
+	<LabPageHero
+		eyebrow="Phase 1 · Step 15 · F17"
+		title="Button Sound Effects"
+		description="短音效只補充操作結果，不取代畫面與文字；三種聲音共用一個 channel，快速觸發不會堆疊音量。"
+		actions={[
+			{ label: '測試操作回饋', href: '#sound-actions' },
+			{ label: '測試限制與重設', href: '#sound-guardrails' },
+		]}
+		headingId="sound-effects-title"
+	/>
+
+	<div class="sound-effects-main" data-sound-effects-lab>
+		<audio
+			preload="none"
+			data-sound-effect-channel
+			data-success-src={`${audioBase}/effect-success.wav`}
+			data-cancel-src={`${audioBase}/effect-cancel.wav`}
+			data-hover-src={`${audioBase}/effect-hover.wav`}
+			aria-hidden="true"
+		></audio>
+
+		<section class="sound-effects-overview" aria-labelledby="sound-overview-title">
+			<div>
+				<p class="lab-eyebrow">Shared Effect Channel</p>
+				<h2 id="sound-overview-title">一個 channel，三種短回饋</h2>
+				<p>先在頁首實驗控制器把音效改為開啟。初始載入、重新整理與偏好切換都不會自行播放。</p>
+			</div>
+			<dl>
+				<div><dt>成功</dt><dd>0.24 秒</dd></div>
+				<div><dt>取消</dt><dd>0.20 秒</dd></div>
+				<div><dt>Hover</dt><dd>0.09 秒</dd></div>
+				<div><dt>同時播放</dt><dd>最多 1 個</dd></div>
+			</dl>
+		</section>
+
+		<section id="sound-actions" class="sound-effects-section" aria-labelledby="sound-actions-title">
+			<div class="sound-effects-heading">
+				<div><p class="lab-eyebrow">Action Feedback</p><h2 id="sound-actions-title">聲音不是唯一提示</h2></div>
+				<div>
+					<p>成功與取消都會先更新可見文字，再嘗試播放聲音。即使靜音、節流或播放失敗，操作結果仍清楚。</p>
+					<p class="sound-effects-status" data-sound-effects-status aria-live="polite">正在讀取全站音效偏好。</p>
+				</div>
+			</div>
+
+			<div class="sound-action-grid">
+				<article class="sound-action-card is-success">
+					<p class="lab-eyebrow">Confirm</p>
+					<h3>保存星光留言</h3>
+					<p>明確點擊後播放短促上行音；hover 只有在先前已互動且非節能模式時才播放。</p>
+					<button type="button" data-sound-effect="success">確認保存</button>
+				</article>
+				<article class="sound-action-card is-cancel">
+					<p class="lab-eyebrow">Cancel</p>
+					<h3>放棄本次修改</h3>
+					<p>取消同樣提供文字結果，聲音是較短的下行提示，不使用刺耳警告音。</p>
+					<button type="button" data-sound-effect="cancel">取消修改</button>
+				</article>
+			</div>
+
+			<div class="sound-result-panel" role="status">
+				<div><span>操作次數</span><strong data-sound-effects-count>0</strong></div>
+				<p data-sound-effects-result data-tone="neutral">尚未執行操作；靜音時也能從這裡確認結果。</p>
+			</div>
+			<noscript><p class="sound-effects-noscript">JavaScript 已關閉；按鍵音效不會播放，但所有說明與控制內容仍可閱讀。</p></noscript>
+		</section>
+
+		<section id="sound-guardrails" class="sound-effects-section sound-guardrails" aria-labelledby="sound-guardrails-title">
+			<div><p class="lab-eyebrow">Guardrails</p><h2 id="sound-guardrails-title">節流、節能、永久關閉</h2></div>
+			<div class="sound-guardrail-list">
+				<article>
+					<span>01</span><div><h3>快速連點不疊音</h3><p>模擬五次、每次相隔 35ms；單一 channel 只會重啟，70ms 節流會略過過密要求。</p><button type="button" data-sound-rapid>執行快速觸發</button></div>
+				</article>
+				<article>
+					<span>02</span><div><h3>節能模式略過 hover</h3><p>效能結果為「節能」時，只保留成功與取消等明確操作，不播放滑入提示。</p></div>
+				</article>
+				<article>
+					<span>03</span><div><h3>記住關閉，也能隨時重開</h3><p>關閉狀態會保存，但同一按鈕會立即變成「重新開啟音效」；兩個方向都使用既有 F26 偏好 API，不建立第二個儲存鍵。</p><div class="sound-preference-actions"><button type="button" data-sound-disable>讀取音效設定中</button><button type="button" data-sound-reset>重設所有偏好</button></div></div>
+				</article>
+			</div>
+		</section>
+
+		<section class="sound-effects-decision" aria-labelledby="sound-decision-title">
+			<div><p class="lab-eyebrow">Integration Decision</p><h2 id="sound-decision-title">目前不需要 Howler</h2></div>
+			<div role="note">
+				<strong>原生 Audio 與既有 manager 足夠。</strong>
+				<p>三種短音效、偏好同步、快速觸發節流、節能降級與切頁清理都能由小型共用管理器處理。</p>
+				<p>正式站只應在少量高價值操作使用聲音；一般導覽與每次 hover 不應全面加音效。</p>
+			</div>
+		</section>
+	</div>
+</LabLayout>
+
+<script>
+	import { initializeSoundEffectsLab } from '../../scripts/lab/sound-effects';
+	initializeSoundEffectsLab();
+</script>

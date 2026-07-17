@@ -188,8 +188,7 @@ export const initializeLabPreferences = () => {
 		if (pointerOutput) pointerOutput.textContent = labelForPointer(coarsePointerQuery.matches, hoverQuery.matches);
 	};
 
-	const renderPreferences = (source: LabPreferencesChangeSource, announcement?: string) => {
-		const snapshot = applyLabPreferences(preferences, source);
+	const renderSnapshot = (snapshot: LabPreferencesSnapshot, announcement?: string) => {
 		motionSelect.value = snapshot.preferences.motion;
 		soundSelect.value = snapshot.preferences.sound;
 		performanceSelect.value = snapshot.preferences.performance;
@@ -207,6 +206,10 @@ export const initializeLabPreferences = () => {
 			summaryOutput.textContent = `${motionLabel} · ${soundLabel} · ${performanceLabel}`;
 		}
 		if (announcement && statusOutput) statusOutput.textContent = announcement;
+	};
+	const renderPreferences = (source: LabPreferencesChangeSource, announcement?: string) => {
+		const snapshot = applyLabPreferences(preferences, source);
+		renderSnapshot(snapshot, announcement);
 	};
 
 	const handleFormChange = () => {
@@ -229,6 +232,14 @@ export const initializeLabPreferences = () => {
 		preferences = readLabPreferences();
 		renderPreferences('storage', '偏好已由另一個頁面同步。');
 	};
+	const handleSamePagePreferenceChange: EventListener = (event) => {
+		const detail = (event as CustomEvent<LabPreferencesChangeDetail>).detail;
+		if (!detail) return;
+		preferences = { ...detail.preferences };
+		renderSnapshot(detail, detail.source === 'api' || detail.source === 'control'
+			? '實驗室偏好已由同頁控制同步。'
+			: undefined);
+	};
 	const scheduleDeviceUpdate = () => {
 		cancelAnimationFrame(resizeFrame);
 		resizeFrame = requestAnimationFrame(updateDeviceInformation);
@@ -240,6 +251,7 @@ export const initializeLabPreferences = () => {
 	coarsePointerQuery.addEventListener('change', updateDeviceInformation);
 	hoverQuery.addEventListener('change', updateDeviceInformation);
 	window.addEventListener('storage', handleStorageChange);
+	window.addEventListener(LAB_PREFERENCES_CHANGE_EVENT, handleSamePagePreferenceChange);
 	window.addEventListener('resize', scheduleDeviceUpdate, { passive: true });
 	window.visualViewport?.addEventListener('resize', scheduleDeviceUpdate, { passive: true });
 
@@ -257,6 +269,7 @@ export const initializeLabPreferences = () => {
 			coarsePointerQuery.removeEventListener('change', updateDeviceInformation);
 			hoverQuery.removeEventListener('change', updateDeviceInformation);
 			window.removeEventListener('storage', handleStorageChange);
+			window.removeEventListener(LAB_PREFERENCES_CHANGE_EVENT, handleSamePagePreferenceChange);
 			window.removeEventListener('resize', scheduleDeviceUpdate);
 			window.visualViewport?.removeEventListener('resize', scheduleDeviceUpdate);
 			delete controls.dataset.ready;

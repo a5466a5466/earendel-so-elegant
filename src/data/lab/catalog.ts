@@ -33,6 +33,7 @@ export const labNavigation: LabNavigationItem[] = [
 	{ label: 'Video', href: '/lab/video/' },
 	{ label: 'YouTube', href: '/lab/youtube/' },
 	{ label: 'Audio', href: '/lab/audio/' },
+	{ label: '按鍵音效', href: '/lab/sound-effects/' },
 	{ label: '紀錄模板', href: '/lab/record-template/' },
 ];
 
@@ -84,10 +85,10 @@ export const phaseZeroSteps: LabPhaseStep[] = [
 ];
 
 export const nextExperiment = {
-	id: 'F10',
-	title: 'Audio Player',
+	id: 'F22',
+	title: '分享與 QR',
 	description:
-		'Phase 1・Step 14 以原生 audio 與共用 manager 驗證互斥播放、全站靜音偏好、生命週期與失效降級。',
+		'下一步將驗證 Web Share、複製連結、下載 QR 與不支援 API 時的可靠 fallback。',
 };
 
 export const normalizeLabPath = (path: string) => {
