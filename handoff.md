@@ -11,12 +11,12 @@
 | 專案 | `earendel-so-elegant` |
 | Repository | `https://github.com/a5466a5466/earendel-so-elegant.git` |
 | 分支 | `master` |
-| HEAD | `0f4dd70 phase 1 step 15 done` |
+| HEAD | `1a7344f phase 1 step 16 done` |
 | 遠端 | `master` 與 `origin/master` 同步 |
-| 工作樹 | 有未提交變更：Phase 1・Step 16 實作、樣式、紀錄與正式輸出隔離設定 |
+| 工作樹 | 有未提交變更：Phase 1・Step 17 實作、樣式、紀錄與正式輸出隔離設定 |
 | Phase 0 | Step 1～6 完成 |
-| Phase 1 | Step 1～16 完成 |
-| 下一步 | 取得使用者指示後開始 Step 17・F19 搜尋、標籤與篩選 |
+| Phase 1 | Step 1～17 完成 |
+| 下一步 | 取得使用者指示後開始 Step 18・Phase 1B 整合 QA 與 Phase 1 結案 |
 
 最近完成的 Phase 1 功能：
 
@@ -49,6 +49,7 @@ Astro功能實驗室－Phase1-Step5-F23.md
 Astro功能實驗室－Phase1-Step6-F04.md
 Astro功能實驗室－Phase1-Step15-F17.md
 Astro功能實驗室－Phase1-Step16-F22.md
+Astro功能實驗室－Phase1-Step17-F19.md
 ```
 
 共用技術契約：
@@ -141,7 +142,7 @@ pnpm build
 先告訴我目前完成到哪個 Step、工作樹是否乾淨，以及下一個 Step 的範圍。
 ```
 
-## 6. 近期進度與下一步：Phase 1・Step 17
+## 6. 近期進度與下一步：Phase 1・Step 18
 
 Step 6 已由使用者驗收完成。最終決策為保留普通 Astro MPA 與原生 History，採用 native cross-document View Transition，不採用 ClientRouter。
 
@@ -172,7 +173,9 @@ Step 15・F17 按鍵音效已於 2026-07-18 完成：Prototype 位於 `/lab/soun
 
 Step 16・F22 已於 2026-07-19 完成：Prototype 位於 `/lab/share/`，以原生 Web Share、Clipboard 與手動選取建立漸進增強流程，包含不支援、取消、未知錯誤、活動深層連結與特殊字元 fixture。Lab／production build、390px RWD、互動訊息、控制台、正式輸出隔離及使用者人工驗收均通過。最終採用原生 API；QR 因正式網域及實體使用情境尚未固定而延後，未安裝套件。
 
-下一步是 Step 17・F19 搜尋、標籤與篩選；開始前仍需由使用者確認範圍，預計以既有活動 schema 建立原生搜尋與篩選基線，驗證 URL 狀態、空結果、鍵盤與資料量，再判斷是否值得加入 Pagefind。
+Step 17・F19 已於 2026-07-20 完成：Prototype 位於 `/lab/search/`，直接沿用 events Content Collection，以原生表單與 History API 實作關鍵字、年份、標籤、媒體、組合條件、結果數、無結果、清除與 URL 狀態。直接網址、重新整理、返回鍵、360px RWD、無 JavaScript 完整列表、Lab／production build、控制台、正式輸出隔離及使用者人工驗收均通過。最終維持原生方案；三筆資料不足以導入 Pagefind，不安裝套件。
+
+下一步是 Step 18・Phase 1B 整合 QA 與 Phase 1 結案；開始前仍需由使用者確認。範圍包含回歸 Step 1～17、360／768／1440px 與鍵盤底線、快速切頁及媒體清理、Lab／正式雙模式建置、noindex／Sitemap／dependency 檢查、決策彙整與 Phase 2 前置條件。
 
 ## 7. 目前架構與重要限制
 

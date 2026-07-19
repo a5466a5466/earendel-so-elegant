@@ -35,6 +35,7 @@ export const labNavigation: LabNavigationItem[] = [
 	{ label: 'Audio', href: '/lab/audio/' },
 	{ label: '按鍵音效', href: '/lab/sound-effects/' },
 	{ label: '分享與 QR', href: '/lab/share/' },
+	{ label: '搜尋與篩選', href: '/lab/search/' },
 	{ label: '紀錄模板', href: '/lab/record-template/' },
 ];
 
@@ -86,10 +87,10 @@ export const phaseZeroSteps: LabPhaseStep[] = [
 ];
 
 export const nextExperiment = {
-	id: 'F19',
-	title: '搜尋與篩選',
+	id: 'QA',
+	title: 'Phase 1 整合 QA',
 	description:
-		'下一步將以既有活動資料驗證原生搜尋、標籤、空結果與 URL 狀態，並判斷目前資料量是否需要 Pagefind。',
+		'下一步將回歸 Step 1～17 的資料、導覽、媒體、偏好、分享與搜尋，完成雙模式建置、決策彙整與 Phase 1 交接。',
 };
 
 export const normalizeLabPath = (path: string) => {

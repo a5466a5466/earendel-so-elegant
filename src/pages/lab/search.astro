@@ -1,0 +1,143 @@
+---
+import { getCollection } from 'astro:content';
+import LabLayout from '../../layouts/LabLayout.astro';
+import LabPageHero from '../../components/lab/LabPageHero.astro';
+import OptimizedEventImage from '../../components/lab/OptimizedEventImage.astro';
+
+const labContentEnabled = import.meta.env.DEV || import.meta.env.MODE === 'lab';
+const events = (labContentEnabled ? await getCollection('events') : []).sort(
+	(a, b) => b.data.date.getTime() - a.data.date.getTime(),
+);
+const years = [...new Set(events.map((event) => String(event.data.date.getFullYear())))].sort().reverse();
+const tags = [...new Set(events.flatMap((event) => event.data.tags ?? []))].sort((a, b) => a.localeCompare(b, 'zh-Hant'));
+const mediaLabels: Record<string, string> = {
+	gallery: '圖片 Gallery',
+	video: '影片',
+	audio: '音訊',
+	social: '社群連結',
+};
+const mediaKindsFor = (event: (typeof events)[number]) => [
+	event.data.gallery.length > 0 && 'gallery',
+	event.data.videos.length > 0 && 'video',
+	event.data.audio.length > 0 && 'audio',
+	event.data.socialPosts.length > 0 && 'social',
+].filter((kind): kind is string => Boolean(kind));
+const availableMediaKinds = Object.keys(mediaLabels).filter((kind) =>
+	events.some((event) => mediaKindsFor(event).includes(kind)),
+);
+const formatDate = new Intl.DateTimeFormat('zh-Hant-TW', {
+	year: 'numeric',
+	month: 'long',
+	day: 'numeric',
+});
+---
+
+<LabLayout
+	title="Search & Filter Prototype｜功能實驗室"
+	description="Phase 1 Step 17：驗證原生關鍵字搜尋、年份、標籤、媒體篩選、URL 狀態與無結果 fallback。"
+	breadcrumbLabel="搜尋與篩選"
+>
+	<LabPageHero
+		eyebrow="Phase 1 · Step 17 · F19"
+		title="Search, Tags & Filters"
+		description="以 Content Collection 的三筆活動建立原生搜尋基線；條件寫入 URL，重新整理與返回鍵都能恢復。"
+		actions={[
+			{ label: '開始篩選', href: '#search-controls' },
+			{ label: '查看套件決策', href: '#search-decision' },
+		]}
+		headingId="search-title"
+	/>
+
+	<div class="search-lab-main" data-search-lab>
+		<section class="search-overview" aria-labelledby="search-overview-title">
+			<div>
+				<p class="lab-eyebrow">Collection Baseline</p>
+				<h2 id="search-overview-title">資料少，也要先把狀態做對</h2>
+				<p>目前只有三筆活動且都在 2026 年；本頁驗證互動與 URL 契約，不用大型搜尋索引假裝資料很多。</p>
+			</div>
+			<dl>
+				<div><dt>活動</dt><dd>{events.length} 筆</dd></div>
+				<div><dt>年份</dt><dd>{years.length} 種</dd></div>
+				<div><dt>標籤</dt><dd>{tags.length} 個</dd></div>
+				<div><dt>Dependency</dt><dd>0 個</dd></div>
+			</dl>
+		</section>
+
+		<section id="search-controls" class="search-workspace" aria-labelledby="search-controls-title">
+			<div class="search-section-heading">
+				<div><p class="lab-eyebrow">Native Form + URL</p><h2 id="search-controls-title">搜尋活動資料</h2></div>
+				<p>關鍵字輸入會取代目前 URL 狀態；選單與清除動作會新增 History，方便用瀏覽器返回鍵比較條件。</p>
+			</div>
+
+			<details class="search-filter-panel" open>
+				<summary>搜尋與篩選條件</summary>
+				<form action="/lab/search/" method="get" data-search-form>
+					<label class="search-query-field">
+						<span>關鍵字</span>
+						<input type="search" name="q" placeholder="例如：生日、信箋、留言" autocomplete="off" data-search-query />
+					</label>
+					<label><span>年份</span><select name="year" data-search-year><option value="">全部年份</option>{years.map((year) => <option value={year}>{year}</option>)}</select></label>
+					<label><span>標籤</span><select name="tag" data-search-tag><option value="">全部標籤</option>{tags.map((tag) => <option value={tag}>{tag}</option>)}</select></label>
+					<label><span>媒體類型</span><select name="media" data-search-media><option value="">全部媒體</option>{availableMediaKinds.map((kind) => <option value={kind}>{mediaLabels[kind]}</option>)}</select></label>
+					<div class="search-form-actions">
+						<button type="submit">套用條件</button>
+						<button type="reset" data-search-reset>清除全部</button>
+					</div>
+				</form>
+			</details>
+
+			<div class="search-results-header">
+				<div><p data-search-count role="status" aria-live="polite">共 {events.length} 筆結果</p><p data-search-summary>目前顯示全部活動。</p></div>
+				<noscript><p>JavaScript 已關閉，因此不套用篩選；下方仍顯示完整活動列表。</p></noscript>
+			</div>
+
+			<div class="search-empty" data-search-empty hidden role="note">
+				<p class="lab-eyebrow">No Results</p>
+				<h3>沒有符合條件的活動</h3>
+				<p>請縮短關鍵字、改用其他標籤，或按「清除全部」回到完整列表。</p>
+			</div>
+
+			<ol class="search-result-grid">
+				{events.map((event) => {
+					const mediaKinds = mediaKindsFor(event);
+					const searchableText = [event.data.title, event.data.summary, event.data.theme, ...event.data.tags, ...mediaKinds.map((kind) => mediaLabels[kind])].join(' ');
+					return (
+						<li
+							data-search-item
+							data-year={String(event.data.date.getFullYear())}
+							data-tags={JSON.stringify(event.data.tags ?? [])}
+							data-media={JSON.stringify(mediaKinds)}
+							data-search-text={searchableText}
+						>
+							<article class="event-card search-result-card">
+								<a class="event-card-cover" href={`/lab/events/${event.data.slug}/`} aria-label={`查看${event.data.title}`}>
+									<OptimizedEventImage src={event.data.cover} fallbackSrc={event.data.fallbackCover} alt={event.data.coverAlt} position={event.data.coverPosition} variant="card" />
+								</a>
+								<div class="event-card-body">
+									<div class="event-card-meta"><time datetime={event.data.date.toISOString().slice(0, 10)}>{formatDate.format(event.data.date)}</time>{event.data.featured && <span>Featured</span>}</div>
+									<h3><a href={`/lab/events/${event.data.slug}/`}>{event.data.title}</a></h3>
+									<p>{event.data.summary}</p>
+									<ul class="event-tags" aria-label={`${event.data.title}標籤`}>{event.data.tags.map((tag) => <li>{tag}</li>)}</ul>
+									<p class="search-media-list">{mediaKinds.length > 0 ? mediaKinds.map((kind) => mediaLabels[kind]).join(' · ') : '純文字活動'}</p>
+								</div>
+							</article>
+						</li>
+					);
+				})}
+			</ol>
+		</section>
+
+		<section id="search-decision" class="search-decision" aria-labelledby="search-decision-title">
+			<div><p class="lab-eyebrow">Package Gate</p><h2 id="search-decision-title">Pagefind 現在沒有投入價值</h2></div>
+			<div>
+				<strong>暫定採用原生篩選；Pagefind 延後。</strong>
+				<p>三筆結構化活動可以直接在瀏覽器過濾，不需要建立全文索引。等內容超過約 20 筆、需要跨頁內文搜尋、詞彙權重或分頁結果時，再另開 dependency 核准。</p>
+			</div>
+		</section>
+	</div>
+</LabLayout>
+
+<script>
+	import { initializeSearchLab } from '../../scripts/lab/search';
+	initializeSearchLab();
+</script>
