@@ -11,12 +11,12 @@
 | 專案 | `earendel-so-elegant` |
 | Repository | `https://github.com/a5466a5466/earendel-so-elegant.git` |
 | 分支 | `master` |
-| HEAD | `068ee3e phase 0 step 14 done` |
+| HEAD | `0f4dd70 phase 1 step 15 done` |
 | 遠端 | `master` 與 `origin/master` 同步 |
-| 工作樹 | 有未提交變更：已完成並通過驗收的 Phase 1・Step 15 實作與紀錄 |
+| 工作樹 | 有未提交變更：Phase 1・Step 16 實作、樣式、紀錄與正式輸出隔離設定 |
 | Phase 0 | Step 1～6 完成 |
-| Phase 1 | Step 1～15 完成 |
-| 下一步 | 取得使用者指示後開始 Step 16・F22 分享與 QR |
+| Phase 1 | Step 1～16 完成 |
+| 下一步 | 取得使用者指示後開始 Step 17・F19 搜尋、標籤與篩選 |
 
 最近完成的 Phase 1 功能：
 
@@ -47,6 +47,8 @@ Astro功能實驗室－Phase1-Step3-F26.md
 Astro功能實驗室－Phase1-Step4-F03.md
 Astro功能實驗室－Phase1-Step5-F23.md
 Astro功能實驗室－Phase1-Step6-F04.md
+Astro功能實驗室－Phase1-Step15-F17.md
+Astro功能實驗室－Phase1-Step16-F22.md
 ```
 
 共用技術契約：
@@ -139,7 +141,7 @@ pnpm build
 先告訴我目前完成到哪個 Step、工作樹是否乾淨，以及下一個 Step 的範圍。
 ```
 
-## 6. 近期進度與下一步：Phase 1・Step 16
+## 6. 近期進度與下一步：Phase 1・Step 17
 
 Step 6 已由使用者驗收完成。最終決策為保留普通 Astro MPA 與原生 History，採用 native cross-document View Transition，不採用 ClientRouter。
 
@@ -168,7 +170,9 @@ Step 14・F10 Audio Player 已於 2026-07-16 完成：Prototype 位於 `/lab/aud
 
 Step 15・F17 按鍵音效已於 2026-07-18 完成：Prototype 位於 `/lab/sound-effects/`，以單一 effect channel 播放成功、取消與 hover 三種短 WAV，包含快速觸發節流、節能模式、持久靜音、同區重新開啟、頁首偏好同步及切頁清理。Lab／production build、正式輸出隔離與使用者人工驗收均通過；最終採用原生 Audio 與 Step 14 共用 manager，不安裝 Howler。
 
-下一步是 Step 16・F22 分享與 QR；開始前仍需由使用者確認範圍，預計比較 Web Share、Clipboard、靜態／動態 QR、下載與 API 不支援 fallback，不得自行加入 QR 套件。
+Step 16・F22 已於 2026-07-19 完成：Prototype 位於 `/lab/share/`，以原生 Web Share、Clipboard 與手動選取建立漸進增強流程，包含不支援、取消、未知錯誤、活動深層連結與特殊字元 fixture。Lab／production build、390px RWD、互動訊息、控制台、正式輸出隔離及使用者人工驗收均通過。最終採用原生 API；QR 因正式網域及實體使用情境尚未固定而延後，未安裝套件。
+
+下一步是 Step 17・F19 搜尋、標籤與篩選；開始前仍需由使用者確認範圍，預計以既有活動 schema 建立原生搜尋與篩選基線，驗證 URL 狀態、空結果、鍵盤與資料量，再判斷是否值得加入 Pagefind。
 
 ## 7. 目前架構與重要限制
 

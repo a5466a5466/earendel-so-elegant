@@ -1,7 +1,7 @@
 # Astro 功能實驗室 Phase 1・執行計畫與紀錄
 
 - 建立日期：2026-07-15
-- 目前狀態：Step 1～15 已完成；下一步為 Step 16・F22 分享與 QR
+- 目前狀態：Step 1～16 已完成；下一步為 Step 17・F19 搜尋、標籤與篩選
 - 前置狀態：Phase 0・Step 1～Step 6 已完成並由使用者驗收
 - 依據文件：`厄倫蒂兒粉絲應援網站－開發計畫書.md`、`Astro功能實驗室－企劃書.md`、`Astro功能實驗室－Phase0-Step6-QA.md`
 
@@ -144,7 +144,7 @@
 | 13 | 1B | F14 YouTube 影片嵌入 | Step 6、12 | 0.5～1 天 | 未開始 |
 | 14 | 1B | F10 Audio Player | Step 3、7 | 1～2 天 | 完成 |
 | 15 | 1B | F17 按鍵音效 | Step 3、14 | 0.5～1 天 | 完成 |
-| 16 | 1B | F22 分享、複製連結與 QR Code | Step 1、4、7 | 0.5～1 天 | 未開始 |
+| 16 | 1B | F22 分享、複製連結與 QR Code | Step 1、4、7 | 0.5～1 天 | 完成 |
 | 17 | 1B | F19 搜尋、標籤與篩選 | Step 1、4、7 | 1～2 天 | 未開始 |
 | 18 | 1B | Phase 1B 整合 QA 與 Phase 1 結案 | Step 8～17 | 1～2 天 | 未開始 |
 
@@ -606,6 +606,8 @@ Step 6 已完成普通 MPA 與九種原生 cross-document View Transition 比較
 
 Step 15 已完成單一短音效 channel、成功／取消／hover 三種 WAV、快速觸發節流、節能模式、可逆的持久靜音與偏好重設。驗收期間依使用者回饋補上同區重新開啟入口與 LabControls 同頁同步；技術、建置及使用者人工驗收均通過，最終採用原生 Audio 與共用 manager，不安裝 Howler。詳細結果記錄於 `Astro功能實驗室－Phase1-Step15-F17.md`。
 
+Step 16 已完成 Web Share、Clipboard、手動選取、深層連結、特殊字元與錯誤／取消 fallback。Lab／正式建置、390px RWD、互動狀態、正式輸出隔離及使用者人工驗收均通過；最終採用原生 API，QR 因正式網址與實體情境未固定而延後。詳細結果記錄於 `Astro功能實驗室－Phase1-Step16-F22.md`。
+
 | Step | 狀態 | 開始日期 | 完成日期 | 決策／摘要 | 詳細紀錄 |
 |---:|---|---|---|---|---|
 | 1 | 完成 | 2026-07-15 | 2026-07-15 | 3 筆活動、列表／詳情頁、schema 驗證與人工驗收均通過 | `Astro功能實驗室－Phase1-Step1-F18.md` |
@@ -623,7 +625,7 @@ Step 15 已完成單一短音效 channel、成功／取消／hover 三種 WAV、
 | 13 | 完成 | 2026-07-16 | 2026-07-16 | 點擊後載入的隱私增強 iframe、單一播放器、60 秒起播與 fallback 均通過技術及人工驗收 | `Astro功能實驗室－Phase1-Step13-F14.md` |
 | 14 | 完成 | 2026-07-16 | 2026-07-16 | 原生 audio、共用 manager、互斥播放、偏好、生命週期與人工驗收均通過 | `Astro功能實驗室－Phase1-Step14-F10.md` |
 | 15 | 完成 | 2026-07-18 | 2026-07-18 | 單一 effect channel、三種短音效、節流、節能、可逆持久靜音與人工驗收均通過 | `Astro功能實驗室－Phase1-Step15-F17.md` |
-| 16 | 未開始 |  |  | F22 分享與 QR | 本文件 Step 16 |
+| 16 | 完成 | 2026-07-18 | 2026-07-19 | 原生 Web Share／Clipboard／手動 fallback 與人工驗收均通過；QR 延後 | `Astro功能實驗室－Phase1-Step16-F22.md` |
 | 17 | 未開始 |  |  | F19 搜尋與篩選 | 本文件 Step 17 |
 | 18 | 未開始 |  |  | Phase 1B QA／Phase 1 結案 | 本文件 Step 18 |
 

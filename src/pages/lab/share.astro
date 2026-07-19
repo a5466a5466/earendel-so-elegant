@@ -1,0 +1,124 @@
+---
+import LabLayout from '../../layouts/LabLayout.astro';
+import LabPageHero from '../../components/lab/LabPageHero.astro';
+
+const sharePath = '/lab/events/starlight-birthday-project/';
+const shareTitle = '星光生日應援｜厄倫蒂兒好氣質';
+const shareText = '一起回顧寫給厄倫蒂兒的生日星光與祝福 ✦';
+---
+
+<LabLayout
+	title="Share & QR Prototype｜功能實驗室"
+	description="Phase 1 Step 16：驗證 Web Share、Clipboard、手動複製、深層連結與 QR 決策。"
+	breadcrumbLabel="分享與 QR"
+>
+	<LabPageHero
+		eyebrow="Phase 1 · Step 16 · F22"
+		title="Share, Copy & QR"
+		description="手機優先使用系統分享；不支援或失敗時仍能複製、手動選取並直接開啟活動深層連結。"
+		actions={[
+			{ label: '測試分享流程', href: '#share-actions' },
+			{ label: '查看 QR 決策', href: '#qr-decision' },
+		]}
+		headingId="share-title"
+	/>
+
+	<div
+		class="share-lab-main"
+		data-share-lab
+		data-share-path={sharePath}
+		data-share-title={shareTitle}
+		data-share-text={shareText}
+	>
+		<section class="share-overview" aria-labelledby="share-overview-title">
+			<div>
+				<p class="lab-eyebrow">Progressive Enhancement</p>
+				<h2 id="share-overview-title">分享失敗，連結仍然存在</h2>
+				<p>系統分享與剪貼簿都是增強功能；活動網址、標題和摘要先以可閱讀內容輸出，不把主要路徑綁在瀏覽器 API 上。</p>
+			</div>
+			<dl>
+				<div><dt>標題</dt><dd>活動＋站名</dd></div>
+				<div><dt>摘要</dt><dd>純文字</dd></div>
+				<div><dt>網址</dt><dd>深層連結</dd></div>
+				<div><dt>Fallback</dt><dd>複製／選取</dd></div>
+			</dl>
+		</section>
+
+		<section id="share-actions" class="share-section" aria-labelledby="share-actions-title">
+			<div class="share-section-heading">
+				<div><p class="lab-eyebrow">Primary Actions</p><h2 id="share-actions-title">一份 payload，三條出口</h2></div>
+				<div>
+					<p>手機可開系統分享面板；桌機或不支援環境改為複製。Clipboard 被阻擋時，網址欄會自動聚焦並選取。</p>
+					<p class="share-support" data-share-support>正在檢查瀏覽器能力。</p>
+				</div>
+			</div>
+
+			<div class="share-card">
+				<div class="share-preview" aria-label="分享內容預覽">
+					<p class="lab-eyebrow">Share Payload</p>
+					<h3>{shareTitle}</h3>
+					<p>{shareText}</p>
+					<code>{sharePath}</code>
+				</div>
+				<div class="share-controls">
+					<label>
+						<span>測試情境</span>
+						<select data-share-test-mode>
+							<option value="auto">真實瀏覽器能力</option>
+							<option value="unsupported">模擬不支援</option>
+							<option value="cancelled">模擬使用者取消</option>
+							<option value="failed">模擬未知錯誤</option>
+						</select>
+					</label>
+					<div class="share-primary-actions">
+						<button type="button" data-share-system>使用系統分享</button>
+						<button type="button" data-share-copy>複製活動連結</button>
+					</div>
+					<label class="share-url-field">
+						<span>手動複製 fallback</span>
+						<input type="text" readonly data-share-url aria-label="活動分享網址" />
+					</label>
+					<p class="share-status" data-share-status data-tone="neutral" role="status">尚未執行分享。</p>
+				</div>
+			</div>
+			<noscript><p class="share-noscript">JavaScript 已關閉；請使用下方直接連結開啟活動頁，再從瀏覽器網址列複製。</p></noscript>
+		</section>
+
+		<section class="share-section share-special" aria-labelledby="share-special-title">
+			<div><p class="lab-eyebrow">URL Integrity</p><h2 id="share-special-title">特殊字元不手動拼接</h2><p>Prototype 使用 `URL` 與 `searchParams` 產生繁中、`&`、`?`、`#` 等測試值，避免錯誤 escaping。</p></div>
+			<div class="share-special-card">
+				<label><span>編碼後網址</span><input type="text" readonly data-share-special-url aria-label="特殊字元測試網址" /></label>
+				<div><button type="button" data-share-special-copy>複製特殊字元網址</button><a href={sharePath} data-share-direct-link>直接開啟並驗證</a></div>
+			</div>
+		</section>
+
+		<section id="qr-decision" class="share-section qr-decision" aria-labelledby="qr-decision-title">
+			<div><p class="lab-eyebrow">QR Decision Gate</p><h2 id="qr-decision-title">QR 暫時延後</h2></div>
+			<div class="qr-decision-card" role="note">
+				<strong>現在不產生 QR，也不安裝套件。</strong>
+				<p>正式網域尚未確定；目前 QR 只能指向 localhost 或臨時網址，印出後無法可靠更新。等活動現場、印刷物或跨裝置需求成立，再以正式 canonical URL 比較 build-time SVG 與小型套件。</p>
+				<ul>
+					<li>正式網址與 redirect 政策先固定。</li>
+					<li>確認是否需要下載 SVG／PNG 及品牌留白。</li>
+					<li>以實體手機測試尺寸、對比、錯誤修正與印刷距離。</li>
+				</ul>
+			</div>
+		</section>
+
+		<section class="share-og" aria-labelledby="share-og-title">
+			<div><p class="lab-eyebrow">Open Graph Contract</p><h2 id="share-og-title">本 Step 只定義素材需求</h2></div>
+			<dl>
+				<div><dt>og:title</dt><dd>活動名稱＋網站名稱</dd></div>
+				<div><dt>og:description</dt><dd>不依賴 emoji 才能理解的摘要</dd></div>
+				<div><dt>og:image</dt><dd>1200 × 630、含安全留白與授權紀錄</dd></div>
+				<div><dt>canonical</dt><dd>正式 HTTPS 活動深層連結</dd></div>
+			</dl>
+			<p>Facebook、X、LINE、Discord 等平台的實際抓取快取與圖片裁切，留待正式網域及 OG 圖完成後另行 QA。</p>
+		</section>
+	</div>
+</LabLayout>
+
+<script>
+	import { initializeShareLab } from '../../scripts/lab/share';
+	initializeShareLab();
+</script>

@@ -34,6 +34,7 @@ export const labNavigation: LabNavigationItem[] = [
 	{ label: 'YouTube', href: '/lab/youtube/' },
 	{ label: 'Audio', href: '/lab/audio/' },
 	{ label: '按鍵音效', href: '/lab/sound-effects/' },
+	{ label: '分享與 QR', href: '/lab/share/' },
 	{ label: '紀錄模板', href: '/lab/record-template/' },
 ];
 
@@ -85,10 +86,10 @@ export const phaseZeroSteps: LabPhaseStep[] = [
 ];
 
 export const nextExperiment = {
-	id: 'F22',
-	title: '分享與 QR',
+	id: 'F19',
+	title: '搜尋與篩選',
 	description:
-		'下一步將驗證 Web Share、複製連結、下載 QR 與不支援 API 時的可靠 fallback。',
+		'下一步將以既有活動資料驗證原生搜尋、標籤、空結果與 URL 狀態，並判斷目前資料量是否需要 Pagefind。',
 };
 
 export const normalizeLabPath = (path: string) => {
