@@ -27,7 +27,7 @@ const stop = onLabPreferencesChange((detail) => {
 // 元件卸載或頁面替換時呼叫 stop()。
 ```
 
-純 CSS 功能只讀取 `html[data-motion='reduce']`、`html[data-sound='off']` 與 `html[data-performance='economy']`。Astro 伺服器端輸出使用 Layout 的安全預設，不在 frontmatter 存取瀏覽器 API。
+動態設定提供 `system`、`full`、`reduce`：`system` 跟隨 `prefers-reduced-motion`，`full` 是使用者明確要求完整動態，`reduce` 則強制降級。純 CSS 功能只讀取解析後的 `html[data-motion='reduce']`、`html[data-sound='off']` 與 `html[data-performance='economy']`。Astro 伺服器端輸出使用 Layout 的安全預設，不在 frontmatter 存取瀏覽器 API。
 
 ```css
 html[data-motion='reduce'] .decorative-motion { animation: none; }

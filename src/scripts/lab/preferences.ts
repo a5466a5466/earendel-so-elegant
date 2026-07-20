@@ -1,4 +1,4 @@
-export type MotionPreference = 'system' | 'reduce';
+export type MotionPreference = 'system' | 'full' | 'reduce';
 export type SoundPreference = 'off' | 'on';
 export type PerformancePreference = 'auto' | 'standard' | 'economy';
 export type ResolvedMotionPreference = 'full' | 'reduce';
@@ -43,7 +43,7 @@ export const DEFAULT_LAB_PREFERENCES: Readonly<LabPreferences> = Object.freeze({
 let activeController: ActiveController | undefined;
 
 const isMotionPreference = (value: unknown): value is MotionPreference =>
-	value === 'system' || value === 'reduce';
+	value === 'system' || value === 'full' || value === 'reduce';
 
 const isSoundPreference = (value: unknown): value is SoundPreference =>
 	value === 'off' || value === 'on';
@@ -110,8 +110,11 @@ export const getLabPreferencesSnapshot = (
 		typeof matchMedia !== 'undefined' && matchMedia('(prefers-reduced-motion: reduce)').matches;
 	return {
 		preferences: safePreferences,
-		resolvedMotion:
-			safePreferences.motion === 'reduce' || systemRequestsReducedMotion ? 'reduce' : 'full',
+		resolvedMotion: safePreferences.motion === 'reduce'
+			? 'reduce'
+			: safePreferences.motion === 'full'
+				? 'full'
+				: systemRequestsReducedMotion ? 'reduce' : 'full',
 		resolvedPerformance: resolvePerformance(safePreferences.performance),
 	};
 };
@@ -198,7 +201,9 @@ export const initializeLabPreferences = () => {
 		}
 		if (performanceOutput) performanceOutput.textContent = snapshot.resolvedPerformance === 'economy' ? '節能' : '標準';
 		if (summaryOutput) {
-			const motionLabel = snapshot.preferences.motion === 'reduce' ? '減少動態' : '跟隨系統';
+			const motionLabel = snapshot.preferences.motion === 'reduce'
+				? '減少動態'
+				: snapshot.preferences.motion === 'full' ? '完整動態' : '跟隨系統';
 			const soundLabel = snapshot.preferences.sound === 'on' ? '音效開啟' : '靜音';
 			const performanceLabel = snapshot.preferences.performance === 'auto'
 				? `自動→${snapshot.resolvedPerformance === 'economy' ? '節能' : '標準'}`

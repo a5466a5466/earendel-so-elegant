@@ -1,0 +1,32 @@
+.live2d-lab { width: min(100% - 40px, 1120px); margin: 0 auto; padding: clamp(3rem, 7vw, 6rem) 0; }
+.live2d-overview, .live2d-guardrails { display: grid; grid-template-columns: .82fr 1.18fr; gap: clamp(2rem, 6vw, 5rem); padding-bottom: clamp(3rem, 7vw, 6rem); }
+.live2d-overview h2, .live2d-section-heading h2, .live2d-guardrails h2, .live2d-license h2 { margin: 0; font-size: clamp(1.8rem, 4vw, 3.3rem); font-weight: 500; line-height: 1.15; }
+.live2d-overview p, .live2d-license p { color: #607080; font-size: .82rem; line-height: 1.9; }
+.live2d-section-heading { margin-bottom: 1.5rem; }
+.live2d-console { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(280px, .65fr); min-height: 650px; border: 1px solid var(--lab-line); background: #08111e; color: #fff; overflow: hidden; }
+.live2d-stage { position: relative; min-height: 650px; background: radial-gradient(circle at 50% 35%, #263d5b, #0b1524 60%, #050a11); overflow: hidden; }
+.live2d-stage::before { content: ''; position: absolute; inset: 0; background-image: radial-gradient(#fff 1px, transparent 1px); background-size: 47px 47px; opacity: .12; }
+.live2d-stage canvas { position: relative; display: block; width: 100%; height: 100%; min-height: 650px; touch-action: none; }
+.live2d-fallback, .live2d-loading { position: absolute; inset: 0; display: grid; place-content: center; justify-items: center; gap: .5rem; text-align: center; }
+.live2d-fallback span { color: #dcc584; font-size: 3rem; }
+.live2d-fallback strong { font: 500 clamp(2rem, 7vw, 5rem) Georgia, serif; letter-spacing: .08em; }
+.live2d-fallback small { color: #aebed1; letter-spacing: .18em; text-transform: uppercase; }
+.live2d-loading { background: rgba(5, 10, 17, .78); color: #d9c47f; letter-spacing: .16em; }
+.live2d-panel { display: flex; flex-direction: column; gap: 1.25rem; padding: clamp(1.25rem, 3vw, 2.25rem); background: #f8f3e8; color: #172435; }
+.live2d-status { min-height: 112px; padding-bottom: 1rem; border-bottom: 1px solid #d9d0bc; }
+.live2d-status span { color: #8b743e; font: 700 .65rem var(--lab-sans); letter-spacing: .16em; text-transform: uppercase; }
+.live2d-status p { margin: .7rem 0 0; font-size: .76rem; line-height: 1.75; }
+.live2d-panel button { min-height: 44px; padding: .75rem 1rem; border: 1px solid #8e7a4d; background: transparent; color: #655225; font: 600 .7rem var(--lab-sans); cursor: pointer; }
+.live2d-panel button:hover, .live2d-panel button:focus-visible, .live2d-panel button.is-active, .live2d-panel .live2d-primary { background: #172435; color: #fff; }
+.live2d-motion-controls { display: grid; gap: .5rem; }
+.live2d-panel dl, .live2d-license dl { display: grid; gap: .7rem; margin: auto 0 0; }
+.live2d-panel dl div, .live2d-license dl div { display: flex; justify-content: space-between; gap: 1rem; padding-top: .7rem; border-top: 1px solid #d9d0bc; font-size: .68rem; }
+.live2d-panel dt, .live2d-license dt { color: #78818a; }
+.live2d-guardrails { margin-top: clamp(4rem, 8vw, 7rem); padding-top: clamp(3rem, 7vw, 6rem); border-top: 1px solid var(--lab-line); }
+.live2d-guardrails ul { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; margin: 0; padding: 1px; background: var(--lab-line); list-style: none; }
+.live2d-guardrails li { display: grid; gap: .6rem; padding: 1.25rem; background: #fffdf8; }
+.live2d-guardrails strong { font-size: .83rem; }.live2d-guardrails span { color: #667482; font-size: .72rem; line-height: 1.65; }
+.live2d-license { padding: clamp(3rem, 7vw, 6rem) 0 0; border-top: 1px solid var(--lab-line); }.live2d-license dl { max-width: 620px; margin-top: 2rem; }
+.live2d-noscript { padding: 1rem; border: 1px solid #b99c58; background: #fff9e8; }
+@media (max-width: 820px) { .live2d-overview, .live2d-guardrails, .live2d-console { grid-template-columns: 1fr; }.live2d-console, .live2d-stage, .live2d-stage canvas { min-height: 520px; }.live2d-guardrails ul { grid-template-columns: 1fr; } }
+@media (max-width: 520px) { .live2d-lab { width: min(100% - 28px, 1120px); }.live2d-console, .live2d-stage, .live2d-stage canvas { min-height: 460px; } }

@@ -1,0 +1,59 @@
+---
+import Live2DCharacter from '../../components/lab/Live2DCharacter.svelte';
+import LabPageHero from '../../components/lab/LabPageHero.astro';
+import LabLayout from '../../layouts/LabLayout.astro';
+import '../../styles/lab/character-animation.css';
+
+const pageActions = [
+	{ label: '載入人物測試', href: '#live2d-prototype' },
+	{ label: '查看降級規則', href: '#live2d-guardrails' },
+	{ label: '返回實驗索引', href: '/lab/' },
+];
+---
+
+<LabLayout
+	title="Live2D 人物動畫｜功能實驗室"
+	description="使用官方 Cubism SDK for Web 與 Koharu 範例模型驗證延遲載入、動作控制、效能降級與清理。"
+	breadcrumbLabel="Live2D 人物"
+>
+	<LabPageHero
+		eyebrow="Phase 3 · Step 2 · F16"
+		title="Live2D 人物動畫"
+		description="先以官方範例模型驗證真實 WebGL runtime。初始不下載 1.43 MB 貼圖，只有按下載入後才建立 Canvas renderer。"
+		actions={pageActions}
+		headingId="live2d-title"
+	/>
+
+	<main class="live2d-lab">
+		<section class="live2d-overview" aria-labelledby="live2d-overview-title">
+			<div><p class="lab-eyebrow">Official Runtime · Real Model</p><h2 id="live2d-overview-title">先驗證渲染架構，再製作正式人物</h2></div>
+			<div><p>本頁使用 Live2D 官方原創範例角色 Koharu，只作 SDK 整合與效能測試，不代表厄倫蒂兒，也不修改角色設計。</p><p>Astro 提供 SSR 與靜態 fallback，Svelte 只管理低頻 UI；逐幀更新、模型物理與 WebGL 繪製由 Cubism runtime 負責。</p></div>
+		</section>
+
+		<section id="live2d-prototype" aria-labelledby="live2d-prototype-title">
+			<div class="live2d-section-heading"><p class="lab-eyebrow">Deferred Prototype</p><h2 id="live2d-prototype-title">由使用者決定何時載入重型模型</h2></div>
+			<Live2DCharacter client:load />
+		</section>
+
+		<section id="live2d-guardrails" class="live2d-guardrails" aria-labelledby="live2d-guardrails-title">
+			<div><p class="lab-eyebrow">Guardrails</p><h2 id="live2d-guardrails-title">持續動畫必須能停下來</h2></div>
+			<ul>
+				<li><strong>初始零模型請求</strong><span>按下載入前只提供 SSR 文字與 CSS fallback。</span></li>
+				<li><strong>Reduced motion</strong><span>載入後先暫停，只在使用者主動觸發短動作時暫時恢復。</span></li>
+				<li><strong>Economy</strong><span>不自動播放；可保留最後一幀或完全不載入。</span></li>
+				<li><strong>頁籤隱藏</strong><span>立即停止 animation frame，不在背景持續消耗 GPU。</span></li>
+				<li><strong>離頁清理</strong><span>解除 Canvas 事件、ResizeObserver、renderer、模型與 Cubism Framework。</span></li>
+				<li><strong>錯誤降級</strong><span>Core、模型或 WebGL 失敗時仍保留頁面與重新載入控制。</span></li>
+			</ul>
+		</section>
+
+		<section class="live2d-license" aria-labelledby="live2d-license-title">
+			<p class="lab-eyebrow">Sample Attribution</p>
+			<h2 id="live2d-license-title">模型與 SDK 來源</h2>
+			<p>This content uses sample data owned and copyrighted by Live2D Inc. The sample data are utilized in accordance with terms and conditions set by Live2D Inc. This content itself is created at the author’s sole discretion.</p>
+			<dl><div><dt>角色</dt><dd>Koharu（官方 Sample Model）</dd></div><div><dt>Illustration</dt><dd>Live2D Inc.</dd></div><div><dt>Modeling</dt><dd>Live2D Inc.</dd></div><div><dt>Runtime</dt><dd>Cubism SDK for Web 5-r.5</dd></div></dl>
+		</section>
+
+		<noscript><p class="live2d-noscript">JavaScript 未啟用：Live2D 不會載入，頁面仍保留完整說明與靜態 fallback。</p></noscript>
+	</main>
+</LabLayout>

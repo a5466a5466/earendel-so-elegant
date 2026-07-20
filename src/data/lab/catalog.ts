@@ -39,6 +39,7 @@ export const labNavigation: LabNavigationItem[] = [
 	{ label: '分享與 QR', href: '/lab/share/' },
 	{ label: '搜尋與篩選', href: '/lab/search/' },
 	{ label: 'Svelte Island', href: '/lab/islands/' },
+	{ label: 'Live2D 人物', href: '/lab/character-animation/' },
 	{ label: '紀錄模板', href: '/lab/record-template/' },
 ];
 
@@ -91,9 +92,11 @@ export const phaseZeroSteps: LabPhaseStep[] = [
 
 export const nextExperiment = {
 	id: 'P3-02',
-	title: '人物動畫候選比較',
+	title: 'Live2D 人物動畫',
 	description:
-		'先比較 Animated WebP、Sprite、Rive／Lottie 與 Live2D，再選出單一 Prototype 方向。',
+		'以官方 Cubism SDK for Web 與 Koharu 範例模型驗證人物動作、效能降級和生命週期。',
+	href: '/lab/character-animation/',
+	linkLabel: '開啟 Live2D Prototype',
 };
 
 export const normalizeLabPath = (path: string) => {

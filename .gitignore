@@ -20,5 +20,10 @@ pnpm-debug.log*
 # macOS-specific files
 .DS_Store
 
+# Locally downloaded Live2D source archives (keep outside Git)
+src/assets/CubismSdkForWeb-*.zip
+src/assets/miara_*.zip
+src/assets/koharu_haruto_*.zip
+
 # jetbrains setting folder
 .idea/

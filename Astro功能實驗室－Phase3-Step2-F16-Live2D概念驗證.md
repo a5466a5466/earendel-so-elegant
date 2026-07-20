@@ -1,9 +1,9 @@
 # Astro 功能實驗室 Phase 3・Step 2・F16 Live2D 概念驗證
 
 - 建立日期：2026-07-20
-- 狀態：規劃完成；等待授權條款確認與 SDK／範例模型取得
+- 狀態：第一階段已完成實作、初步技術 QA 與使用者人工驗收；剩餘技術 QA 待後續補齊
 - 開始前 commit：`970e216 phase 3 step 1 done: 完成 Svelte Interactive Island 驗證`
-- Dependency：尚未新增；使用者明確核准前不得下載、安裝或提交 Live2D runtime
+- Dependency：未新增 npm dependency；納入官方 Cubism SDK for Web 5-r.5 Framework／Core 可再散布檔與 Koharu runtime 資產
 - 預定路由：`/lab/character-animation/`
 
 ## 1. 目標與結論邊界
@@ -136,6 +136,18 @@
 
 AI 生成圖不等於可直接使用的 Live2D 模型。分層邊緣、補畫、ArtMesh、參數、deformer、physics、motion 與輸出都需要額外處理；若成本超過本網站價值，保留官方模型的技術結論並停止即可。
 
-## 10. 下一個動作
+## 10. 第一階段實作紀錄（2026-07-21）
 
-不修改程式、不安裝 dependency。先由使用者閱讀官方條款並取得 Cubism SDK for Web 配布包與一個官方原創範例模型；取得後先做檔案、版本、大小、來源與授權核對，再提出精確的 repository 納入清單供使用者核准。
+使用者已自行取得官方 Cubism SDK for Web 5-r.5、Miara 英文範例模型及 `koharu_haruto_ja` 範例模型。原始 ZIP 保留在 `src/assets/` 並由 `.gitignore` 排除，不提交壓縮包；repository 只納入本頁所需的 Framework source、Core redistributable、shader、目前採用的 Koharu Web runtime 檔案及隨附授權／署名文件，沒有新增 npm dependency。
+
+已建立 `/lab/character-animation/`、Svelte 控制元件與 Live2D adapter。初始 SSR 只顯示 CSS fallback；按下「載入 Live2D」後才動態載入 Core、Framework、2048px 貼圖與模型。Koharu 提供 Idle／Tap／FlickLeft 三組 motion、暫停／繼續、reduced-motion／economy 自動暫停、頁籤隱藏暫停及離頁清理。頁面清楚標示 Koharu 是 Live2D 官方 Sample Model，不代表厄倫蒂兒。
+
+本機瀏覽器初步 QA 最初以 Miara 通過：載入前資產 inventory 沒有 `/lab-assets/live2d/`；載入後 WebGL Canvas 成功呈現，Console error／warning 為 0；系統 reduced motion 下短動作後會回到 paused，360px viewport 無水平溢位。載入期間實際發現並修正三組 Vite runtime import 問題（`LogLevel`、`ICubismModelSetting`、`ICubismUpdater`）。2026-07-21 使用者認為 Miara 風格不符，改採同一官方 Sample Data 系列的 Koharu；貼圖由 4096px／13.46 MB 降為 2048px／1.43 MB。ZIP 亦含 Haruto，但第一輪只納入 Koharu，Haruto 保留為日後角色切換候選。替換後已重跑本機瀏覽器：Koharu Canvas 成功以 `755 × 650` 呈現，Idle／Tap／FlickLeft 控制正常，Console error／warning 為 0。
+
+2026-07-21 使用者完成 Koharu 人工驗收，確認目前模型風格、角色比例、載入、持續待機、Tap、Flick 與操作呈現符合概念測試需求。驗收期間發現「跟隨系統」的儲存設定與「減少」的解析結果容易混淆，因此共用偏好新增明確的「完整動態」覆蓋選項，Live2D 卡片也拆成「動態設定」與「目前結果」；使用者確認調整後效果通過。
+
+尚待完成：768／1440 px 完整矩陣、正式 build 隔離複查、錯誤 fixture及反覆載入／生命週期檢查。正式 `pnpm build` 目前仍受 Astro／Vite 載入 `picomatch` 時的 `require is not defined` 阻擋；`pnpm build:lab` 與真實瀏覽器執行均通過。本次 commit 作為可用 Prototype checkpoint，但在剩餘技術 QA 完成前不把 Step 2 標記為正式結案。
+
+## 11. 下一個動作
+
+以本次人工驗收通過的 Prototype 為 checkpoint，下一輪優先排除 production build 問題，再完成錯誤 fixture、768／1440 px 與反覆載入／cleanup QA。全部通過後才建立 Step 2 結案紀錄並決定是否進入 Step 3；Haruto 角色切換維持選配，不納入目前完成條件。

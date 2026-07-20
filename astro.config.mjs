@@ -1,5 +1,6 @@
 // @ts-check
 import { readFile, readdir, rm } from 'node:fs/promises';
+import { fileURLToPath } from 'node:url';
 import { defineConfig } from 'astro/config';
 
 import svelte from '@astrojs/svelte';
@@ -28,7 +29,7 @@ const labOutputGuard = () => {
 				if (labEnabled) return;
 
 				const astroAssetDirectory = new URL('./_astro/', dir);
-				const labAssetPattern = /^(?:LabLayout\.|LabControls\.|LabNavigation\.|CharacterStateStation\.|client\.svelte\.|client\.|preferences(?:\.astro[^.]*)?\.|navigation(?:\.astro[^.]*)?\.|islands(?:\.astro[^.]*)?\.|scroll(?:\.astro[^.]*)?\.|cursor(?:\.astro[^.]*)?\.|carousel(?:\.astro[^.]*)?\.|lightbox(?:\.astro[^.]*)?\.|video(?:\.astro[^.]*)?\.|youtube(?:\.astro[^.]*)?\.|social-embeds(?:\.astro[^.]*)?\.|audio(?:\.astro[^.]*)?\.|sound-effects(?:\.astro[^.]*)?\.|share(?:\.astro[^.]*)?\.|search(?:\.astro[^.]*)?\.|audio-manager\.|gallery-|starlight-birthday\.|summer-letter\.|moonlit-message-transparent\.)/;
+				const labAssetPattern = /^(?:LabLayout\.|LabControls\.|LabNavigation\.|CharacterStateStation\.|Live2DCharacter\.|live2d-adapter\.|lapp|cubism|client\.svelte\.|client\.|preferences(?:\.astro[^.]*)?\.|navigation(?:\.astro[^.]*)?\.|islands(?:\.astro[^.]*)?\.|character-animation(?:\.astro[^.]*)?\.|scroll(?:\.astro[^.]*)?\.|cursor(?:\.astro[^.]*)?\.|carousel(?:\.astro[^.]*)?\.|lightbox(?:\.astro[^.]*)?\.|video(?:\.astro[^.]*)?\.|youtube(?:\.astro[^.]*)?\.|social-embeds(?:\.astro[^.]*)?\.|audio(?:\.astro[^.]*)?\.|sound-effects(?:\.astro[^.]*)?\.|share(?:\.astro[^.]*)?\.|search(?:\.astro[^.]*)?\.|audio-manager\.|gallery-|starlight-birthday\.|summer-letter\.|moonlit-message-transparent\.)/;
 				const astroAssets = await readdir(astroAssetDirectory).catch(() => []);
 				const labOnlyAssets = astroAssets.filter((file) => labAssetPattern.test(file));
 
@@ -61,4 +62,11 @@ const labOutputGuard = () => {
 // https://astro.build/config
 export default defineConfig({
 	integrations: [labOutputGuard(), svelte()],
+	vite: {
+		resolve: {
+			alias: {
+				'@framework': fileURLToPath(new URL('./src/vendor/live2d/framework', import.meta.url)),
+			},
+		},
+	},
 });
