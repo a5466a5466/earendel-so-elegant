@@ -1,9 +1,9 @@
 # Astro 功能實驗室 Phase 3・執行計畫與紀錄
 
 - 建立日期：2026-07-20
-- 目前狀態：Svelte 已由使用者選定；Step 1 F11 等待開始實作
+- 目前狀態：Step 1 F11 已完成技術 QA 與使用者人工驗收；下一步為 Step 2 F16 候選比較
 - 開始前 commit：`29c3316 phase 2 step 4 done: 完成整合 QA 與 Phase 2 結案`
-- Dependency：Svelte 已獲選為 Phase 3 UI framework，但尚未安裝；其他動畫／3D／遊戲 runtime 仍需先取得使用者同意
+- Dependency：已安裝官方 `@astrojs/svelte ^9.0.1`、`svelte ^5.56.6` 與其 TypeScript peer dependency；其他動畫／3D／遊戲 runtime 仍需先取得使用者同意
 
 ## 1. Phase 3 目標
 
@@ -31,8 +31,8 @@ Phase 3 驗證進階沉浸功能的品質上限與效能成本：
 
 | Step | 功能 | 前置 | 狀態 |
 |---:|---|---|---|
-| 1 | F11 Interactive Islands 決策 | Phase 1～2 原生基線 | Svelte 已選定，等待開始實作 |
-| 2 | F16 人物動畫／Live2D 類效果 | Step 1、F26 | 未開始 |
+| 1 | F11 Interactive Islands 決策 | Phase 1～2 原生基線 | 完成；採用 Svelte 管理 Phase 3 低頻 UI 狀態 |
+| 2 | F16 人物動畫／Live2D 類效果 | Step 1、F26 | 等待開始候選比較 |
 | 3 | F02 網站內桌寵 | Step 2、F26；選配 Audio | 未開始 |
 | 4 | F21 粒子、視差與 WebGL | Scroll、F26、Step 2 | 未開始 |
 | 5 | F15 小遊戲 | Audio、Step 1、Step 2；選配 Step 4 | 未開始 |
@@ -87,6 +87,24 @@ Step 1 仍保留原生 TypeScript 基準，用來確認 Svelte 增加的 client 
 
 高頻動畫與 GPU render loop 不經由 Svelte 逐幀更新 DOM；元件卸載時必須停止 listener、timer、animation frame、音訊及 renderer。F16 仍可獨立評估 Sprite、Rive、Lottie 或 Live2D runtime。
 
+### Step 1 實作與技術 QA 紀錄
+
+2026-07-20 已建立 `/lab/islands/`，以完全相同的四狀態角色互動情境並排比較原生 TypeScript 與 Svelte 5 Island。兩側都支援按鈕、方向鍵／Home／End、最多五筆最近紀錄、重設，以及 F26 reduced motion／economy 共用偏好。Svelte 使用 `client:load`，初始 HTML 已包含完整 SSR 內容；hydration 後才顯示 `Hydrated`，不使用空白 loading shell。
+
+Svelte 只管理低頻狀態、清單與 UI 事件，未將裝飾動畫放入逐幀元件更新。原生版本在 `pagehide` 清理事件與偏好訂閱；Svelte 版本透過元件生命週期取消偏好訂閱。正式 build guard 也已納入本頁、Svelte 元件與目前 lab-only runtime 資產。
+
+技術驗證結果：
+
+- `pnpm build:lab` 通過，`/lab/islands/` 產生完整 SSR 頁面。
+- `pnpm build` 通過；`dist/lab`、`dist/lab-assets` 與 Step 1 Svelte lab-only assets 均不留在正式輸出。
+- 瀏覽器確認兩側狀態切換、鍵盤操作、五筆上限、重設、hydration 與共用偏好同步正常。
+- 360／768／1440 px 無水平溢位；1440 px 為雙欄，360／768 px 為單欄。
+- Console error／warning 為 0；`git diff --check` 無 whitespace error。
+
+2026-07-20 使用者已完成人工驗收。驗收期間將狀態差異調整為可直接辨識：`spark` 星芒放大至 25px；`cheer` 角色上移 10px、星環週期縮短為 1.8 秒，三顆 35px 星芒同時自轉並以 1.25／1.8／2.45 秒不同週期繞中心公轉，其中一顆反向；`sleep` 維持縮小、降亮度與停止裝飾動畫。原生 TypeScript 與 Svelte 兩側共用相同視覺規則，使用者確認最終效果通過。
+
+Step 1 結論：採用 Svelte 作為 Phase 3 複雜互動的低頻 UI／狀態層，但簡單功能仍可保留原生 TypeScript；人物、桌寵、Canvas、WebGL 與遊戲的高頻 render loop 不交由 Svelte 逐幀更新。Step 1 正式完成。
+
 ## 5. Step 2～5 的停止點
 
 ### Step 2・F16
@@ -112,4 +130,4 @@ Step 1 仍保留原生 TypeScript 基準，用來確認 Svelte 增加的 client 
 
 ## 6. 下一步
 
-Svelte 選型與責任邊界已確定。下一個動作是在使用者指示開始 Step 1 後，安裝官方 `@astrojs/svelte` integration 與 Svelte，建立 `/lab/islands/` 的原生 TypeScript 基準及 Svelte「角色互動狀態台」，再依共同情境與評估指標完成技術 QA。React 不列入實作。
+開始 Step 2・F16 人物動畫／Live2D 類效果。第一個動作只做靜態圖／Animated WebP、Sprite、Rive／Lottie、Live2D 的書面候選比較，依素材需求、授權、開發時間、效能、互動能力與 fallback 選出單一 Prototype 方向；使用者核准前不安裝任何新動畫 runtime。

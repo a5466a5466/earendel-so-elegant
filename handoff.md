@@ -13,15 +13,15 @@
 | 專案 | `earendel-so-elegant` |
 | Repository | `https://github.com/a5466a5466/earendel-so-elegant.git` |
 | 分支 | `master` |
-| HEAD | Phase 2 結案提交；完整 hash 與訊息以現場 `git log -1 --oneline` 核對 |
+| HEAD | Phase 3・Step 1 完成提交；完整 hash 與訊息以現場 `git log -1 --oneline` 核對 |
 | 遠端 | 採 `master` 直接推送至 `origin/master`；同步狀態以 `git status -sb` 核對 |
-| 工作樹 | Phase 2・Step 4 與結案紀錄已完成；現況以 `git status -sb` 為準 |
+| 工作樹 | Phase 3・Step 1 已完成並記錄；現況以 `git status -sb` 為準 |
 | Phase 0 | Step 1～6 完成 |
 | Phase 1 | Step 1～18 全部完成；2026-07-20 通過使用者驗收並結案 |
 | Phase 2 | Step 1、Step 3、Step 4 已完成使用者驗收並結案；Step 2 最新列表暫緩 |
-| Phase 3 | 執行計畫已建立；Svelte 已選定，Step 1 F11 等待開始實作 |
+| Phase 3 | Step 1 F11 已於 2026-07-20 完成技術 QA 與使用者人工驗收；Step 2 F16 等待開始 |
 | Phase 4 | 尚未開始；F24 投稿表單／後端評估、F25 PWA |
-| 下一步 | 開始 Phase 3・Step 1：安裝官方 Svelte integration，建立原生 TypeScript／Svelte 比較頁 |
+| 下一步 | 開始 Step 2・F16：先比較人物動畫候選，不先安裝 runtime |
 
 最近完成的 Phase 1 功能：
 
@@ -129,6 +129,7 @@ Lab：http://127.0.0.1:4321/lab/
 語系決策：http://127.0.0.1:4321/lab/i18n/
 轉場決策：http://127.0.0.1:4321/lab/transitions/
 外部內容：http://127.0.0.1:4321/lab/social-embeds/
+Interactive Islands：http://127.0.0.1:4321/lab/islands/
 紀錄模板：http://127.0.0.1:4321/lab/record-template/
 ```
 
@@ -164,7 +165,7 @@ pnpm build
 先告訴我目前完成到哪個 Step、工作樹是否乾淨，以及下一個 Step 的範圍。
 ```
 
-## 6. 近期進度與下一步：Phase 3 規劃完成
+## 6. 近期進度與下一步：Phase 3・Step 1 完成
 
 Step 6 已由使用者驗收完成。最終決策為保留普通 Astro MPA 與原生 History，採用 native cross-document View Transition，不採用 ClientRouter。
 
@@ -213,14 +214,19 @@ Phase 2・Step 3 F01 動畫滑鼠 Prototype 已位於 `/lab/cursor/`：可比較
 
 Phase 2・Step 4 整合 QA 已完成：Lab／production 雙模式、32 個 Lab HTML 守門、360／768／1440 px 主要路由、手機選單、X／Threads 官方嵌入、YouTube 單一播放器、動畫游標與 reduced motion／economy 跨頁偏好均通過，Console 無錯誤。使用者已於 2026-07-20 完成最終人工驗收並接受目前版本；實體觸控 coarse pointer、Safari／Firefox、螢幕閱讀器與正式部署效能依既有決策留到正式整合／部署階段。Step 4 與 Phase 2 正式結案，詳細證據位於 `Astro功能實驗室－Phase2-Step4-QA與結案.md`。
 
-Phase 3 已開始規劃，順序維持原企劃：F11 Interactive Islands、F16 人物動畫／Live2D、F02 網站內桌寵、F21 粒子／視差／WebGL、F15 小遊戲，最後做整合 QA；Phase 4 的 F24 與 F25 仍保留在其後。2026-07-20 使用者已選定 Svelte 作為 Phase 3 UI framework，不再實作 React 候選。Step 1 將以同一個多狀態角色互動案例驗證原生 TypeScript 基準與 Svelte Island；高頻動畫、Live2D、Canvas、WebGL 與遊戲 render loop 維持由專用 runtime／原生層負責。目前尚未安裝 dependency，等待使用者指示開始 Step 1。詳細範圍位於 `Astro功能實驗室－Phase3執行計畫與紀錄.md`。
+Phase 3 順序維持原企劃：F11 Interactive Islands、F16 人物動畫／Live2D、F02 網站內桌寵、F21 粒子／視差／WebGL、F15 小遊戲，最後做整合 QA；Phase 4 的 F24 與 F25 仍保留在其後。2026-07-20 使用者已選定 Svelte 作為 Phase 3 UI framework，不再實作 React 候選。
+
+Phase 3・Step 1 Prototype 位於 `/lab/islands/`：同一個四狀態角色互動案例並排提供原生 TypeScript 與 Svelte 5 Island，包含按鈕與方向鍵／Home／End、最多五筆最近紀錄、重設，以及 reduced motion／economy 共用偏好。Svelte 使用 `client:load` 且 hydration 前已有完整 SSR 內容；高頻動畫、Live2D、Canvas、WebGL 與遊戲 render loop 仍維持由專用 runtime／原生層負責。Lab／production build、正式輸出隔離、360／768／1440 px、互動、鍵盤、偏好同步與 Console 技術 QA 均通過。
+
+使用者已於 2026-07-20 完成人工驗收。最終視覺讓 `spark` 使用 25px 星芒，`cheer` 角色上移 10px、星環加速，三顆 35px 星芒以不同週期及方向繞中心公轉並自轉，`sleep` 停止裝飾動畫。Step 1 最終決策為採用 Svelte 管理 Phase 3 複雜互動的低頻 UI 狀態，簡單功能仍可保留原生 TypeScript。下一步為 Step 2・F16 書面比較人物動畫候選，使用者核准前不安裝新 runtime。詳細證據位於 `Astro功能實驗室－Phase3執行計畫與紀錄.md`。
 
 ## 7. 目前架構與重要限制
 
 - Astro：`^7.0.9`。
+- Svelte：`^5.56.6`；Astro integration：`@astrojs/svelte ^9.0.1`。目前只用於 Phase 3 Lab Island。
 - Sharp：`0.35.3`，已由使用者明確核准，用於圖片處理；它不是 AI 圖片生成器。
 - 不得未經使用者核准新增 dependency。
-- 專案沒有直接安裝 `tsc`／`@astrojs/check`；不要為了執行型別命令自行安裝。現階段以 Astro build 作為編譯基線。
+- Svelte integration 已帶入 TypeScript peer dependency，但專案仍未安裝 `@astrojs/check`；不要為了額外型別命令自行新增套件。現階段以 Astro build 作為編譯基線。
 - Content Collection schema 位於 `src/content.config.ts`。修改 schema 後應重新啟動 dev server，不能只依賴 HMR。
 - Lab 偏好只使用 `earendel-lab-preferences-v1`，後續功能不得建立第二份 localStorage 或 reduced-motion 狀態。
 - Lab 內部路由使用普通 `<a>` 與 Astro file routing；Step 4 沒有攔截 History。Page Transition／ClientRouter 要等 Step 6 決策。

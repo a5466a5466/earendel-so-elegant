@@ -38,6 +38,7 @@ export const labNavigation: LabNavigationItem[] = [
 	{ label: '按鍵音效', href: '/lab/sound-effects/' },
 	{ label: '分享與 QR', href: '/lab/share/' },
 	{ label: '搜尋與篩選', href: '/lab/search/' },
+	{ label: 'Svelte Island', href: '/lab/islands/' },
 	{ label: '紀錄模板', href: '/lab/record-template/' },
 ];
 
@@ -89,10 +90,10 @@ export const phaseZeroSteps: LabPhaseStep[] = [
 ];
 
 export const nextExperiment = {
-	id: 'P3-01',
-	title: 'Svelte Interactive Island',
+	id: 'P3-02',
+	title: '人物動畫候選比較',
 	description:
-		'用角色互動狀態台驗證 Svelte Island 的狀態管理、hydration、無障礙與清理生命週期。',
+		'先比較 Animated WebP、Sprite、Rive／Lottie 與 Live2D，再選出單一 Prototype 方向。',
 };
 
 export const normalizeLabPath = (path: string) => {

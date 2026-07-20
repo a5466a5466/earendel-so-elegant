@@ -1,0 +1,121 @@
+---
+import CharacterStateStation from '../../components/lab/CharacterStateStation.svelte';
+import LabPageHero from '../../components/lab/LabPageHero.astro';
+import LabLayout from '../../layouts/LabLayout.astro';
+import '../../styles/lab/islands.css';
+
+const pageActions = [
+	{ label: '比較兩種版本', href: '#island-comparison' },
+	{ label: '查看驗收條件', href: '#island-verification' },
+	{ label: '返回實驗索引', href: '/lab/' },
+];
+
+const states = [
+	{ id: 'idle', label: '待機' },
+	{ id: 'spark', label: '星光' },
+	{ id: 'cheer', label: '應援' },
+	{ id: 'sleep', label: '休眠' },
+];
+---
+
+<LabLayout
+	title="Svelte Interactive Island｜功能實驗室"
+	description="以相同角色互動情境驗證原生 TypeScript 基準與 Svelte Island 的 hydration、狀態管理及生命週期。"
+	breadcrumbLabel="Svelte Island"
+>
+	<LabPageHero
+		eyebrow="Phase 3 · Step 1 · F11"
+		title="Svelte Interactive Island"
+		description="同一份四狀態角色互動，以原生 TypeScript 與 Svelte 5 並排驗證；框架只負責低頻 UI 狀態，不承擔未來的逐幀動畫渲染。"
+		actions={pageActions}
+		headingId="islands-title"
+	/>
+
+	<div class="islands-lab">
+		<section class="islands-intro" aria-labelledby="islands-intro-title">
+			<div>
+				<p class="lab-eyebrow">Same Scenario · Different Runtime</p>
+				<h2 id="islands-intro-title">先比較維護邊界，再決定使用範圍</h2>
+			</div>
+			<p>兩側具有相同狀態、鍵盤操作、最近紀錄、共用偏好與重設功能。Svelte 已被選為 Phase 3 UI framework，但簡單互動仍可保留原生實作。</p>
+		</section>
+
+		<section id="island-comparison" class="island-comparison-grid" aria-label="原生 TypeScript 與 Svelte Island 比較">
+			<article class="state-station" data-native-state-station data-state="idle" aria-labelledby="native-station-title">
+				<header class="state-station__header">
+					<div>
+						<p class="state-station__eyebrow">Native Baseline</p>
+						<h2 id="native-station-title">原生狀態台</h2>
+					</div>
+					<span class="state-station__runtime">TypeScript</span>
+				</header>
+
+				<div class="state-station__stage">
+					<div class="state-character" aria-hidden="true">
+						<i class="state-character__orbit"></i>
+						<i class="state-character__core"></i>
+						<span class="state-character__spark-track state-character__spark-track--one"><i class="state-character__spark state-character__spark--one"></i></span>
+						<span class="state-character__spark-track state-character__spark-track--two"><i class="state-character__spark state-character__spark--two"></i></span>
+						<span class="state-character__spark-track state-character__spark-track--three"><i class="state-character__spark state-character__spark--three"></i></span>
+					</div>
+					<div class="state-station__copy" aria-live="polite" aria-atomic="true">
+						<span data-state-current>目前狀態 · 待機</span>
+						<h3 data-state-title>靜候星訊</h3>
+						<p data-state-description>保持安靜，等待下一次互動。</p>
+					</div>
+				</div>
+
+				<div class="state-station__controls" aria-label="選擇原生角色狀態">
+					{states.map((state, index) => (
+						<button
+							type="button"
+							class:list={{ 'is-active': index === 0 }}
+							data-state-option={state.id}
+							aria-pressed={index === 0 ? 'true' : 'false'}
+						>
+							{state.label}
+						</button>
+					))}
+				</div>
+
+				<div class="state-station__meta" aria-live="polite">
+					<span data-state-motion>動態：完整</span>
+					<span data-state-performance>效能：標準</span>
+				</div>
+
+				<div class="state-station__log">
+					<div>
+						<h3>最近互動</h3>
+						<button type="button" data-state-reset disabled>重設</button>
+					</div>
+					<ol data-state-log aria-label="原生最近互動紀錄"></ol>
+					<p class="state-station__empty" data-state-empty>尚無互動，請選擇一個角色狀態。</p>
+				</div>
+			</article>
+
+			<CharacterStateStation client:load />
+		</section>
+
+		<section id="island-verification" class="islands-verification" aria-labelledby="verification-title">
+			<p class="lab-eyebrow">Acceptance Gate</p>
+			<h2 id="verification-title">Step 1 驗收重點</h2>
+			<ul>
+				<li>四個狀態均可由點擊、Enter／Space 與方向鍵操作。</li>
+				<li>Hydration 前有完整 SSR 內容，不依賴空白 loading shell。</li>
+				<li>共用 reduced motion 與 economy 偏好能即時套用兩側。</li>
+				<li>紀錄最多五筆，重設後回到待機且不遺留舊狀態。</li>
+				<li>頁面離開時移除偏好訂閱、事件 listener 與生命週期資源。</li>
+				<li>360／768／1440 px、鍵盤、Console 與雙模式 build 通過。</li>
+			</ul>
+		</section>
+
+		<noscript>
+			<p>JavaScript 未啟用：兩個狀態台仍顯示 SSR 初始內容，但互動控制不會運作。</p>
+		</noscript>
+	</div>
+</LabLayout>
+
+<script>
+	import { initializeNativeStateStation } from '../../scripts/lab/islands-native';
+	initializeNativeStateStation();
+</script>
