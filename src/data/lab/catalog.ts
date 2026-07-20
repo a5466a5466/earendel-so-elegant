@@ -89,10 +89,10 @@ export const phaseZeroSteps: LabPhaseStep[] = [
 ];
 
 export const nextExperiment = {
-	id: 'P2-04',
-	title: 'Phase 2 整合 QA',
+	id: 'P3-01',
+	title: 'Svelte Interactive Island',
 	description:
-		'回歸 X、Threads、YouTube 與動畫游標共存，完成跨尺寸、偏好降級、正式輸出隔離及 Phase 2 結案。',
+		'用角色互動狀態台驗證 Svelte Island 的狀態管理、hydration、無障礙與清理生命週期。',
 };
 
 export const normalizeLabPath = (path: string) => {

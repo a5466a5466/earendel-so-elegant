@@ -19,7 +19,9 @@
 | Phase 0 | Step 1～6 完成 |
 | Phase 1 | Step 1～18 全部完成；2026-07-20 通過使用者驗收並結案 |
 | Phase 2 | Step 1、Step 3、Step 4 已完成使用者驗收並結案；Step 2 最新列表暫緩 |
-| 下一步 | 規劃正式網站整合順序，先確認正式社群內容與核准品牌游標素材 |
+| Phase 3 | 執行計畫已建立；Svelte 已選定，Step 1 F11 等待開始實作 |
+| Phase 4 | 尚未開始；F24 投稿表單／後端評估、F25 PWA |
+| 下一步 | 開始 Phase 3・Step 1：安裝官方 Svelte integration，建立原生 TypeScript／Svelte 比較頁 |
 
 最近完成的 Phase 1 功能：
 
@@ -35,14 +37,15 @@
 ## 2. 權威文件閱讀順序
 
 1. `handoff.md`（本文件）。
-2. `Astro功能實驗室－Phase2執行計畫與紀錄.md`（目前 Step、平台限制、範圍與完成閘門）。
-3. `Astro功能實驗室－Phase2-Step1-X與Threads官方嵌入.md`（目前實作與 QA 證據）。
-4. `Astro功能實驗室－Phase2-Step3-F01動畫滑鼠.md`（動畫游標決策與驗收）。
-5. `Astro功能實驗室－Phase2-Step4-QA與結案.md`（Phase 2 整合證據與結案閘門）。
-6. `Astro功能實驗室－Phase1-Step18-QA與結案.md`（Phase 1 最終基線）。
-7. `Astro功能實驗室－企劃書.md`（F01～F26 功能邊界與套件規則）。
-8. `厄倫蒂兒粉絲應援網站－開發計畫書.md`（正式網站資訊架構與長期方向）。
-9. 需要 Phase 0 背景時，再讀 `Astro功能實驗室－Phase0交接.md` 與 `Astro功能實驗室－Phase0-Step6-QA.md`。
+2. `Astro功能實驗室－Phase3執行計畫與紀錄.md`（目前 Phase 3 Step、依賴閘門與完成條件）。
+3. `Astro功能實驗室－Phase2執行計畫與紀錄.md`（外部平台限制、Phase 2 決策與結案）。
+4. `Astro功能實驗室－Phase2-Step1-X與Threads官方嵌入.md`（目前實作與 QA 證據）。
+5. `Astro功能實驗室－Phase2-Step3-F01動畫滑鼠.md`（動畫游標決策與驗收）。
+6. `Astro功能實驗室－Phase2-Step4-QA與結案.md`（Phase 2 整合證據與結案閘門）。
+7. `Astro功能實驗室－Phase1-Step18-QA與結案.md`（Phase 1 最終基線）。
+8. `Astro功能實驗室－企劃書.md`（F01～F26 功能邊界與套件規則）。
+9. `厄倫蒂兒粉絲應援網站－開發計畫書.md`（正式網站資訊架構與長期方向）。
+10. 需要 Phase 0 背景時，再讀 `Astro功能實驗室－Phase0交接.md` 與 `Astro功能實驗室－Phase0-Step6-QA.md`。
 
 目前相關 Step 紀錄：
 
@@ -161,7 +164,7 @@ pnpm build
 先告訴我目前完成到哪個 Step、工作樹是否乾淨，以及下一個 Step 的範圍。
 ```
 
-## 6. 近期進度與下一步：Phase 2 規劃完成
+## 6. 近期進度與下一步：Phase 3 規劃完成
 
 Step 6 已由使用者驗收完成。最終決策為保留普通 Astro MPA 與原生 History，採用 native cross-document View Transition，不採用 ClientRouter。
 
@@ -209,6 +212,8 @@ Phase 2・Step 1 的 Prototype 位於 `/lab/social-embeds/`。目前使用 5 則
 Phase 2・Step 3 F01 動畫滑鼠 Prototype 已位於 `/lab/cursor/`：可比較原生、32 × 32 靜態星芒 placeholder 與保留原生指標的單一動態星環；四顆白色星點各自在不同半徑與週期繞行，兩顆順時針、兩顆逆時針，其中兩顆為四向星芒，各星點有不同週期的亮度起伏，外圈有柔和呼吸效果。觸控／無 Hover、reduced motion 與 economy 會安全回到原生游標；裝飾層不攔截操作，也未新增 dependency。Lab／production build、三模式、輸入與點擊、偏好降級、360／768／1280 px 及 Console 技術 QA 均通過。使用者已於 2026-07-20 完成人工驗收，最終結論為條件採用動態星環；整組等速與齒輪式變速方案均不採用。詳細證據位於 `Astro功能實驗室－Phase2-Step3-F01動畫滑鼠.md`。
 
 Phase 2・Step 4 整合 QA 已完成：Lab／production 雙模式、32 個 Lab HTML 守門、360／768／1440 px 主要路由、手機選單、X／Threads 官方嵌入、YouTube 單一播放器、動畫游標與 reduced motion／economy 跨頁偏好均通過，Console 無錯誤。使用者已於 2026-07-20 完成最終人工驗收並接受目前版本；實體觸控 coarse pointer、Safari／Firefox、螢幕閱讀器與正式部署效能依既有決策留到正式整合／部署階段。Step 4 與 Phase 2 正式結案，詳細證據位於 `Astro功能實驗室－Phase2-Step4-QA與結案.md`。
+
+Phase 3 已開始規劃，順序維持原企劃：F11 Interactive Islands、F16 人物動畫／Live2D、F02 網站內桌寵、F21 粒子／視差／WebGL、F15 小遊戲，最後做整合 QA；Phase 4 的 F24 與 F25 仍保留在其後。2026-07-20 使用者已選定 Svelte 作為 Phase 3 UI framework，不再實作 React 候選。Step 1 將以同一個多狀態角色互動案例驗證原生 TypeScript 基準與 Svelte Island；高頻動畫、Live2D、Canvas、WebGL 與遊戲 render loop 維持由專用 runtime／原生層負責。目前尚未安裝 dependency，等待使用者指示開始 Step 1。詳細範圍位於 `Astro功能實驗室－Phase3執行計畫與紀錄.md`。
 
 ## 7. 目前架構與重要限制
 
