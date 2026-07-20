@@ -7,9 +7,10 @@
 - Phase 0：完成。
 - Phase 1 Step 1～18：全部完成。
 - Phase 1 已於 2026-07-20 通過使用者最終人工驗收並結案。
+- Phase 2：執行計畫已建立，Step 1～5 尚未開始。
 - 正式網站視覺、正式素材、網域與 Cloudflare 部署尚未開始。
 
-最新進度與接手方式請先讀 `handoff.md`。Phase 1 詳細狀態位於 `Astro功能實驗室－Phase1執行計畫與紀錄.md`。
+最新進度與接手方式請先讀 `handoff.md`。目前執行範圍與 Step 位於 `Astro功能實驗室－Phase2執行計畫與紀錄.md`；Phase 1 最終結果位於 `Astro功能實驗室－Phase1-Step18-QA與結案.md`。
 
 ## 環境
 
