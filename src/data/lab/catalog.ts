@@ -32,6 +32,7 @@ export const labNavigation: LabNavigationItem[] = [
 	{ label: 'Lightbox', href: '/lab/lightbox/' },
 	{ label: 'Video', href: '/lab/video/' },
 	{ label: 'YouTube', href: '/lab/youtube/' },
+	{ label: '外部內容', href: '/lab/social-embeds/' },
 	{ label: 'Audio', href: '/lab/audio/' },
 	{ label: '按鍵音效', href: '/lab/sound-effects/' },
 	{ label: '分享與 QR', href: '/lab/share/' },
@@ -87,10 +88,10 @@ export const phaseZeroSteps: LabPhaseStep[] = [
 ];
 
 export const nextExperiment = {
-	id: 'QA',
-	title: 'Phase 1 整合 QA',
+	id: 'P2-01',
+	title: 'X／Threads 官方嵌入',
 	description:
-		'下一步將回歸 Step 1～17 的資料、導覽、媒體、偏好、分享與搜尋，完成雙模式建置、決策彙整與 Phase 1 交接。',
+		'直接使用兩個平台的官方 embed code 顯示公開貼文，不加入額外同意視窗或第三方套件。',
 };
 
 export const normalizeLabPath = (path: string) => {

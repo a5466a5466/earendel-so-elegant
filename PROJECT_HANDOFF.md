@@ -16,7 +16,7 @@
 - Phase 0 已完成。
 - Phase 1 Step 1～18 已全部完成。
 - 使用者已於 2026-07-20 完成 Step 18 最終人工驗收，Phase 1 正式結案。
-- Phase 2 執行計畫已建立；Step 1～5 尚未開始，下一步需使用者核准 Step 1。
+- Phase 2・Step 1 已改為簡單的 X／Threads 官方直接嵌入並完成技術 QA，位於 `/lab/social-embeds/`；正式貼文網址可日後直接替換。
 - Git、環境、建置指令、已核准 dependency、已知限制與下一步，一律以 `handoff.md` 和現場 `git status`／`git log` 為準。
 
 不要再依照本文件的歷史版本假設首頁仍是 Astro minimal 範本、Astro 檔案尚未 commit、沒有 Content Collections，或 GitHub 遠端尚未建立。

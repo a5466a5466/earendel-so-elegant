@@ -1,0 +1,115 @@
+---
+import LabPageHero from '../../components/lab/LabPageHero.astro';
+import LabLayout from '../../layouts/LabLayout.astro';
+
+const xPostUrl = 'https://x.com/Interior/status/463440424141459456';
+const threadsPostUrl = 'https://www.threads.com/@threads/post/Da5YxXtkeU4';
+---
+
+<LabLayout
+	title="X 與 Threads 官方貼文嵌入｜功能實驗室"
+	description="使用官方提供的嵌入碼，直接在 Astro 頁面顯示 X 與 Threads 公開貼文。"
+	breadcrumbLabel="外部內容"
+>
+	<LabPageHero
+		eyebrow="Phase 2 · Direct Embed"
+		title="X & Threads Official Embeds"
+		description="直接載入兩個平台的官方嵌入程式，不加入額外同意視窗、sessionStorage 或第三方 wrapper。正式內容只要替換公開貼文網址。"
+		actions={[{ label: '查看官方貼文', href: '#official-social-embeds' }]}
+		headingId="social-embed-title"
+	/>
+
+	<div class="social-embed-lab">
+		<section class="social-embed-overview" aria-labelledby="social-embed-overview-title">
+			<div>
+				<p class="lab-eyebrow">Simple Integration</p>
+				<h2 id="social-embed-overview-title">官方程式直接載入</h2>
+				<p>X 使用官方文件中的範例 Post；Threads 使用官方已驗證帳號的公開貼文。頁面只各載入一份官方 script，沒有額外套件或自製同意流程。</p>
+			</div>
+			<dl>
+				<div><dt>X loader</dt><dd>platform.x.com</dd></div>
+				<div><dt>Threads loader</dt><dd>threads.com</dd></div>
+				<div><dt>額外套件</dt><dd>0</dd></div>
+				<div><dt>自製同意視窗</dt><dd>無</dd></div>
+			</dl>
+		</section>
+
+		<section id="official-social-embeds" class="social-embed-section" aria-labelledby="official-social-embeds-title">
+			<div class="social-embed-section-heading">
+				<p class="lab-eyebrow">Official Embed Code</p>
+				<h2 id="official-social-embeds-title">兩個官方公開貼文</h2>
+				<p>若平台程式被瀏覽器或網路阻擋，卡片下方的原文連結仍可直接開啟。</p>
+			</div>
+
+			<div class="social-embed-grid">
+				<article class="social-embed-card">
+					<header><span aria-hidden="true">X</span><div><p>Official X example</p><h3>US Department of the Interior</h3></div></header>
+					<div class="social-embed-slot x-embed-slot">
+						<blockquote class="twitter-tweet" data-dnt="true" data-theme="dark">
+							<p lang="en" dir="ltr">Sunsets don't get much better than this one over <a href="https://x.com/GrandTetonNPS?ref_src=twsrc%5Etfw">@GrandTetonNPS</a>. <a href="https://x.com/hashtag/nature?src=hash&amp;ref_src=twsrc%5Etfw">#nature</a> <a href="https://x.com/hashtag/sunset?src=hash&amp;ref_src=twsrc%5Etfw">#sunset</a> <a href="http://t.co/YuKy2rcjyU">pic.twitter.com/YuKy2rcjyU</a></p>
+							&mdash; US Department of the Interior (@Interior) <a href="https://x.com/Interior/status/463440424141459456?ref_src=twsrc%5Etfw">May 5, 2014</a>
+						</blockquote>
+					</div>
+					<footer><a href={xPostUrl} target="_blank" rel="noreferrer">在 X 查看原文 <span aria-hidden="true">↗</span></a></footer>
+				</article>
+
+				<article class="social-embed-card">
+					<header><span aria-hidden="true">@</span><div><p>Official Threads account</p><h3>Threads</h3></div></header>
+					<div class="social-embed-slot threads-embed-slot">
+						<blockquote
+							class="text-post-media"
+							data-text-post-permalink={threadsPostUrl}
+							data-text-post-version="0"
+						>
+							<p>Reply with your self-portrait in emojis?</p>
+							<a href={threadsPostUrl}>View this post on Threads</a>
+						</blockquote>
+					</div>
+					<footer><a href={threadsPostUrl} target="_blank" rel="noreferrer">在 Threads 查看原文 <span aria-hidden="true">↗</span></a></footer>
+				</article>
+			</div>
+
+			<noscript><p class="social-embed-noscript">JavaScript 已關閉，官方嵌入無法產生；請使用卡片下方的原文連結。</p></noscript>
+		</section>
+	</div>
+</LabLayout>
+
+<script is:inline async src="https://platform.x.com/widgets.js" charset="utf-8"></script>
+<script is:inline async src="https://www.threads.com/embed.js"></script>
+
+<style>
+	.social-embed-lab { width: min(1120px, calc(100% - 32px)); margin: 0 auto; padding: 40px 0 96px; }
+	.social-embed-overview { display: grid; grid-template-columns: 1.25fr 1fr; gap: 36px; padding: clamp(24px, 4vw, 48px); border: 1px solid rgba(174, 218, 238, .2); border-radius: 28px; background: linear-gradient(145deg, rgba(14, 39, 55, .92), rgba(8, 24, 38, .94)); }
+	.social-embed-overview h2, .social-embed-section h2 { margin: 8px 0 14px; font-size: clamp(1.65rem, 3vw, 2.7rem); }
+	.social-embed-overview h2 { color: #f4f0e8; }
+	.social-embed-section h2 { color: #173246; }
+	.social-embed-overview p { color: #b8cbd7; line-height: 1.75; }
+	.social-embed-section-heading > p:last-child { color: #526675; line-height: 1.75; }
+	.social-embed-overview dl { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin: 0; }
+	.social-embed-overview dl div { min-width: 0; padding: 18px; border-radius: 18px; background: rgba(152, 214, 226, .08); }
+	.social-embed-overview dt { color: #9eb9c8; font-size: .76rem; text-transform: uppercase; letter-spacing: .07em; }
+	.social-embed-overview dd { overflow-wrap: anywhere; margin: 8px 0 0; font-weight: 700; }
+	.social-embed-section { padding-top: 70px; }
+	.social-embed-section-heading { max-width: 760px; margin-bottom: 26px; }
+	.social-embed-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px; align-items: start; }
+	.social-embed-card { min-width: 0; overflow: hidden; border: 1px solid rgba(174, 218, 238, .18); border-radius: 24px; background: rgba(10, 30, 44, .94); }
+	.social-embed-card > header { display: flex; gap: 14px; align-items: center; padding: 22px 24px; }
+	.social-embed-card > header > span { display: grid; width: 44px; aspect-ratio: 1; place-items: center; flex: 0 0 auto; border-radius: 50%; background: #d8f4f1; color: #08202b; font-weight: 900; }
+	.social-embed-card header p { margin: 0 0 2px; color: #93afbd; font-size: .74rem; text-transform: uppercase; letter-spacing: .08em; }
+	.social-embed-card h3 { margin: 0; color: #f4f0e8; font-size: 1.1rem; }
+	.social-embed-slot { display: grid; min-height: 360px; padding: 0 18px 20px; place-items: start center; }
+	.social-embed-slot > :global(*) { max-width: 100% !important; }
+	:global(.twitter-tweet), :global(.text-post-media) { width: 100%; margin: 0 auto; padding: 20px; border: 1px solid rgba(180, 218, 230, .22); border-radius: 16px; background: #fff; color: #17212b; line-height: 1.55; box-sizing: border-box; }
+	:global(.twitter-tweet a), :global(.text-post-media a) { color: #1769aa; }
+	.social-embed-card footer { padding: 18px 24px 22px; border-top: 1px solid rgba(174, 218, 238, .12); }
+	.social-embed-card footer a { color: #d7eeee; }
+	.social-embed-noscript { margin-top: 20px; padding: 18px; border-radius: 14px; background: #432d20; color: #fff2df; }
+	@media (max-width: 800px) {
+		.social-embed-overview, .social-embed-grid { grid-template-columns: 1fr; }
+	}
+	@media (max-width: 520px) {
+		.social-embed-lab { width: min(100% - 20px, 1120px); padding-top: 24px; }
+		.social-embed-overview dl { grid-template-columns: 1fr; }
+		.social-embed-slot { min-height: 320px; padding-inline: 10px; }
+	}
+</style>
