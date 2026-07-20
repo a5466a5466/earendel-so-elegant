@@ -13,9 +13,9 @@
 | 專案 | `earendel-so-elegant` |
 | Repository | `https://github.com/a5466a5466/earendel-so-elegant.git` |
 | 分支 | `master` |
-| HEAD | `c5e03ff phase 1 done and phase 2 planning` |
-| 遠端 | 本機 `master` 與 `origin/master` 同步（更新本文件前快照） |
-| 工作樹 | 有未提交變更：Phase 2・Step 1 官方嵌入實作、QA 與文件 |
+| HEAD | 以現場 `git log -1 --oneline` 為準；Phase 2・Step 1 功能基線為 `f42deba feat: add X and Threads embed masonry` |
+| 遠端 | 採 `master` 直接推送至 `origin/master`；同步狀態以 `git status -sb` 核對 |
+| 工作樹 | Phase 2・Step 1 已完成合併；現況以 `git status -sb` 為準 |
 | Phase 0 | Step 1～6 完成 |
 | Phase 1 | Step 1～18 全部完成；2026-07-20 通過使用者驗收並結案 |
 | Phase 2 | Step 1 X／Threads 各 5 則公開貼文已完成技術與使用者驗收 |
@@ -222,7 +222,8 @@ Phase 2・Step 1 的 Prototype 位於 `/lab/social-embeds/`。目前使用 5 則
 
 ## 9. 工作與 Git 規則
 
-- 未經使用者要求，不自行 stage、commit、push、建立 PR 或改分支。
+- 本專案目前由使用者單人開發；使用者要求交付改動時，預設直接在 `master` commit 並 push 至 `origin/master`，不另開功能分支或 PR，除非使用者另外指定。
+- 未有明確交付或 Git 操作要求時，不自行 stage、commit、push、建立 PR 或改分支。
 - 工作樹若不乾淨，既有修改視為使用者資產；不要 reset、checkout 或覆寫無關內容。
 - 每個 Step 必須保留：開始前 commit、範圍、dependency 決策、自動／靜態證據、人工驗收與最終結論。
 - 使用者確認完成後，同步更新 Phase 1 主控文件、該 Step 紀錄與本文件的「目前工作快照」。
