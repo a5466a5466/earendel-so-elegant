@@ -1,43 +1,58 @@
-# Astro Starter Kit: Minimal
+# 厄倫蒂兒好氣質
 
-```sh
-pnpm create astro@latest -- --template minimal
+以粉絲應援活動成果展示為主的 Astro 網站。目前主要成果是隔離於 `/lab/` 的功能實驗室，用來驗證正式站可能採用的內容、圖片、導覽、動畫、Gallery、影音、分享與搜尋能力。
+
+## 專案狀態
+
+- Phase 0：完成。
+- Phase 1 Step 1～18：全部完成。
+- Phase 1 已於 2026-07-20 通過使用者最終人工驗收並結案。
+- 正式網站視覺、正式素材、網域與 Cloudflare 部署尚未開始。
+
+最新進度與接手方式請先讀 `handoff.md`。Phase 1 詳細狀態位於 `Astro功能實驗室－Phase1執行計畫與紀錄.md`。
+
+## 環境
+
+- Node.js `>=22.12.0`；目前驗證版本 `v24.18.0`
+- pnpm `11.13.0`
+- Astro `7.0.9`
+- Sharp `0.35.3`（已核准的 build-time 圖片處理 dependency）
+
+首次安裝：
+
+```powershell
+corepack enable
+pnpm install --frozen-lockfile
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## 常用指令
 
-## 🚀 Project Structure
+```powershell
+# 本機開發；保留功能實驗室
+pnpm dev --host 127.0.0.1
 
-Inside of your Astro project, you'll see the following folders and files:
+# Lab 驗收建置；保留 /lab/ 與測試資產
+pnpm build:lab
 
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
+# 正式建置；輸出守門會移除 /lab/ 與 Lab 專用資產
+pnpm build
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+常用本機網址：
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+- 首頁：`http://127.0.0.1:4321/`
+- 功能實驗室：`http://127.0.0.1:4321/lab/`
+- 活動資料：`http://127.0.0.1:4321/lab/events/`
+- 搜尋與篩選：`http://127.0.0.1:4321/lab/search/`
 
-Any static assets, like images, can be placed in the `public/` directory.
+正式 build 會覆寫 `dist/`。若要繼續查看 Lab 靜態輸出，最後再執行一次 `pnpm build:lab`。
 
-## 🧞 Commands
+## 架構原則
 
-All commands are run from the root of the project, from a terminal:
+- Astro 元件、HTML、原生 CSS 與原生 TypeScript 優先。
+- 未經核准不得新增 dependency。
+- Lab 使用普通 Astro MPA、原生 History 與漸進增強。
+- Lab 頁面保持 noindex；正式輸出不得包含 `/lab/`、`/lab-assets/` 或 Lab 專用 bundle。
+- 正式首頁視覺、正式素材與部署策略不得因 Lab 實驗被默認決定。
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `pnpm install`             | Installs dependencies                            |
-| `pnpm dev`             | Starts local dev server at `localhost:4321`      |
-| `pnpm build`           | Build your production site to `./dist/`          |
-| `pnpm preview`         | Preview your build locally, before deploying     |
-| `pnpm astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `pnpm astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+共用契約位於 `src/data/lab/`；各 Step 的範圍、驗證與決策記錄於專案根目錄的 `Astro功能實驗室－Phase*.md` 文件。
