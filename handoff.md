@@ -19,9 +19,9 @@
 | Phase 0 | Step 1～6 完成 |
 | Phase 1 | Step 1～18 全部完成；2026-07-20 通過使用者驗收並結案 |
 | Phase 2 | Step 1、Step 3、Step 4 已完成使用者驗收並結案；Step 2 最新列表暫緩 |
-| Phase 3 | Step 1 F11 已於 2026-07-20 完成技術 QA 與使用者人工驗收；Step 2 F16 等待開始 |
+| Phase 3 | Step 1 F11 已於 2026-07-20 完成技術 QA 與使用者人工驗收；Step 2 F16 已完成 Live2D 概念驗證規劃，等待授權與 SDK／範例模型取得 |
 | Phase 4 | 尚未開始；F24 投稿表單／後端評估、F25 PWA |
-| 下一步 | 開始 Step 2・F16：先比較人物動畫候選，不先安裝 runtime |
+| 下一步 | 依 Step 2 紀錄確認官方條款並取得 Cubism SDK for Web 與官方原創範例模型；核准前不加入 runtime |
 
 最近完成的 Phase 1 功能：
 
@@ -38,14 +38,15 @@
 
 1. `handoff.md`（本文件）。
 2. `Astro功能實驗室－Phase3執行計畫與紀錄.md`（目前 Phase 3 Step、依賴閘門與完成條件）。
-3. `Astro功能實驗室－Phase2執行計畫與紀錄.md`（外部平台限制、Phase 2 決策與結案）。
-4. `Astro功能實驗室－Phase2-Step1-X與Threads官方嵌入.md`（目前實作與 QA 證據）。
-5. `Astro功能實驗室－Phase2-Step3-F01動畫滑鼠.md`（動畫游標決策與驗收）。
-6. `Astro功能實驗室－Phase2-Step4-QA與結案.md`（Phase 2 整合證據與結案閘門）。
-7. `Astro功能實驗室－Phase1-Step18-QA與結案.md`（Phase 1 最終基線）。
-8. `Astro功能實驗室－企劃書.md`（F01～F26 功能邊界與套件規則）。
-9. `厄倫蒂兒粉絲應援網站－開發計畫書.md`（正式網站資訊架構與長期方向）。
-10. 需要 Phase 0 背景時，再讀 `Astro功能實驗室－Phase0交接.md` 與 `Astro功能實驗室－Phase0-Step6-QA.md`。
+3. `Astro功能實驗室－Phase3-Step2-F16-Live2D概念驗證.md`（Live2D 概念驗證階段、授權閘門、使用者協助與 QA）。
+4. `Astro功能實驗室－Phase2執行計畫與紀錄.md`（外部平台限制、Phase 2 決策與結案）。
+5. `Astro功能實驗室－Phase2-Step1-X與Threads官方嵌入.md`（目前實作與 QA 證據）。
+6. `Astro功能實驗室－Phase2-Step3-F01動畫滑鼠.md`（動畫游標決策與驗收）。
+7. `Astro功能實驗室－Phase2-Step4-QA與結案.md`（Phase 2 整合證據與結案閘門）。
+8. `Astro功能實驗室－Phase1-Step18-QA與結案.md`（Phase 1 最終基線）。
+9. `Astro功能實驗室－企劃書.md`（F01～F26 功能邊界與套件規則）。
+10. `厄倫蒂兒粉絲應援網站－開發計畫書.md`（正式網站資訊架構與長期方向）。
+11. 需要 Phase 0 背景時，再讀 `Astro功能實驗室－Phase0交接.md` 與 `Astro功能實驗室－Phase0-Step6-QA.md`。
 
 目前相關 Step 紀錄：
 
@@ -219,6 +220,8 @@ Phase 3 順序維持原企劃：F11 Interactive Islands、F16 人物動畫／Liv
 Phase 3・Step 1 Prototype 位於 `/lab/islands/`：同一個四狀態角色互動案例並排提供原生 TypeScript 與 Svelte 5 Island，包含按鈕與方向鍵／Home／End、最多五筆最近紀錄、重設，以及 reduced motion／economy 共用偏好。Svelte 使用 `client:load` 且 hydration 前已有完整 SSR 內容；高頻動畫、Live2D、Canvas、WebGL 與遊戲 render loop 仍維持由專用 runtime／原生層負責。Lab／production build、正式輸出隔離、360／768／1440 px、互動、鍵盤、偏好同步與 Console 技術 QA 均通過。
 
 使用者已於 2026-07-20 完成人工驗收。最終視覺讓 `spark` 使用 25px 星芒，`cheer` 角色上移 10px、星環加速，三顆 35px 星芒以不同週期及方向繞中心公轉並自轉，`sleep` 停止裝飾動畫。Step 1 最終決策為採用 Svelte 管理 Phase 3 複雜互動的低頻 UI 狀態，簡單功能仍可保留原生 TypeScript。下一步為 Step 2・F16 書面比較人物動畫候選，使用者核准前不安裝新 runtime。詳細證據位於 `Astro功能實驗室－Phase3執行計畫與紀錄.md`。
+
+2026-07-20 使用者確認希望做到真實 Live2D 概念測試，即使目前沒有角色素材。Step 2 已規劃為兩階段：先以官方 Cubism SDK for Web 與條款允許的官方原創範例模型驗證 Astro／Svelte、Canvas、動作、降級與 cleanup；通過後再選配生成原創星空系概念人物、分層 PSD 與 Cubism Editor 建模。下一個閘門是使用者閱讀並接受適用條款、取得官方 SDK 配布包與範例模型；在檔案與授權核對及使用者核准前，不下載／安裝其他 runtime，也不把 Cubism Core 或模型加入 repository。詳細流程位於 `Astro功能實驗室－Phase3-Step2-F16-Live2D概念驗證.md`。
 
 ## 7. 目前架構與重要限制
 
