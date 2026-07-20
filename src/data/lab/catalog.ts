@@ -89,9 +89,9 @@ export const phaseZeroSteps: LabPhaseStep[] = [
 
 export const nextExperiment = {
 	id: 'P2-01',
-	title: 'X／Threads 官方嵌入',
+	title: 'X／Threads 官方貼文',
 	description:
-		'直接使用兩個平台的官方 embed code 顯示公開貼文，不加入額外同意視窗或第三方套件。',
+		'使用官方 embed code 顯示厄倫蒂兒的 5 則 X 與 5 則 Threads 公開貼文，驗證多卡片版面。',
 };
 
 export const normalizeLabPath = (path: string) => {

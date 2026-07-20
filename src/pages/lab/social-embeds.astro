@@ -2,74 +2,95 @@
 import LabPageHero from '../../components/lab/LabPageHero.astro';
 import LabLayout from '../../layouts/LabLayout.astro';
 
-const xPostUrl = 'https://x.com/Interior/status/463440424141459456';
-const threadsPostUrl = 'https://www.threads.com/@threads/post/Da5YxXtkeU4';
+const xPostUrls = [
+	'https://x.com/EarendelXDFP/status/1566668038862094336',
+	'https://x.com/EarendelXDFP/status/1775318083823141301',
+	'https://x.com/EarendelXDFP/status/1712139900055937053',
+	'https://x.com/EarendelXDFP/status/1641875349612146688',
+	'https://x.com/EarendelXDFP/status/1646215020957806594',
+];
+
+const threadsPostUrls = [
+	'https://www.threads.com/@earendel_xdfp/post/Da8eNJJk8ki',
+	'https://www.threads.com/@earendel_xdfp/post/Da9V0UBE3H3',
+	'https://www.threads.com/@earendel_xdfp/post/Da77DjtE0Mo',
+	'https://www.threads.com/@earendel_xdfp/post/Da5OVQLk1TZ',
+	'https://www.threads.com/@earendel_xdfp/post/Da2GjvBExXo',
+];
 ---
 
 <LabLayout
-	title="X 與 Threads 官方貼文嵌入｜功能實驗室"
-	description="使用官方提供的嵌入碼，直接在 Astro 頁面顯示 X 與 Threads 公開貼文。"
+	title="X 與 Threads 官方貼文｜功能實驗室"
+	description="使用官方嵌入程式顯示厄倫蒂兒的 X 與 Threads 公開貼文。"
 	breadcrumbLabel="外部內容"
 >
 	<LabPageHero
 		eyebrow="Phase 2 · Direct Embed"
-		title="X & Threads Official Embeds"
-		description="直接載入兩個平台的官方嵌入程式，不加入額外同意視窗、sessionStorage 或第三方 wrapper。正式內容只要替換公開貼文網址。"
-		actions={[{ label: '查看官方貼文', href: '#official-social-embeds' }]}
+		title="X & Threads Official Posts"
+		description="直接顯示厄倫蒂兒的 5 則 X 與 5 則 Threads 公開貼文，用來比較多則內容、媒體與不同高度的版面。"
+		actions={[{ label: '查看官方貼文', href: '#official-social-posts' }]}
 		headingId="social-embed-title"
 	/>
 
 	<div class="social-embed-lab">
 		<section class="social-embed-overview" aria-labelledby="social-embed-overview-title">
 			<div>
-				<p class="lab-eyebrow">Simple Integration</p>
-				<h2 id="social-embed-overview-title">官方程式直接載入</h2>
-				<p>X 使用官方文件中的範例 Post；Threads 使用官方已驗證帳號的公開貼文。頁面只各載入一份官方 script，沒有額外套件或自製同意流程。</p>
+				<p class="lab-eyebrow">Visible Content</p>
+				<h2 id="social-embed-overview-title">直接顯示厄倫蒂兒貼文</h2>
+				<p>X 與 Threads 各使用 5 筆公開貼文；每個平台仍只載入一份官方 embed script，不需要額外套件或自製同意流程。</p>
 			</div>
 			<dl>
 				<div><dt>X loader</dt><dd>platform.x.com</dd></div>
 				<div><dt>Threads loader</dt><dd>threads.com</dd></div>
+				<div><dt>測試貼文</dt><dd>共 10 則</dd></div>
 				<div><dt>額外套件</dt><dd>0</dd></div>
-				<div><dt>自製同意視窗</dt><dd>無</dd></div>
 			</dl>
 		</section>
 
-		<section id="official-social-embeds" class="social-embed-section" aria-labelledby="official-social-embeds-title">
+		<section id="official-social-posts" class="social-embed-section" aria-labelledby="official-social-posts-title">
 			<div class="social-embed-section-heading">
 				<p class="lab-eyebrow">Official Embed Code</p>
-				<h2 id="official-social-embeds-title">兩個官方公開貼文</h2>
-				<p>若平台程式被瀏覽器或網路阻擋，卡片下方的原文連結仍可直接開啟。</p>
+				<h2 id="official-social-posts-title">厄倫蒂兒官方貼文</h2>
+				<p>若平台程式被瀏覽器或網路阻擋，仍可使用卡片下方的原文連結前往查看。</p>
 			</div>
 
-			<div class="social-embed-grid">
-				<article class="social-embed-card">
-					<header><span aria-hidden="true">X</span><div><p>Official X example</p><h3>US Department of the Interior</h3></div></header>
-					<div class="social-embed-slot x-embed-slot">
-						<blockquote class="twitter-tweet" data-dnt="true" data-theme="dark">
-							<p lang="en" dir="ltr">Sunsets don't get much better than this one over <a href="https://x.com/GrandTetonNPS?ref_src=twsrc%5Etfw">@GrandTetonNPS</a>. <a href="https://x.com/hashtag/nature?src=hash&amp;ref_src=twsrc%5Etfw">#nature</a> <a href="https://x.com/hashtag/sunset?src=hash&amp;ref_src=twsrc%5Etfw">#sunset</a> <a href="http://t.co/YuKy2rcjyU">pic.twitter.com/YuKy2rcjyU</a></p>
-							&mdash; US Department of the Interior (@Interior) <a href="https://x.com/Interior/status/463440424141459456?ref_src=twsrc%5Etfw">May 5, 2014</a>
-						</blockquote>
-					</div>
-					<footer><a href={xPostUrl} target="_blank" rel="noreferrer">在 X 查看原文 <span aria-hidden="true">↗</span></a></footer>
-				</article>
-
-				<article class="social-embed-card">
-					<header><span aria-hidden="true">@</span><div><p>Official Threads account</p><h3>Threads</h3></div></header>
-					<div class="social-embed-slot threads-embed-slot">
-						<blockquote
-							class="text-post-media"
-							data-text-post-permalink={threadsPostUrl}
-							data-text-post-version="0"
-						>
-							<p>Reply with your self-portrait in emojis?</p>
-							<a href={threadsPostUrl}>View this post on Threads</a>
-						</blockquote>
-					</div>
-					<footer><a href={threadsPostUrl} target="_blank" rel="noreferrer">在 Threads 查看原文 <span aria-hidden="true">↗</span></a></footer>
-				</article>
+			<div class="social-platform-group" aria-labelledby="x-posts-title">
+				<div class="social-platform-heading"><h3 id="x-posts-title">X 貼文</h3><p>5 則公開貼文</p></div>
+				<div class="social-embed-grid">
+					{xPostUrls.map((postUrl, index) => (
+						<article class="social-embed-card">
+							<header><span aria-hidden="true">X</span><div><p>Official X post · {index + 1}/5</p><h4>厄倫蒂兒 Earendel</h4></div></header>
+							<div class="social-embed-slot x-embed-slot">
+								<blockquote class="twitter-tweet" data-dnt="true" data-theme="dark">
+									<p>厄倫蒂兒 Earendel on X</p>
+									<a href={postUrl}>View this post on X</a>
+								</blockquote>
+							</div>
+							<footer><a href={postUrl} target="_blank" rel="noreferrer">在 X 查看原文 <span aria-hidden="true">↗</span></a></footer>
+						</article>
+					))}
+				</div>
 			</div>
 
-			<noscript><p class="social-embed-noscript">JavaScript 已關閉，官方嵌入無法產生；請使用卡片下方的原文連結。</p></noscript>
+			<div class="social-platform-group" aria-labelledby="threads-posts-title">
+				<div class="social-platform-heading"><h3 id="threads-posts-title">Threads 貼文</h3><p>5 則近期公開貼文</p></div>
+				<div class="social-embed-grid">
+					{threadsPostUrls.map((postUrl, index) => (
+						<article class="social-embed-card">
+							<header><span aria-hidden="true">@</span><div><p>Official Threads post · {index + 1}/5</p><h4>厄倫蒂兒 Earendel</h4></div></header>
+							<div class="social-embed-slot threads-embed-slot">
+								<blockquote class="text-post-media" data-text-post-permalink={postUrl} data-text-post-version="0">
+									<p>厄倫蒂兒 Earendel on Threads</p>
+									<a href={postUrl}>View this post on Threads</a>
+								</blockquote>
+							</div>
+							<footer><a href={postUrl} target="_blank" rel="noreferrer">在 Threads 查看原文 <span aria-hidden="true">↗</span></a></footer>
+						</article>
+					))}
+				</div>
+			</div>
+			<noscript><p class="social-embed-noscript">JavaScript 已關閉，請使用卡片下方的原文連結。</p></noscript>
+
 		</section>
 	</div>
 </LabLayout>
@@ -91,21 +112,26 @@ const threadsPostUrl = 'https://www.threads.com/@threads/post/Da5YxXtkeU4';
 	.social-embed-overview dd { overflow-wrap: anywhere; margin: 8px 0 0; font-weight: 700; }
 	.social-embed-section { padding-top: 70px; }
 	.social-embed-section-heading { max-width: 760px; margin-bottom: 26px; }
-	.social-embed-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px; align-items: start; }
-	.social-embed-card { min-width: 0; overflow: hidden; border: 1px solid rgba(174, 218, 238, .18); border-radius: 24px; background: rgba(10, 30, 44, .94); }
+	.social-platform-group + .social-platform-group { margin-top: 48px; }
+	.social-platform-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; margin-bottom: 16px; }
+	.social-platform-heading h3 { margin: 0; color: #173246; font-size: 1.35rem; }
+	.social-platform-heading p { margin: 0; color: #647887; }
+	.social-embed-grid { columns: 2 440px; column-gap: 22px; }
+	.social-embed-card { display: inline-block; width: 100%; min-width: 0; margin: 0 0 22px; overflow: hidden; break-inside: avoid; border: 1px solid rgba(174, 218, 238, .18); border-radius: 24px; background: rgba(10, 30, 44, .94); box-sizing: border-box; }
 	.social-embed-card > header { display: flex; gap: 14px; align-items: center; padding: 22px 24px; }
 	.social-embed-card > header > span { display: grid; width: 44px; aspect-ratio: 1; place-items: center; flex: 0 0 auto; border-radius: 50%; background: #d8f4f1; color: #08202b; font-weight: 900; }
 	.social-embed-card header p { margin: 0 0 2px; color: #93afbd; font-size: .74rem; text-transform: uppercase; letter-spacing: .08em; }
-	.social-embed-card h3 { margin: 0; color: #f4f0e8; font-size: 1.1rem; }
+	.social-embed-card h4 { margin: 0; color: #f4f0e8; font-size: 1.1rem; }
 	.social-embed-slot { display: grid; min-height: 360px; padding: 0 18px 20px; place-items: start center; }
 	.social-embed-slot > :global(*) { max-width: 100% !important; }
 	:global(.twitter-tweet), :global(.text-post-media) { width: 100%; margin: 0 auto; padding: 20px; border: 1px solid rgba(180, 218, 230, .22); border-radius: 16px; background: #fff; color: #17212b; line-height: 1.55; box-sizing: border-box; }
-	:global(.twitter-tweet a), :global(.text-post-media a) { color: #1769aa; }
+	:global(.text-post-media a) { color: #1769aa; }
 	.social-embed-card footer { padding: 18px 24px 22px; border-top: 1px solid rgba(174, 218, 238, .12); }
 	.social-embed-card footer a { color: #d7eeee; }
 	.social-embed-noscript { margin-top: 20px; padding: 18px; border-radius: 14px; background: #432d20; color: #fff2df; }
 	@media (max-width: 800px) {
-		.social-embed-overview, .social-embed-grid { grid-template-columns: 1fr; }
+		.social-embed-overview { grid-template-columns: 1fr; }
+		.social-embed-grid { columns: 1; }
 	}
 	@media (max-width: 520px) {
 		.social-embed-lab { width: min(100% - 20px, 1120px); padding-top: 24px; }

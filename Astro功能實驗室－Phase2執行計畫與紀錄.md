@@ -2,7 +2,7 @@
 
 - 建立日期：2026-07-20
 - 最後更新：2026-07-20
-- 目前狀態：Step 1 X／Threads 官方直接嵌入已技術完成
+- 目前狀態：Step 1 X／Threads 多貼文嵌入已完成技術與使用者人工驗收
 - 前置狀態：Phase 0、Phase 1 Step 1～18 已完成並由使用者驗收
 - 規劃基線 commit：`c5e03ff phase 1 done and phase 2 planning`
 
@@ -34,15 +34,14 @@ Phase 2 驗證：
 
 ### X
 
-- X 官方 Embedded Posts 由頁面內的 `blockquote.twitter-tweet` 與 `https://platform.x.com/widgets.js` 組成。
-- 官方文件提供 `https://x.com/Interior/status/463440424141459456` 作為 oEmbed 範例，本 Prototype 直接採用。
-- 來源：`https://docs.x.com/x-for-websites/embedded-posts/overview`
-- 來源：`https://help.x.com/en/using-x/how-to-embed-a-post`
+- X 官方 Embedded Timelines 可用個人檔案 URL 與 `https://platform.x.com/widgets.js` 產生時間軸，不需要認證。
+- 曾以 `https://x.com/EarendelXDFP` 測試最多 10 筆並要求包含回覆；iframe 在使用者的一般瀏覽器仍為空白，已撤下。
+- 來源：`https://docs.x.com/x-for-websites/oembed-api`
 
 ### Threads
 
 - Threads 網頁已由 `threads.net` 遷移至 `threads.com`。
-- 本 Prototype 使用 Threads 已驗證官方帳號的公開貼文：`https://www.threads.com/@threads/post/Da5YxXtkeU4`。
+- 曾以 Threads 已驗證官方帳號的公開貼文測試單篇嵌入；依最新決策已撤下，改連到厄倫蒂兒 Threads 主頁。
 - 2026-07-20 確認 `https://www.threads.com/embed.js` 回傳 200，且仍支援 `text-post-media` 與 `data-text-post-permalink`。
 - 來源：`https://about.fb.com/news/2025/04/new-features-threads-web-experience/`
 
@@ -50,22 +49,21 @@ Phase 2 驗證：
 
 | Step | 功能 | 狀態 |
 |---:|---|---|
-| 1 | X／Threads 官方直接嵌入 Prototype | 技術完成 |
-| 2 | 替換成經核准的厄倫蒂兒相關公開貼文 | 等待正式貼文網址時執行 |
+| 1 | X／Threads 各 5 則公開貼文嵌入 | 完成並由使用者驗收 |
+| 2 | 最新列表 | 暫緩；仍需 API 授權與後端機制 |
 | 3 | F01 動畫滑鼠 | 未開始 |
 | 4 | Phase 2 整合 QA 與結案 | 未開始 |
 
-原規劃把 X 與 Threads 拆成兩個技術 Step；簡化後兩者已在同一頁完成基本整合，因此後續只需替換內容，不再重複建立兩套架構。
+X 官方個人時間軸在使用者的一般瀏覽器驗收仍為空白，因此不採用。最終改為兩個平台各 5 筆公開貼文，確保頁面內有實際可見內容並驗證不同高度的多卡片版面。
 
 ## 5. Step 1：X／Threads 官方直接嵌入
 
 ### 實作
 
 - 路由：`/lab/social-embeds/`
-- X：官方 `@Interior` 範例貼文。
-- Threads：官方已驗證 `@threads` 公開貼文。
-- X loader：`https://platform.x.com/widgets.js`，一份。
-- Threads loader：`https://www.threads.com/embed.js`，一份。
+- X：`https://x.com/EarendelXDFP/status/1566668038862094336`。
+- Threads：`https://www.threads.com/@earendel_xdfp/post/Da8eNJJk8ki`。
+- X／Threads embed loader 各一份。
 - 無額外 dependency。
 - 無自製互動 script、同意狀態或 loader 管理器。
 - 兩張卡片永久保留原文連結。
@@ -73,25 +71,24 @@ Phase 2 驗證：
 ### QA
 
 - `pnpm build:lab` 通過，輸出 33 個頁面。
-- 瀏覽器確認 X 與 Threads 都成功產生官方 iframe。
-- DOM 確認兩個平台各一個 iframe、各一份官方 loader。
+- X 時間軸方案曾因空白 block 判定不可採用。
+- 修正後瀏覽器確認 10 張卡、X／Threads iframe 各 5 個、loader 各一份且沒有水平溢位。
+- 一般 Grid 會被高貼文撐開整列，已改為桌機雙欄 masonry；800 px 以下回到單欄。
 - 1280 px 無水平溢位；兩張卡片的 `scrollWidth` 等於 `clientWidth`。
 - 修正淺色內容區二級標題與說明文字的對比。
 - `noindex` 與正式輸出隔離由現有 Lab 架構維持。
 
 詳細紀錄：`Astro功能實驗室－Phase2-Step1-X與Threads官方嵌入.md`。
 
-## 6. Step 2：替換正式貼文
+## 6. Step 2：最新列表
 
-目前不需要使用者提供網址，官方範例已足以驗證技術。
+單篇貼文嵌入已完成。若未來要改成最新 10 筆，需要：
 
-正式內容準備好後，只需提供：
+- 可管理的 Threads 帳號或 Meta Developer App 授權。
+- API Token 的安全保存與更新策略。
+- 正式站後端或排程同步機制。
 
-- 需要展示的 X 公開貼文網址。
-- 需要展示的 Threads 公開貼文網址。
-- 確認內容與作者已核准在網站展示。
-
-替換後檢查貼文仍為公開、官方 embed 能顯示、手機寬度不溢出即可。
+在上述條件尚未成立前，維持目前官方測試貼文，不建立未授權的抓取或爬蟲。
 
 ## 7. Step 3：F01 動畫滑鼠
 
@@ -114,7 +111,7 @@ Phase 2 驗證：
 
 ## 9. 不在 Phase 2
 
-- 不建立即時 X／Threads feed。
+- 不自行爬取 X／Threads 頁面。
 - 不建立登入、發文、按讚、回覆或 API 同步。
 - 不建立 CMS、資料庫、Worker、Token 或 server secret。
 - 不使用第三方 embed 聚合器。
@@ -122,6 +119,6 @@ Phase 2 驗證：
 
 ## 10. 下一步
 
-X／Threads 直接嵌入已完成，不需要再做同意流程驗收，也不需要立即提供貼文網址。
+X／Threads 各 5 則公開貼文已完成，不再保留空白時間軸或無關測試貼文。
 
-下一個新功能是 F01 動畫滑鼠。若要先把官方範例換成厄倫蒂兒相關內容，再向使用者索取一筆 X 與一筆 Threads 公開貼文網址即可。
+Step 1 已完成。下一步開始 F01 動畫滑鼠；最新 10 筆自動同步等取得必要授權再另行規劃。
