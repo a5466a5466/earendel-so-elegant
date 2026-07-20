@@ -3,7 +3,7 @@
 - 狀態：技術與使用者人工驗收完成
 - 日期：2026-07-20
 - 開始前 commit：`c5e03ff phase 1 done and phase 2 planning`
-- 完成 commit：尚未建立
+- 完成 commit：`f42deba feat: add X and Threads embed masonry`
 - Lab 路由：`/lab/social-embeds/`
 
 ## 1. 使用者決策

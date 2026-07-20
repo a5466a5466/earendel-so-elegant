@@ -13,13 +13,13 @@
 | 專案 | `earendel-so-elegant` |
 | Repository | `https://github.com/a5466a5466/earendel-so-elegant.git` |
 | 分支 | `master` |
-| HEAD | 以現場 `git log -1 --oneline` 為準；Phase 2・Step 1 功能基線為 `f42deba feat: add X and Threads embed masonry` |
+| HEAD | Phase 2 結案提交；完整 hash 與訊息以現場 `git log -1 --oneline` 核對 |
 | 遠端 | 採 `master` 直接推送至 `origin/master`；同步狀態以 `git status -sb` 核對 |
-| 工作樹 | Phase 2・Step 3 已完成並提交；現況以 `git status -sb` 為準 |
+| 工作樹 | Phase 2・Step 4 與結案紀錄已完成；現況以 `git status -sb` 為準 |
 | Phase 0 | Step 1～6 完成 |
 | Phase 1 | Step 1～18 全部完成；2026-07-20 通過使用者驗收並結案 |
-| Phase 2 | Step 1、Step 3 已完成使用者驗收；Step 2 暫緩 |
-| 下一步 | 開始 Step 4 Phase 2 整合 QA 與結案 |
+| Phase 2 | Step 1、Step 3、Step 4 已完成使用者驗收並結案；Step 2 最新列表暫緩 |
+| 下一步 | 規劃正式網站整合順序，先確認正式社群內容與核准品牌游標素材 |
 
 最近完成的 Phase 1 功能：
 
@@ -37,10 +37,12 @@
 1. `handoff.md`（本文件）。
 2. `Astro功能實驗室－Phase2執行計畫與紀錄.md`（目前 Step、平台限制、範圍與完成閘門）。
 3. `Astro功能實驗室－Phase2-Step1-X與Threads官方嵌入.md`（目前實作與 QA 證據）。
-4. `Astro功能實驗室－Phase1-Step18-QA與結案.md`（Phase 1 最終基線）。
-5. `Astro功能實驗室－企劃書.md`（F01～F26 功能邊界與套件規則）。
-6. `厄倫蒂兒粉絲應援網站－開發計畫書.md`（正式網站資訊架構與長期方向）。
-7. 需要 Phase 0 背景時，再讀 `Astro功能實驗室－Phase0交接.md` 與 `Astro功能實驗室－Phase0-Step6-QA.md`。
+4. `Astro功能實驗室－Phase2-Step3-F01動畫滑鼠.md`（動畫游標決策與驗收）。
+5. `Astro功能實驗室－Phase2-Step4-QA與結案.md`（Phase 2 整合證據與結案閘門）。
+6. `Astro功能實驗室－Phase1-Step18-QA與結案.md`（Phase 1 最終基線）。
+7. `Astro功能實驗室－企劃書.md`（F01～F26 功能邊界與套件規則）。
+8. `厄倫蒂兒粉絲應援網站－開發計畫書.md`（正式網站資訊架構與長期方向）。
+9. 需要 Phase 0 背景時，再讀 `Astro功能實驗室－Phase0交接.md` 與 `Astro功能實驗室－Phase0-Step6-QA.md`。
 
 目前相關 Step 紀錄：
 
@@ -64,6 +66,8 @@ Astro功能實驗室－Phase1-Step16-F22.md
 Astro功能實驗室－Phase1-Step17-F19.md
 Astro功能實驗室－Phase1-Step18-QA與結案.md
 Astro功能實驗室－Phase2-Step1-X與Threads官方嵌入.md
+Astro功能實驗室－Phase2-Step3-F01動畫滑鼠.md
+Astro功能實驗室－Phase2-Step4-QA與結案.md
 ```
 
 共用技術契約：
@@ -203,6 +207,8 @@ Phase 2・Step 1 的 Prototype 位於 `/lab/social-embeds/`。目前使用 5 則
 使用者已於 2026-07-20 完成 10 則貼文與 masonry 版面人工驗收，Step 1 正式完成。下一個新功能是 F01 動畫滑鼠。
 
 Phase 2・Step 3 F01 動畫滑鼠 Prototype 已位於 `/lab/cursor/`：可比較原生、32 × 32 靜態星芒 placeholder 與保留原生指標的單一動態星環；四顆白色星點各自在不同半徑與週期繞行，兩顆順時針、兩顆逆時針，其中兩顆為四向星芒，各星點有不同週期的亮度起伏，外圈有柔和呼吸效果。觸控／無 Hover、reduced motion 與 economy 會安全回到原生游標；裝飾層不攔截操作，也未新增 dependency。Lab／production build、三模式、輸入與點擊、偏好降級、360／768／1280 px 及 Console 技術 QA 均通過。使用者已於 2026-07-20 完成人工驗收，最終結論為條件採用動態星環；整組等速與齒輪式變速方案均不採用。詳細證據位於 `Astro功能實驗室－Phase2-Step3-F01動畫滑鼠.md`。
+
+Phase 2・Step 4 整合 QA 已完成：Lab／production 雙模式、32 個 Lab HTML 守門、360／768／1440 px 主要路由、手機選單、X／Threads 官方嵌入、YouTube 單一播放器、動畫游標與 reduced motion／economy 跨頁偏好均通過，Console 無錯誤。使用者已於 2026-07-20 完成最終人工驗收並接受目前版本；實體觸控 coarse pointer、Safari／Firefox、螢幕閱讀器與正式部署效能依既有決策留到正式整合／部署階段。Step 4 與 Phase 2 正式結案，詳細證據位於 `Astro功能實驗室－Phase2-Step4-QA與結案.md`。
 
 ## 7. 目前架構與重要限制
 

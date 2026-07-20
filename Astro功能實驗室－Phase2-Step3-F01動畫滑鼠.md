@@ -41,7 +41,7 @@
 | 三模式切換 | 通過 | 原生、靜態星芒與動態星環的狀態及輸出同步 |
 | 靜態游標 | 通過 | 計算樣式載入 `/lab-assets/cursor/earendel-star.svg`，hotspot `(16, 16)` |
 | 動態星環 | 通過 | Pointer move 後顯示並更新 transform；`pointer-events` 為 `none` |
-| 旋轉與呼吸 | 待人工確認 | 旋轉放在內層，呼吸只改變邊框與陰影，不與跟隨 transform 衝突 |
+| 旋轉與呼吸 | 通過 | 技術確認各星點獨立繞行且不與跟隨 transform 衝突；使用者已完成人工視覺驗收 |
 | 輸入與按鈕 | 通過 | Textbox 可輸入、游標語意為 `text`，按鈕可聚焦與點擊 |
 | reduced motion | 通過 | 共用控制器切為 reduce 後，模式立即成為 native、星環隱藏 |
 | economy | 通過 | 共用控制器切為 economy 後，模式立即成為 native、星環隱藏 |
