@@ -33,6 +33,7 @@ export const labNavigation: LabNavigationItem[] = [
 	{ label: 'Video', href: '/lab/video/' },
 	{ label: 'YouTube', href: '/lab/youtube/' },
 	{ label: '外部內容', href: '/lab/social-embeds/' },
+	{ label: '動畫滑鼠', href: '/lab/cursor/' },
 	{ label: 'Audio', href: '/lab/audio/' },
 	{ label: '按鍵音效', href: '/lab/sound-effects/' },
 	{ label: '分享與 QR', href: '/lab/share/' },
@@ -88,10 +89,10 @@ export const phaseZeroSteps: LabPhaseStep[] = [
 ];
 
 export const nextExperiment = {
-	id: 'P2-01',
-	title: 'X／Threads 官方貼文',
+	id: 'P2-04',
+	title: 'Phase 2 整合 QA',
 	description:
-		'使用官方 embed code 顯示厄倫蒂兒的 5 則 X 與 5 則 Threads 公開貼文，驗證多卡片版面。',
+		'回歸 X、Threads、YouTube 與動畫游標共存，完成跨尺寸、偏好降級、正式輸出隔離及 Phase 2 結案。',
 };
 
 export const normalizeLabPath = (path: string) => {

@@ -1,0 +1,81 @@
+---
+import LabLayout from '../../layouts/LabLayout.astro';
+import LabPageHero from '../../components/lab/LabPageHero.astro';
+---
+
+<LabLayout
+	title="動畫滑鼠 Prototype｜功能實驗室"
+	description="Phase 2 Step 3：比較原生游標、靜態星芒與可安全降級的動態星環。"
+	breadcrumbLabel="動畫滑鼠"
+>
+	<LabPageHero
+		eyebrow="Phase 2 · Step 3 · F01"
+		title="動畫滑鼠"
+		description="保留瀏覽器原生指標作為操作基線，再測試小尺寸品牌游標與單一跟隨星環。效果不攔截點擊，也不在觸控、減少動態或節能模式強制執行。"
+		actions={[
+			{ label: '開始游標測試', href: '#cursor-playground' },
+			{ label: '查看安全邊界', href: '#cursor-guardrails' },
+		]}
+		headingId="cursor-title"
+	/>
+
+	<div class="cursor-lab" data-cursor-lab data-cursor-mode="native">
+		<section class="cursor-overview" aria-labelledby="cursor-overview-title">
+			<div>
+				<p class="lab-eyebrow">Native First</p>
+				<h2 id="cursor-overview-title">品牌感不能交換可用性</h2>
+				<p>星芒素材是 32 × 32 SVG placeholder，hotspot 位於中心。正式採用前仍需要確認品牌素材與實際 hotspot。</p>
+			</div>
+			<dl>
+				<div><dt>目前模式</dt><dd data-cursor-mode-output>原生游標</dd></div>
+				<div><dt>安全判定</dt><dd data-cursor-guard-output>正在偵測</dd></div>
+				<div><dt>Dependency</dt><dd>0；CSS ＋ Pointer Events</dd></div>
+			</dl>
+		</section>
+
+		<section id="cursor-playground" class="cursor-workspace" aria-labelledby="cursor-playground-title">
+			<div class="cursor-section-heading">
+				<div><p class="lab-eyebrow">Comparison Playground</p><h2 id="cursor-playground-title">同一區域，直接切換三種模式</h2></div>
+				<p>動態星環不會取代系統指標，只在旁邊提供緩慢旋轉與柔和呼吸回饋；互動元件、文字選取和輸入框仍使用瀏覽器熟悉的游標語意。</p>
+			</div>
+
+			<form class="cursor-mode-form" data-cursor-mode-form>
+				<fieldset>
+					<legend>游標模式</legend>
+					<label><input type="radio" name="cursor-mode" value="native" /><span><strong>原生基線</strong><small>不加任何裝飾</small></span></label>
+					<label><input type="radio" name="cursor-mode" value="static" /><span><strong>靜態星芒</strong><small>32 px SVG 游標</small></span></label>
+					<label><input type="radio" name="cursor-mode" value="halo" checked /><span><strong>動態星環</strong><small>保留原生指標</small></span></label>
+				</fieldset>
+			</form>
+
+			<div class="cursor-stage" data-cursor-stage>
+				<div class="cursor-stage-copy">
+					<span>Move · Hover · Click · Select</span>
+					<h3>讓游標成為低調的星光回應</h3>
+					<p>移動滑鼠、停在按鈕與連結上、拖曳選取這段文字，再試著輸入內容。星環只有一個 DOM 元素，不建立粒子或殘影。</p>
+					<div><a href="#cursor-guardrails">查看安全邊界</a><button type="button">測試按下狀態</button></div>
+					<label>文字輸入測試<input type="text" placeholder="游標應保持文字輸入語意" /></label>
+				</div>
+				<div class="cursor-orbit-visual" aria-hidden="true"><i></i><i></i><i></i><strong>F01</strong></div>
+				<div class="cursor-halo" data-cursor-halo data-visible="false" data-interactive="false" data-pressed="false" aria-hidden="true"><i><b><span></span></b><b><span></span></b><b><span></span></b><b><span></span></b></i></div>
+			</div>
+			<p class="cursor-status" data-cursor-status aria-live="polite"></p>
+			<noscript><p class="cursor-noscript">JavaScript 未啟用：頁面維持原生游標，所有內容和操作仍可使用。</p></noscript>
+		</section>
+
+		<section id="cursor-guardrails" class="cursor-guardrails" aria-labelledby="cursor-guardrails-title">
+			<div><p class="lab-eyebrow">Guardrails</p><h2 id="cursor-guardrails-title">自動降級是功能的一部分</h2></div>
+			<ul>
+				<li><span>01</span><div><strong>觸控與無 Hover</strong><p>不建立跟隨效果，也不留下假的滑鼠位置。</p></div></li>
+				<li><span>02</span><div><strong>減少動態與節能</strong><p>立即回到原生游標，不持續執行 animation frame。</p></div></li>
+				<li><span>03</span><div><strong>操作語意</strong><p>裝飾層使用 pointer-events: none；連結、按鈕和輸入仍保留原生游標。</p></div></li>
+				<li><span>04</span><div><strong>素材邊界</strong><p>目前是幾何 placeholder；未取得核准品牌素材前不視為正式視覺。</p></div></li>
+			</ul>
+		</section>
+	</div>
+</LabLayout>
+
+<script>
+	import { initializeCursorLab } from '../../scripts/lab/cursor';
+	initializeCursorLab();
+</script>
