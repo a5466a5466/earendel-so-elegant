@@ -496,6 +496,8 @@ src/data/lab/                  實驗設定與結果資料
 
 此階段最後才處理部署架構與 Service Worker，避免後端和快取干擾前面的純前端實驗。
 
+> 2026-07-22 決策更新：網站預計部署至 GitHub Pages。使用者決定目前不進行後端相關功能，F24 延後；現階段也沒有足夠的安裝／離線需求，F25 PWA 暫不採用。Phase 4 不建立功能 Prototype，下一階段改為 production build 修復與 GitHub Pages 部署準備。詳細理由與重新開啟條件記錄於 `Astro功能實驗室－Phase4停止決策與GitHubPages部署轉向.md`。
+
 ## 10. F01～F26 詳細實作順序
 
 ### 10.1 排序原則
