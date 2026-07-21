@@ -6,10 +6,35 @@
 		type ResolvedMotionPreference,
 		type ResolvedPerformancePreference,
 	} from '../../scripts/lab/preferences';
-	import type { Live2DAdapter } from '../../scripts/lab/live2d-adapter';
+	import type { Live2DAdapter, MotionGroup } from '../../scripts/lab/live2d-adapter';
 
 	type LoadState = 'idle' | 'loading' | 'ready' | 'paused' | 'error';
-	type MotionGroup = 'Idle' | 'Tap' | 'FlickLeft';
+	type MotionItem = { index: number; label: string; file: string };
+	type MotionSection = { group: MotionGroup; label: string; description: string; items: MotionItem[] };
+
+	const motionSections: MotionSection[] = [
+		{
+			group: 'Idle', label: '待機', description: '待機循環與細微姿態',
+			items: [
+				{ index: 0, label: '待機 06', file: '06.motion3.json' },
+				{ index: 1, label: '待機 A', file: 'idle.motion3.json' },
+				{ index: 2, label: '待機 B', file: 'idle_02.motion3.json' },
+			],
+		},
+		{
+			group: 'Tap', label: '點擊反應', description: '點擊角色後的短動作',
+			items: [
+				{ index: 0, label: '點擊 01', file: '01.motion3.json' },
+				{ index: 1, label: '點擊 02', file: '02.motion3.json' },
+				{ index: 2, label: '點擊 03', file: '03.motion3.json' },
+				{ index: 3, label: '點擊 05', file: '05.motion3.json' },
+			],
+		},
+		{ group: 'FlickLeft', label: '向左甩動', description: '左向 Flick', items: [{ index: 0, label: '向左 04', file: '04.motion3.json' }] },
+		{ group: 'FlickRight', label: '向右甩動', description: '右向 Flick', items: [{ index: 0, label: '向右 09', file: '09.motion3.json' }] },
+		{ group: 'FlickUp', label: '向上甩動', description: '上向 Flick', items: [{ index: 0, label: '向上 07', file: '07.motion3.json' }] },
+		{ group: 'FlickDown', label: '向下甩動', description: '下向 Flick', items: [{ index: 0, label: '向下 08', file: '08.motion3.json' }] },
+	];
 
 	let canvas: HTMLCanvasElement;
 	let adapter: Live2DAdapter | undefined;
@@ -18,7 +43,7 @@
 	let motion = $state<ResolvedMotionPreference>('full');
 	let motionSetting = $state<MotionPreference>('system');
 	let performanceMode = $state<ResolvedPerformancePreference>('standard');
-	let activeMotion = $state<MotionGroup>('Idle');
+	let activeMotion = $state('Idle-0');
 	let reducedPauseTimer = 0;
 
 	const loadModel = async (fixture?: 'missing-model') => {
@@ -32,7 +57,7 @@
 			adapter = new Live2DAdapter();
 			await adapter.initialize(canvas, { fixture });
 			loadState = 'ready';
-			status = 'Koharu 已載入。待機、點擊與向左甩動動作可用。';
+			status = 'Koharu 已載入。6 個群組、11 段動作皆可個別預覽。';
 			if (motion === 'reduce' || performanceMode === 'economy') pause();
 		} catch (error) {
 			adapter?.dispose();
@@ -42,14 +67,14 @@
 		}
 	};
 
-	const play = (group: MotionGroup) => {
+	const play = (group: MotionGroup, item: MotionItem) => {
 		if (!adapter || !['ready', 'paused'].includes(loadState)) return;
 		clearTimeout(reducedPauseTimer);
 		adapter.resume();
-		adapter.playMotion(group);
-		activeMotion = group;
+		adapter.playMotion(group, item.index);
+		activeMotion = `${group}-${item.index}`;
 		loadState = 'ready';
-		status = `正在播放 ${group} 動作。`;
+		status = `正在播放「${item.label}」· ${item.file}`;
 		if (motion === 'reduce' || performanceMode === 'economy') {
 			reducedPauseTimer = window.setTimeout(() => pause(), 4500);
 		}
@@ -113,10 +138,27 @@
 				{#if loadState === 'idle'}<button type="button" onclick={() => loadModel('missing-model')}>測試模型載入失敗</button>{/if}
 			</div>
 		{:else}
-			<div class="live2d-motion-controls" aria-label="選擇 Koharu 動作">
-				<button type="button" class:is-active={activeMotion === 'Idle'} onclick={() => play('Idle')}>待機</button>
-				<button type="button" class:is-active={activeMotion === 'Tap'} onclick={() => play('Tap')}>點擊反應</button>
-				<button type="button" class:is-active={activeMotion === 'FlickLeft'} onclick={() => play('FlickLeft')}>向左甩動</button>
+			<div class="live2d-motion-groups" aria-label="Koharu 完整動作列表">
+				{#each motionSections as section}
+					<section class="live2d-motion-group" aria-labelledby={`motion-${section.group}`}>
+						<header>
+							<div><strong id={`motion-${section.group}`}>{section.label}</strong><small>{section.description}</small></div>
+							<span>{section.items.length} 段</span>
+						</header>
+						<div class="live2d-motion-controls">
+							{#each section.items as item}
+								<button
+									type="button"
+									class:is-active={activeMotion === `${section.group}-${item.index}`}
+									aria-pressed={activeMotion === `${section.group}-${item.index}`}
+									onclick={() => play(section.group, item)}
+								>
+									<span>{item.label}</span><small>{item.file}</small>
+								</button>
+							{/each}
+						</div>
+					</section>
+				{/each}
 			</div>
 			<button type="button" onclick={loadState === 'paused' ? resume : pause}>{loadState === 'paused' ? '繼續渲染' : '暫停渲染'}</button>
 		{/if}

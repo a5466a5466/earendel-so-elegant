@@ -1,4 +1,4 @@
-type MotionGroup = 'Idle' | 'Tap' | 'FlickLeft';
+export type MotionGroup = 'Idle' | 'Tap' | 'FlickLeft' | 'FlickRight' | 'FlickUp' | 'FlickDown';
 type Live2DFixture = 'missing-model';
 
 interface InitializeOptions {
@@ -10,7 +10,7 @@ interface Live2DDelegate {
 	run(): void;
 	pause(): void;
 	resume(): void;
-	playMotion(group: MotionGroup): void;
+	playMotion(group: MotionGroup, index?: number): void;
 	isReady(): boolean;
 }
 
@@ -87,8 +87,8 @@ export class Live2DAdapter {
 		}
 	}
 
-	playMotion(group: MotionGroup) {
-		this.delegate?.playMotion(group);
+	playMotion(group: MotionGroup, index?: number) {
+		this.delegate?.playMotion(group, index);
 	}
 
 	pause() {

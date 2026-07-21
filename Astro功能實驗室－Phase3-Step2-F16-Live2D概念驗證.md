@@ -140,7 +140,7 @@ AI 生成圖不等於可直接使用的 Live2D 模型。分層邊緣、補畫、
 
 使用者已自行取得官方 Cubism SDK for Web 5-r.5、Miara 英文範例模型及 `koharu_haruto_ja` 範例模型。原始 ZIP 保留在 `src/assets/` 並由 `.gitignore` 排除，不提交壓縮包；repository 只納入本頁所需的 Framework source、Core redistributable、shader、目前採用的 Koharu Web runtime 檔案及隨附授權／署名文件，沒有新增 npm dependency。
 
-已建立 `/lab/character-animation/`、Svelte 控制元件與 Live2D adapter。初始 SSR 只顯示 CSS fallback；按下「載入 Live2D」後才動態載入 Core、Framework、2048px 貼圖與模型。Koharu 提供 Idle／Tap／FlickLeft 三組 motion、暫停／繼續、reduced-motion／economy 自動暫停、頁籤隱藏暫停及離頁清理。頁面清楚標示 Koharu 是 Live2D 官方 Sample Model，不代表厄倫蒂兒。
+已建立 `/lab/character-animation/`、Svelte 控制元件與 Live2D adapter。初始 SSR 只顯示 CSS fallback；按下「載入 Live2D」後才動態載入 Core、Framework、2048px 貼圖與模型。首輪介面先開放 Idle／Tap／FlickLeft 三組 motion，並提供暫停／繼續、reduced-motion／economy 自動暫停、頁籤隱藏暫停及離頁清理。頁面清楚標示 Koharu 是 Live2D 官方 Sample Model，不代表厄倫蒂兒。
 
 本機瀏覽器初步 QA 最初以 Miara 通過：載入前資產 inventory 沒有 `/lab-assets/live2d/`；載入後 WebGL Canvas 成功呈現，Console error／warning 為 0；系統 reduced motion 下短動作後會回到 paused，360px viewport 無水平溢位。載入期間實際發現並修正三組 Vite runtime import 問題（`LogLevel`、`ICubismModelSetting`、`ICubismUpdater`）。2026-07-21 使用者認為 Miara 風格不符，改採同一官方 Sample Data 系列的 Koharu；貼圖由 4096px／13.46 MB 降為 2048px／1.43 MB。ZIP 亦含 Haruto，但第一輪只納入 Koharu，Haruto 保留為日後角色切換候選。替換後已重跑本機瀏覽器：Koharu Canvas 成功以 `755 × 650` 呈現，Idle／Tap／FlickLeft 控制正常，Console error／warning 為 0。
 
@@ -149,6 +149,8 @@ AI 生成圖不等於可直接使用的 Live2D 模型。分層邊緣、補畫、
 2026-07-21 已完成剩餘技術 QA。新增只存在於 Lab 的「測試模型載入失敗」控制，讓 Cubism runtime 指向不存在的模型目錄；測試會在 4 秒內停止半初始化 renderer、顯示靜態 fallback 與可重試控制，之後可正常載入 Koharu。元件亦補上冪等 `pagehide` cleanup，與 Svelte 卸載共用同一條清理路徑。
 
 768px 採單欄、1440px 採角色與控制面板雙欄，兩者均無水平溢位、Canvas 不遮擋操作且維持單一實例。瀏覽器完成三輪「載入 → 暫停 → 繼續 → 離頁 → 返回 → 再載入」；每次返回皆回到乾淨的 idle 狀態，重新載入後仍只有一個 Canvas，Console error／warning 為 0。`pnpm build:lab`、`pnpm build` 與 `git diff --check` 通過；先前的 `picomatch`／`require is not defined` 問題未再重現。正式輸出不含 `/lab/`、`/lab-assets/`、Live2D bundle、Core、模型、貼圖或人物頁路由。
+
+同日依使用者要求擴充為完整 motion 檢視器。`koharu.model3.json` 的 6 個群組、11 段 motion 現在都能指定索引播放：Idle 3 段、Tap 4 段，以及 FlickLeft／Right／Up／Down 各 1 段。Adapter、delegate 與 manager 保留原本群組隨機播放相容性，並新增選配索引參數；F16 控制面板顯示中文用途與實際檔名。瀏覽器已逐一觸發 11 段，狀態與 active button 全數正確，暫停／繼續仍正常；360px 顯示 11 顆按鈕、單一 Canvas 且無水平溢位。
 
 Step 2 第一階段正式完成。採用結論為：官方 Cubism SDK for Web 可在目前 Astro＋Svelte 架構中延遲載入、可靠降級並安全清理，值得作為 Step 3 網站內桌寵的唯一人物 runtime 基線；Koharu 仍只作官方技術範例，不是正式角色素材。
 

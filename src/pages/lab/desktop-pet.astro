@@ -1,0 +1,60 @@
+---
+import DesktopPet from '../../components/lab/DesktopPet.svelte';
+import LabPageHero from '../../components/lab/LabPageHero.astro';
+import LabLayout from '../../layouts/LabLayout.astro';
+import '../../styles/lab/desktop-pet.css';
+
+const pageActions = [
+	{ label: '開啟桌寵測試', href: '#desktop-pet-prototype' },
+	{ label: '查看停止點', href: '#desktop-pet-boundaries' },
+	{ label: '返回實驗索引', href: '/lab/' },
+];
+---
+
+<LabLayout
+	title="網站內桌寵｜功能實驗室"
+	description="沿用 Koharu Live2D runtime，驗證小型透明桌寵的自主遊走、拖曳、點擊反應、效能降級與清理。"
+	breadcrumbLabel="網站內桌寵"
+>
+	<LabPageHero
+		eyebrow="Phase 3 · Step 3 · F02"
+		title="網站內桌寵"
+		description="把 Step 2 的人物 runtime 變成會在頁面上自由遊走、移動時循環四向動作、可拖曳與點擊互動的小型透明桌寵。"
+		actions={pageActions}
+		headingId="desktop-pet-title"
+	/>
+
+	<main class="desktop-pet-lab">
+		<section id="desktop-pet-prototype" class="desktop-pet-intro" aria-labelledby="desktop-pet-prototype-title">
+			<div><p class="lab-eyebrow">Viewport Companion</p><h2 id="desktop-pet-prototype-title">一隻真的會亂跑的桌寵</h2></div>
+			<div>
+				<p>從右下角叫出 Koharu 後，她會在可視範圍內隨機遊走。每次出發會隨機選擇向左、向右、向上或向下 Flick 並循環播放，抵達後切回待機；拖曳可重新放置，輕點則觸發反應。</p>
+				<p>Koharu 是 Live2D 官方 Sample Model，只作技術測試，不代表厄倫蒂兒或正式角色素材。</p>
+			</div>
+		</section>
+
+		<section class="desktop-pet-safety" aria-labelledby="desktop-pet-safety-title">
+			<p class="lab-eyebrow">Safety Contract</p>
+			<h2 id="desktop-pet-safety-title">使用者永遠能讓它停下來</h2>
+			<div class="desktop-pet-safety-grid">
+				<article><span>01</span><h3>延遲載入</h3><p>初始只有 SSR 按鈕，不建立 WebGL renderer。</p></article>
+				<article><span>02</span><h3>限制活動範圍</h3><p>遊走與拖曳都被限制在目前可視範圍，並保留極簡收合選單。</p></article>
+				<article><span>03</span><h3>偏好降級</h3><p>reduced motion、economy 與背景頁籤停止角色動畫及自主遊走。</p></article>
+				<article><span>04</span><h3>離頁清理</h3><p>離頁、收合、錯誤與元件卸載都釋放同一套 runtime。</p></article>
+			</div>
+		</section>
+
+		<section id="desktop-pet-boundaries" class="desktop-pet-boundaries" aria-labelledby="desktop-pet-boundaries-title">
+			<div><p class="lab-eyebrow">Stop Point</p><h2 id="desktop-pet-boundaries-title">第一版刻意不做什麼</h2></div>
+			<ul>
+				<li>不跨出目前網站或瀏覽器頁面。</li>
+				<li>不做元素碰撞、尋路或跨頁位置持久化。</li>
+				<li>不走出目前可視範圍，也不自動載入重型模型。</li>
+				<li>不加入聲音、AI 對話、鏡頭或麥克風。</li>
+				<li>不新增第二套人物 runtime 或 dependency。</li>
+			</ul>
+		</section>
+	</main>
+
+	<DesktopPet client:load />
+</LabLayout>

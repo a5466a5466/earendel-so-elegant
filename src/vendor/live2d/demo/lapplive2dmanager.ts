@@ -69,8 +69,19 @@ export class LAppLive2DManager {
     );
   }
 
-  public playMotion(group: 'Idle' | 'Tap' | 'FlickLeft'): void {
-    this._models[0]?.startRandomMotion(group, LAppDefine.PriorityForce);
+  public playMotion(
+    group: 'Idle' | 'Tap' | 'FlickLeft' | 'FlickRight' | 'FlickUp' | 'FlickDown',
+    index?: number
+  ): void {
+    const model = this._models[0];
+    if (!model) {
+      return;
+    }
+    if (typeof index === 'number') {
+      model.startMotion(group, index, LAppDefine.PriorityForce);
+      return;
+    }
+    model.startRandomMotion(group, LAppDefine.PriorityForce);
   }
 
   public isReady(): boolean {

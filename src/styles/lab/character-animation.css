@@ -19,7 +19,19 @@
 .live2d-panel button { min-height: 44px; padding: .75rem 1rem; border: 1px solid #8e7a4d; background: transparent; color: #655225; font: 600 .7rem var(--lab-sans); cursor: pointer; }
 .live2d-panel button:hover, .live2d-panel button:focus-visible, .live2d-panel button.is-active, .live2d-panel .live2d-primary { background: #172435; color: #fff; }
 .live2d-load-controls { display: grid; gap: .5rem; }
-.live2d-motion-controls { display: grid; gap: .5rem; }
+.live2d-motion-groups { display: grid; gap: 1rem; }
+.live2d-motion-group { display: grid; gap: .55rem; padding-bottom: 1rem; border-bottom: 1px solid #d9d0bc; }
+.live2d-motion-group:last-child { padding-bottom: 0; border-bottom: 0; }
+.live2d-motion-group header { display: flex; align-items: start; justify-content: space-between; gap: 1rem; }
+.live2d-motion-group header div { display: grid; gap: .15rem; }
+.live2d-motion-group header strong { font-size: .75rem; }
+.live2d-motion-group header small, .live2d-motion-group header span { color: #78818a; font-size: .58rem; line-height: 1.4; }
+.live2d-motion-group header span { flex: 0 0 auto; padding-top: .12rem; }
+.live2d-motion-controls { display: grid; grid-template-columns: repeat(auto-fit, minmax(108px, 1fr)); gap: .4rem; }
+.live2d-motion-controls button { display: grid; gap: .18rem; min-width: 0; text-align: left; }
+.live2d-motion-controls button span { font-size: .66rem; }
+.live2d-motion-controls button small { overflow: hidden; color: #78818a; font-size: .5rem; font-weight: 400; text-overflow: ellipsis; white-space: nowrap; }
+.live2d-motion-controls button:hover small, .live2d-motion-controls button:focus-visible small, .live2d-motion-controls button.is-active small { color: #c9d2dc; }
 .live2d-panel dl, .live2d-license dl { display: grid; gap: .7rem; margin: auto 0 0; }
 .live2d-panel dl div, .live2d-license dl div { display: flex; justify-content: space-between; gap: 1rem; padding-top: .7rem; border-top: 1px solid #d9d0bc; font-size: .68rem; }
 .live2d-panel dt, .live2d-license dt { color: #78818a; }

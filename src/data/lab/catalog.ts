@@ -40,6 +40,7 @@ export const labNavigation: LabNavigationItem[] = [
 	{ label: '搜尋與篩選', href: '/lab/search/' },
 	{ label: 'Svelte Island', href: '/lab/islands/' },
 	{ label: 'Live2D 人物', href: '/lab/character-animation/' },
+	{ label: '網站內桌寵', href: '/lab/desktop-pet/' },
 	{ label: '紀錄模板', href: '/lab/record-template/' },
 ];
 
@@ -91,12 +92,10 @@ export const phaseZeroSteps: LabPhaseStep[] = [
 ];
 
 export const nextExperiment = {
-	id: 'P3-02',
-	title: 'Live2D 人物動畫',
+	id: 'P3-04',
+	title: '粒子、視差與 WebGL',
 	description:
-		'以官方 Cubism SDK for Web 與 Koharu 範例模型驗證人物動作、效能降級和生命週期。',
-	href: '/lab/character-animation/',
-	linkLabel: '開啟 Live2D Prototype',
+		'先建立 CSS／Canvas 效果與效能降級基線；只有真正需要 3D、shader 或模型時才評估 Three.js。',
 };
 
 export const normalizeLabPath = (path: string) => {

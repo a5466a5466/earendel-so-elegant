@@ -272,8 +272,11 @@ export class LAppDelegate {
     this.run();
   }
 
-  public playMotion(group: 'Idle' | 'Tap' | 'FlickLeft'): void {
-    this._subdelegates[0]?.getLive2DManager().playMotion(group);
+  public playMotion(
+    group: 'Idle' | 'Tap' | 'FlickLeft' | 'FlickRight' | 'FlickUp' | 'FlickDown',
+    index?: number
+  ): void {
+    this._subdelegates[0]?.getLive2DManager().playMotion(group, index);
   }
 
   public isReady(): boolean {
