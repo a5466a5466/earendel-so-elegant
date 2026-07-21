@@ -1,0 +1,47 @@
+---
+import TemperamentGame from '../../components/lab/TemperamentGame.svelte';
+import LabPageHero from '../../components/lab/LabPageHero.astro';
+import LabLayout from '../../layouts/LabLayout.astro';
+import '../../styles/lab/mini-game.css';
+---
+
+<LabLayout
+	title="幫蒂兒收集氣質｜功能實驗室"
+	description="Phase 3 Step 5：以 Svelte 與 Canvas 2D 驗證鍵鼠、觸控與鍵盤皆可玩的氣質收集小遊戲。"
+	breadcrumbLabel="氣質收集小遊戲"
+>
+	<LabPageHero
+		eyebrow="Phase 3 · Step 5 · F15"
+		title="幫蒂兒收集氣質"
+		description="在 30 秒內收集寫有「氣質」的星星，累積氣質值與 Combo。玩法本身先成立，再決定是否加入角色、語音或正式美術。"
+		actions={[
+			{ label: '開始收集氣質', href: '#temperament-game' },
+			{ label: '查看遊戲契約', href: '#game-guardrails' },
+		]}
+		headingId="mini-game-title"
+	/>
+
+	<main class="mini-game-lab">
+		<section class="mini-game-intro" aria-labelledby="mini-game-intro-title">
+			<div><p class="lab-eyebrow">Svelte + Canvas 2D</p><h2 id="mini-game-intro-title">規則簡單，輸入與生命週期完整</h2></div>
+			<p>介面狀態由 Svelte 管理，氣質星與高頻動畫由 Canvas 繪製。第一版不載入 Live2D，也不安裝遊戲引擎。</p>
+		</section>
+
+		<section id="temperament-game" aria-label="氣質收集遊戲 Prototype">
+			<TemperamentGame client:load />
+			<noscript><p class="mini-game-noscript">JavaScript 未啟用，無法開始遊戲；規則與驗收說明仍可閱讀。</p></noscript>
+		</section>
+
+		<section id="game-guardrails" class="mini-game-guardrails" aria-labelledby="game-guardrails-title">
+			<div><p class="lab-eyebrow">Play & Safety Contract</p><h2 id="game-guardrails-title">無聲、低動態與手機都要能玩</h2></div>
+			<ul>
+				<li><strong>輸入</strong><span>點擊、觸控，或方向鍵選擇後按 Enter／Space。</span></li>
+				<li><strong>Reduced motion</strong><span>移除飛入與漂浮，保留外框、文字及計分提示。</span></li>
+				<li><strong>Economy</strong><span>降低同時目標與 DPR，不改變得分規則。</span></li>
+				<li><strong>Hidden tab</strong><span>自動暫停，返回後由玩家主動繼續。</span></li>
+				<li><strong>音效</strong><span>尊重共用靜音偏好，無聲仍有完整視覺回饋。</span></li>
+				<li><strong>Cleanup</strong><span>離頁停止倒數、動畫、音效、Observer 與偏好訂閱。</span></li>
+			</ul>
+		</section>
+	</main>
+</LabLayout>

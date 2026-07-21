@@ -42,6 +42,7 @@ export const labNavigation: LabNavigationItem[] = [
 	{ label: 'Live2D 人物', href: '/lab/character-animation/' },
 	{ label: '網站內桌寵', href: '/lab/desktop-pet/' },
 	{ label: '粒子與視差', href: '/lab/ambient-effects/' },
+	{ label: '氣質小遊戲', href: '/lab/mini-game/' },
 	{ label: '紀錄模板', href: '/lab/record-template/' },
 ];
 
@@ -93,12 +94,12 @@ export const phaseZeroSteps: LabPhaseStep[] = [
 ];
 
 export const nextExperiment = {
-	id: 'P3-04',
-	title: '粒子、視差與 WebGL',
+	id: 'P3-05',
+	title: '幫蒂兒收集氣質',
 	description:
-		'先建立 CSS／Canvas 效果與效能降級基線；只有真正需要 3D、shader 或模型時才評估 Three.js。',
-	href: '/lab/ambient-effects/',
-	linkLabel: '開啟粒子與視差 Prototype',
+		'以 Svelte 與 Canvas 2D 整合輸入、計分、音效與共用偏好，驗證 30 秒氣質收集小遊戲。',
+	href: '/lab/mini-game/',
+	linkLabel: '開啟氣質收集 Prototype',
 };
 
 export const normalizeLabPath = (path: string) => {

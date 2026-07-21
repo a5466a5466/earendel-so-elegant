@@ -1,7 +1,7 @@
 # Astro 功能實驗室 Phase 3・Step 5・F15 小遊戲
 
 - 規劃日期：2026-07-22
-- 目前狀態：規劃完成，等待開始實作
+- 目前狀態：完成；Prototype、主要技術 QA 與使用者人工驗收均通過
 - 開始前 commit：`a8f3d42 phase 3 step 4 done: 完成粒子視差與環境效果驗證`
 - 預定 Prototype：`/lab/mini-game/`
 - Dependency：不新增套件；使用既有 Svelte、原生 Canvas 2D 與共用偏好／音效基線
@@ -92,3 +92,16 @@ Combo 稱號候選：
 ## 9. 素材與後續邊界
 
 第一版所有星星、光圈、徽章與介面使用程式繪製及 CSS，不需要使用者提供素材。角色立繪、Live2D、語音、專用背景與遊戲專用音效皆屬驗收後的第二階段選配；若採用，必須另外確認素材來源、授權、容量與正式網站使用方式。
+
+## 10. 2026-07-22 第一版實作與技術 QA
+
+- 已建立 `/lab/mini-game/`、`TemperamentGame.svelte` 與專用樣式，並加入 Lab 導覽、索引下一項實驗及 production asset guard。
+- Svelte 管理 ready／playing／paused／finished、30 秒倒數、氣質值、Combo、最高 Combo、本機最佳紀錄、稱號與狀態文案；Canvas 2D 負責星形徽章、「氣質」文字、稀有 `+3`、鍵盤選取框及命中短句。
+- 一般星、閃耀星、目標逾時中斷 Combo、10 Combo 全體氣質時刻、暫停／繼續／重新開始與四級結算稱號均已實作；第一版未加入選配害羞星或 Live2D。
+- 滑鼠／觸控共用 Pointer Event 命中；遊戲區取得焦點後可用方向鍵循環選星，並以 `Enter`／`Space` 收集。瀏覽器實測鍵盤收集閃耀星後由 0 增至 3 點，暫停 Overlay 與繼續流程正確。
+- 共用偏好實測可即時解析為 Reduced motion＋Economy；前者停用位移式回饋，後者將同時目標由 5 降至 3、降低 DPR 與背景密度。測試後已還原完整動態與自動效能。
+- 360×800 viewport 的遊戲區為 315×500px，`scrollWidth === clientWidth`，無水平溢位；預設桌機 Canvas 為 1178×650px。「氣質」與稀有 `+3` 於兩種星形上均可辨識。
+- hidden tab 會自動暫停且不自行恢復；ResizeObserver 沿用單一 Canvas；卸載會取消 animation frame、observer、visibility listener、偏好訂閱及音效 channel。
+- `pnpm build:lab` 通過，共輸出 39 個頁面並包含 `/lab/mini-game/`；瀏覽器 console warning／error 為 0。
+- production `pnpm build` 仍在 Astro content sync、頁面編譯前重現既有 `picomatch@4.0.5` 的 `require is not defined`。因此正式輸出排除條件仍待工具鏈問題排除後補驗，與本次遊戲 runtime 無直接錯誤證據。
+- 2026-07-22 使用者已完成實際遊玩驗收，確認第一版目前效果可接受。氣質星文字、操作手感、Combo／全體氣質時刻與結算流程通過，Step 5 正式完成；害羞星、Live2D、語音與正式美術仍維持後續選配。
