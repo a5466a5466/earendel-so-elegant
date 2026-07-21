@@ -13,15 +13,15 @@
 | 專案 | `earendel-so-elegant` |
 | Repository | `https://github.com/a5466a5466/earendel-so-elegant.git` |
 | 分支 | `master` |
-| HEAD | 本文件所在提交完成 Phase 3・Step 5；精確 hash 以 `git log -1 --oneline` 核對 |
+| HEAD | 本文件所在提交完成 Phase 3・Step 6 與 Phase 3 結案；精確 hash 以 `git log -1 --oneline` 核對 |
 | 遠端 | 採 `master` 直接推送至 `origin/master`；同步狀態以 `git status -sb` 核對 |
-| 工作樹 | Step 5 交付後應為乾淨；現況以 `git status -sb` 為準 |
+| 工作樹 | Phase 3 結案交付後應為乾淨；現況以 `git status -sb` 為準 |
 | Phase 0 | Step 1～6 完成 |
 | Phase 1 | Step 1～18 全部完成；2026-07-20 通過使用者驗收並結案 |
 | Phase 2 | Step 1、Step 3、Step 4 已完成使用者驗收並結案；Step 2 最新列表暫緩 |
-| Phase 3 | Step 1 F11、Step 2 F16、Step 3 F02、Step 4 F21、Step 5 F15 已完成使用者人工驗收 |
+| Phase 3 | Step 1～6 全部完成；採用候選、效能上限與工具鏈處置已核准並結案 |
 | Phase 4 | 尚未開始；F24 投稿表單／後端評估、F25 PWA |
-| 下一步 | 開始 Step 6 Phase 3 整合 QA 與結案；回歸 Step 1～5、確認採用候選，並列管 production build 的 `picomatch` 工具鏈錯誤 |
+| 下一步 | 開始 Phase 4・F24 投稿表單／後端評估；先界定資料、個資、審核、防濫用與部署責任 |
 
 最近完成的 Phase 1 功能：
 
@@ -231,6 +231,8 @@ Phase 3・Step 3 Prototype 已於 2026-07-21 建立在 `/lab/desktop-pet/`。初
 Phase 3・Step 4 已於 2026-07-22 完成 `/lab/ambient-effects/` CSS／Canvas 星塵、反向景深、點擊星芒、視角重設及 Standard／Economy／Reduced motion 降級。使用者回饋初版視差不明顯後，最終調整為星塵 18px、遠景 12px、中景 28px、近景 44px，並通過人工驗收；未新增 Three.js。
 
 Phase 3・Step 5 已於 2026-07-22 完成 `/lab/mini-game/`「幫蒂兒收集氣質」：Svelte 管理 30 秒遊戲狀態、分數、Combo、暫停與結算，Canvas 2D 繪製一般／閃耀氣質星及文字回饋；支援 Pointer 與完整鍵盤輸入、全體氣質時刻、本機最佳紀錄、共用音效與動態／效能偏好。Lab build 39 頁、360px、生命週期與 Console QA 通過，使用者已實際遊玩並確認目前效果可接受。production build 仍在頁面編譯前重現 `picomatch@4.0.5` 的 `require is not defined`，須在 Step 6 處理或明確列為環境阻擋。下一步為 Phase 3・Step 6 整合 QA 與結案。
+
+Phase 3・Step 6 已於 2026-07-22 完成整合技術 QA：五個 Phase 3 Prototype、跨頁偏好、360px RWD、Console、37 個 Lab HTML noindex／重複 ID 與 39 頁 Lab build 均通過。最終採用決策為 Svelte 採用；Live2D、桌寵與粒子條件採用；氣質小遊戲作為活動限定功能。同頁只允許一個主要高頻 runtime，小遊戲執行時應暫停桌寵自主遊走與非必要背景動畫。使用者接受 production build 的 `picomatch@4.0.5` 問題移至乾淨依賴環境處理，不阻擋概念驗證結案。Phase 3 正式完成，詳細證據位於 `Astro功能實驗室－Phase3-Step6-QA與結案.md`；下一步為 Phase 4・F24。
 
 ## 7. 目前架構與重要限制
 
