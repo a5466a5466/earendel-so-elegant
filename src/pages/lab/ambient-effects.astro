@@ -1,0 +1,79 @@
+---
+import LabLayout from '../../layouts/LabLayout.astro';
+import LabPageHero from '../../components/lab/LabPageHero.astro';
+import '../../styles/lab/ambient-effects.css';
+---
+
+<LabLayout
+	title="粒子、視差與背景｜功能實驗室"
+	description="以原生 CSS 與 Canvas 驗證星空粒子、分層視差、效能降級與生命週期。"
+	breadcrumbLabel="粒子與視差"
+>
+	<LabPageHero
+		eyebrow="Phase 3 · Step 4 · F21"
+		title="粒子、視差與背景"
+		description="先用 CSS 與 Canvas 建立可量測的沉浸背景；不阻擋內容、不攔截捲動，並在 reduced motion、economy 與頁籤隱藏時主動降級。"
+		actions={[
+			{ label: '開始效果測試', href: '#ambient-prototype' },
+			{ label: '查看效能契約', href: '#ambient-guardrails' },
+		]}
+		headingId="ambient-title"
+	/>
+
+	<main class="ambient-lab" data-ambient-lab>
+		<section class="ambient-intro" aria-labelledby="ambient-intro-title">
+			<div><p class="lab-eyebrow">Native Baseline</p><h2 id="ambient-intro-title">三種效果，共用一個生命週期</h2><p>CSS 負責低頻景深與光暈；Canvas 只繪製星塵、短連線與使用者點擊星芒。所有內容與控制都位於普通 HTML，背景失敗時仍可完整閱讀。</p></div>
+			<dl>
+				<div><dt>Dependency</dt><dd>0；不使用 Three.js</dd></div>
+				<div><dt>Renderer</dt><dd>2D Canvas</dd></div>
+				<div><dt>粒子上限</dt><dd data-ambient-particle-count>等待初始化</dd></div>
+				<div><dt>狀態</dt><dd data-ambient-status aria-live="polite">等待初始化</dd></div>
+			</dl>
+		</section>
+
+		<section id="ambient-prototype" class="ambient-prototype" aria-labelledby="ambient-prototype-title">
+			<header><div><p class="lab-eyebrow">Interactive Scene</p><h2 id="ambient-prototype-title">月光星海</h2></div><p>在桌機移動指標觀察小幅景深；點擊場景會產生短暫星芒。效果不攔截文字選取、按鈕或頁面捲動。</p></header>
+
+			<div class="ambient-scene" data-ambient-scene data-mode="combined">
+				<div class="ambient-layer ambient-layer--far" aria-hidden="true"></div>
+				<div class="ambient-layer ambient-layer--mid" aria-hidden="true"></div>
+				<div class="ambient-layer ambient-layer--near" aria-hidden="true"></div>
+				<canvas data-ambient-canvas aria-hidden="true"></canvas>
+				<div class="ambient-scene-copy">
+					<span>EARTHLIGHT / 04</span>
+					<h3>讓背景回應，而不是搶走主角</h3>
+					<p>星塵與光暈分成反向景深，最大位移 44 px；文字層固定不動，維持穩定閱讀。</p>
+					<a href="#ambient-guardrails">閱讀降級規則</a>
+				</div>
+			</div>
+
+			<div class="ambient-controls" aria-label="背景效果控制">
+				<div class="ambient-mode-controls" role="group" aria-label="效果模式">
+					<button type="button" data-ambient-mode="css">CSS 分層</button>
+					<button type="button" data-ambient-mode="canvas">Canvas 星塵</button>
+					<button type="button" data-ambient-mode="combined" aria-pressed="true">合併效果</button>
+				</div>
+				<button type="button" data-ambient-pause>暫停效果</button>
+				<button type="button" data-ambient-reset disabled>視角已置中</button>
+			</div>
+			<noscript><p class="ambient-noscript">JavaScript 已關閉：保留靜態 CSS 星空與完整內容。</p></noscript>
+		</section>
+
+		<section id="ambient-guardrails" class="ambient-guardrails" aria-labelledby="ambient-guardrails-title">
+			<div><p class="lab-eyebrow">Guardrails</p><h2 id="ambient-guardrails-title">持續效果必須有明確成本上限</h2></div>
+			<ul>
+				<li><strong>Standard</strong><span>桌機最多 56 顆、手機 32 顆，DPR 上限 2。</span></li>
+				<li><strong>Economy</strong><span>固定 18 顆，不畫粒子連線，不啟用指標視差。</span></li>
+				<li><strong>Reduced motion</strong><span>只繪製單一靜態畫面；CSS 圖層回到中央。</span></li>
+				<li><strong>Hidden tab</strong><span>停止 animation frame，回到前景時依使用者暫停狀態決定是否恢復。</span></li>
+				<li><strong>Cleanup</strong><span>離頁移除 pointer、click、resize、visibility、偏好 listener 與 animation frame。</span></li>
+				<li><strong>停止點</strong><span>目前不需要真正 3D、shader 或模型，因此不開 Three.js 閘門。</span></li>
+			</ul>
+		</section>
+	</main>
+</LabLayout>
+
+<script>
+	import { initializeAmbientEffects } from '../../scripts/lab/ambient-effects';
+	initializeAmbientEffects();
+</script>

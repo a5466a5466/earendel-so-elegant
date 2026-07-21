@@ -41,6 +41,7 @@ export const labNavigation: LabNavigationItem[] = [
 	{ label: 'Svelte Island', href: '/lab/islands/' },
 	{ label: 'Live2D 人物', href: '/lab/character-animation/' },
 	{ label: '網站內桌寵', href: '/lab/desktop-pet/' },
+	{ label: '粒子與視差', href: '/lab/ambient-effects/' },
 	{ label: '紀錄模板', href: '/lab/record-template/' },
 ];
 
@@ -96,6 +97,8 @@ export const nextExperiment = {
 	title: '粒子、視差與 WebGL',
 	description:
 		'先建立 CSS／Canvas 效果與效能降級基線；只有真正需要 3D、shader 或模型時才評估 Three.js。',
+	href: '/lab/ambient-effects/',
+	linkLabel: '開啟粒子與視差 Prototype',
 };
 
 export const normalizeLabPath = (path: string) => {
