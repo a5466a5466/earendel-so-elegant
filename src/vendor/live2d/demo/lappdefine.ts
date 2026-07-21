@@ -33,7 +33,13 @@ export const ViewLogicalMaxBottom = -2.0;
 export const ViewLogicalMaxTop = 2.0;
 
 // 相対パス
-export const ResourcesPath = '/lab-assets/live2d/koharu/';
+const DefaultResourcesPath = '/lab-assets/live2d/koharu/';
+
+export let ResourcesPath = DefaultResourcesPath;
+
+export const setResourcesPathForFixture = (path?: string): void => {
+  ResourcesPath = path ?? DefaultResourcesPath;
+};
 
 // シェーダー相対パス
 export const ShaderPath = '/lab-assets/live2d/shaders/';

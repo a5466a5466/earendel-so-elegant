@@ -21,14 +21,16 @@
 	let activeMotion = $state<MotionGroup>('Idle');
 	let reducedPauseTimer = 0;
 
-	const loadModel = async () => {
+	const loadModel = async (fixture?: 'missing-model') => {
 		if (loadState === 'loading' || loadState === 'ready') return;
 		loadState = 'loading';
-		status = '正在載入 Cubism Core、Koharu 模型與 2048px 貼圖…';
+		status = fixture
+			? '正在驗證不存在的模型路徑與錯誤清理…'
+			: '正在載入 Cubism Core、Koharu 模型與 2048px 貼圖…';
 		try {
 			const { Live2DAdapter } = await import('../../scripts/lab/live2d-adapter');
 			adapter = new Live2DAdapter();
-			await adapter.initialize(canvas);
+			await adapter.initialize(canvas, { fixture });
 			loadState = 'ready';
 			status = 'Koharu 已載入。待機、點擊與向左甩動動作可用。';
 			if (motion === 'reduce' || performanceMode === 'economy') pause();
@@ -74,13 +76,20 @@
 			if (adapter && (motion === 'reduce' || performanceMode === 'economy')) pause();
 		});
 		const onVisibilityChange = () => document.hidden ? adapter?.pause() : undefined;
-		document.addEventListener('visibilitychange', onVisibilityChange);
-		return () => {
+		let disposed = false;
+		const cleanup = () => {
+			if (disposed) return;
+			disposed = true;
 			clearTimeout(reducedPauseTimer);
 			unsubscribe();
 			document.removeEventListener('visibilitychange', onVisibilityChange);
+			window.removeEventListener('pagehide', cleanup);
 			adapter?.dispose();
+			adapter = undefined;
 		};
+		document.addEventListener('visibilitychange', onVisibilityChange);
+		window.addEventListener('pagehide', cleanup, { once: true });
+		return cleanup;
 	});
 </script>
 
@@ -99,7 +108,10 @@
 			<p>{status}</p>
 		</div>
 		{#if loadState === 'idle' || loadState === 'error'}
-			<button class="live2d-primary" type="button" onclick={loadModel}>{loadState === 'error' ? '重新載入 Live2D' : '載入 Live2D'}</button>
+			<div class="live2d-load-controls">
+				<button class="live2d-primary" type="button" onclick={() => loadModel()}>{loadState === 'error' ? '重新載入 Live2D' : '載入 Live2D'}</button>
+				{#if loadState === 'idle'}<button type="button" onclick={() => loadModel('missing-model')}>測試模型載入失敗</button>{/if}
+			</div>
 		{:else}
 			<div class="live2d-motion-controls" aria-label="選擇 Koharu 動作">
 				<button type="button" class:is-active={activeMotion === 'Idle'} onclick={() => play('Idle')}>待機</button>

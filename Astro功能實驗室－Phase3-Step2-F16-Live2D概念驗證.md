@@ -146,8 +146,12 @@ AI 生成圖不等於可直接使用的 Live2D 模型。分層邊緣、補畫、
 
 2026-07-21 使用者完成 Koharu 人工驗收，確認目前模型風格、角色比例、載入、持續待機、Tap、Flick 與操作呈現符合概念測試需求。驗收期間發現「跟隨系統」的儲存設定與「減少」的解析結果容易混淆，因此共用偏好新增明確的「完整動態」覆蓋選項，Live2D 卡片也拆成「動態設定」與「目前結果」；使用者確認調整後效果通過。
 
-尚待完成：768／1440 px 完整矩陣、正式 build 隔離複查、錯誤 fixture及反覆載入／生命週期檢查。正式 `pnpm build` 目前仍受 Astro／Vite 載入 `picomatch` 時的 `require is not defined` 阻擋；`pnpm build:lab` 與真實瀏覽器執行均通過。本次 commit 作為可用 Prototype checkpoint，但在剩餘技術 QA 完成前不把 Step 2 標記為正式結案。
+2026-07-21 已完成剩餘技術 QA。新增只存在於 Lab 的「測試模型載入失敗」控制，讓 Cubism runtime 指向不存在的模型目錄；測試會在 4 秒內停止半初始化 renderer、顯示靜態 fallback 與可重試控制，之後可正常載入 Koharu。元件亦補上冪等 `pagehide` cleanup，與 Svelte 卸載共用同一條清理路徑。
 
-## 11. 下一個動作
+768px 採單欄、1440px 採角色與控制面板雙欄，兩者均無水平溢位、Canvas 不遮擋操作且維持單一實例。瀏覽器完成三輪「載入 → 暫停 → 繼續 → 離頁 → 返回 → 再載入」；每次返回皆回到乾淨的 idle 狀態，重新載入後仍只有一個 Canvas，Console error／warning 為 0。`pnpm build:lab`、`pnpm build` 與 `git diff --check` 通過；先前的 `picomatch`／`require is not defined` 問題未再重現。正式輸出不含 `/lab/`、`/lab-assets/`、Live2D bundle、Core、模型、貼圖或人物頁路由。
 
-以本次人工驗收通過的 Prototype 為 checkpoint，下一輪優先排除 production build 問題，再完成錯誤 fixture、768／1440 px 與反覆載入／cleanup QA。全部通過後才建立 Step 2 結案紀錄並決定是否進入 Step 3；Haruto 角色切換維持選配，不納入目前完成條件。
+Step 2 第一階段正式完成。採用結論為：官方 Cubism SDK for Web 可在目前 Astro＋Svelte 架構中延遲載入、可靠降級並安全清理，值得作為 Step 3 網站內桌寵的唯一人物 runtime 基線；Koharu 仍只作官方技術範例，不是正式角色素材。
+
+## 11. 結案與下一個動作
+
+進入 Step 3・F02 網站內桌寵前，先建立範圍與停止點；優先沿用本 Step 的 Live2D runtime，不新增第二套人物引擎。Haruto 角色切換與原創概念模型維持選配，不是 Step 3 的必要前置。

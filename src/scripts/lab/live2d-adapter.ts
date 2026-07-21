@@ -1,4 +1,9 @@
 type MotionGroup = 'Idle' | 'Tap' | 'FlickLeft';
+type Live2DFixture = 'missing-model';
+
+interface InitializeOptions {
+	fixture?: Live2DFixture;
+}
 
 interface Live2DDelegate {
 	initialize(canvas: HTMLCanvasElement): boolean;
@@ -56,15 +61,30 @@ export class Live2DAdapter {
 	private delegateClass?: DelegateConstructor;
 	private disposed = false;
 
-	async initialize(canvas: HTMLCanvasElement) {
+	async initialize(canvas: HTMLCanvasElement, options: InitializeOptions = {}) {
 		await loadCore();
-		const module = await import('../../vendor/live2d/demo/lappdelegate');
-		this.delegateClass = module.LAppDelegate;
-		this.delegate = module.LAppDelegate.getInstance();
-		if (!this.delegate.initialize(canvas)) throw new Error('WebGL 初始化失敗。');
-		this.delegate.run();
-		await waitUntilReady(this.delegate);
-		if (this.disposed) throw new Error('Live2D 已在載入期間停止。');
+		const [module, define] = await Promise.all([
+			import('../../vendor/live2d/demo/lappdelegate'),
+			import('../../vendor/live2d/demo/lappdefine'),
+		]);
+		define.setResourcesPathForFixture(options.fixture === 'missing-model'
+			? '/lab-assets/live2d/fixtures/missing-model/'
+			: undefined);
+		try {
+			this.delegateClass = module.LAppDelegate;
+			this.delegate = module.LAppDelegate.getInstance();
+			if (!this.delegate.initialize(canvas)) throw new Error('WebGL 初始化失敗。');
+			this.delegate.run();
+			await waitUntilReady(this.delegate, options.fixture ? 4000 : 30000);
+			if (this.disposed) throw new Error('Live2D 已在載入期間停止。');
+		} catch (error) {
+			this.dispose();
+			throw options.fixture === 'missing-model'
+				? new Error('測試模型不存在；已停止渲染並保留靜態 fallback。')
+				: error;
+		} finally {
+			define.setResourcesPathForFixture();
+		}
 	}
 
 	playMotion(group: MotionGroup) {
