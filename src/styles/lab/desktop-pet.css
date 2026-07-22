@@ -11,9 +11,13 @@
 .desktop-pet-boundaries { margin-top: clamp(4rem, 9vw, 8rem); padding-top: clamp(3rem, 7vw, 6rem); border-top: 1px solid var(--lab-line); }
 .desktop-pet-boundaries ul { margin: 0; padding-left: 1.1rem; }
 
-.desktop-pet-launcher { position: fixed; right: max(18px, env(safe-area-inset-right)); bottom: max(18px, env(safe-area-inset-bottom)); z-index: 80; display: flex; align-items: center; gap: .55rem; min-height: 42px; padding: .65rem .9rem; border: 0; border-radius: 999px; background: #142235; color: #fff; box-shadow: 0 10px 30px rgba(5, 12, 22, .24); cursor: pointer; }
-.desktop-pet-launcher span { color: #e0c56c; font-size: 1rem; }
-.desktop-pet-launcher strong { font-size: .7rem; letter-spacing: .04em; }
+.desktop-pet-launcher { display: flex; width: min(100%, 440px); min-height: 92px; align-items: center; justify-content: center; gap: 1rem; margin: 2rem auto 0; padding: 1.1rem 1.5rem; border: 1px solid rgba(224, 197, 108, .72); border-radius: 18px; background: #142235; color: #fff; box-shadow: 0 16px 36px rgba(5, 12, 22, .2); cursor: pointer; transition: transform .18s ease, box-shadow .18s ease, background .18s ease; }
+.desktop-pet-launcher:hover { transform: translateY(-3px); background: #1b2d45; box-shadow: 0 20px 42px rgba(5, 12, 22, .26); }
+.desktop-pet-launcher:focus-visible { outline: 3px solid #d6bd70; outline-offset: 4px; }
+.desktop-pet-launcher > span:first-child { color: #e0c56c; font-size: 2rem; }
+.desktop-pet-launcher > span:last-child { display: grid; gap: .35rem; text-align: left; }
+.desktop-pet-launcher strong { font-size: 1rem; letter-spacing: .04em; }
+.desktop-pet-launcher small { color: rgba(255, 255, 255, .7); font-size: .7rem; }
 .desktop-pet { --pet-travel: 0ms; position: fixed; z-index: 80; width: 168px; height: 205px; transition: left var(--pet-travel) linear, top var(--pet-travel) linear; pointer-events: none; }
 .desktop-pet-character { position: absolute; inset: 0; overflow: visible; outline: none; cursor: grab; touch-action: none; pointer-events: auto; filter: drop-shadow(0 9px 7px rgba(13, 24, 38, .2)); }
 .desktop-pet-character:focus-visible { filter: drop-shadow(0 0 5px #d5b954) drop-shadow(0 9px 7px rgba(13, 24, 38, .2)); }
@@ -34,4 +38,4 @@
 @keyframes desktop-pet-pulse { to { opacity: .35; transform: scale(.85); } }
 
 @media (max-width: 820px) { .desktop-pet-intro, .desktop-pet-boundaries { grid-template-columns: 1fr; }.desktop-pet-safety-grid { grid-template-columns: 1fr; } }
-@media (max-width: 520px) { .desktop-pet-lab { width: min(100% - 28px, 1120px); }.desktop-pet { width: 136px; height: 166px; }.desktop-pet-launcher { right: 14px; bottom: max(72px, env(safe-area-inset-bottom)); }.desktop-pet-menu-toggle { opacity: .72; }.desktop-pet-dialogue { max-width: 160px; } }
+@media (max-width: 520px) { .desktop-pet-lab { width: min(100% - 28px, 1120px); }.desktop-pet { width: 136px; height: 166px; }.desktop-pet-launcher { min-height: 84px; padding-inline: 1rem; }.desktop-pet-menu-toggle { opacity: .72; }.desktop-pet-dialogue { max-width: 160px; } }

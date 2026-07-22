@@ -229,6 +229,8 @@ Step 2 final QA 亦於 2026-07-21 完成：新增可重試的不存在模型 fix
 
 Phase 3・Step 3 Prototype 已於 2026-07-21 建立在 `/lab/desktop-pet/`。初版固定角落控制面板未通過人工驗收，隨後重做為小型透明無邊框桌寵：Koharu 會在 viewport 內低頻隨機遊走，可直接拖曳並以點擊觸發 Tap 對話；暫停與完整收合藏在極簡選單。每次出發會重新隨機抽選 FlickLeft 04、FlickRight 09、FlickUp 07 或 FlickDown 08 原生循環，抵達後切回 Idle 06／A／B 其中一段。桌機尺寸為 168×205px、手機為 136×166px；Cubism Sample 原本以 Alpha 1 清除主 framebuffer，造成 CSS 透明但畫布仍為不透明黑色，現已明確啟用 WebGL Alpha 並改用 Alpha 0 清除，遮罩 buffer 不變。多輪遊走／待機切換、移動途中暫停、點擊、360／768／1440px、viewport 限制與單一 Canvas 已通過瀏覽器 QA，未新增 dependency。使用者已完成第二次人工驗收，確認透明無邊框外觀、尺寸、拖曳、點擊、遊走速度與四向 motion／Idle 搭配符合預期；Step 3 正式完成。下一步為 Step 4・F21，詳細紀錄位於 `Astro功能實驗室－Phase3-Step3-F02網站內桌寵.md`。
 
+2026-07-23 桌寵公開展示入口再調整：原本右下角小型啟動按鈕移入 `/lab/desktop-pet/` 介紹區中央，改為最大 440×92px 的大型「叫出 Koharu 桌寵」CTA；載入後仍切換為既有浮動角色。遊走速度新增每秒 125px 硬上限，移除 4.3 秒 duration 上限，讓大螢幕長距離移動延長時間而不暴衝。`pnpm build:lab` 通過 39 頁，CTA、桌寵載入、遊走與 Console QA 正常。
+
 Phase 3・Step 4 已於 2026-07-22 完成 `/lab/ambient-effects/` CSS／Canvas 星塵、反向景深、點擊星芒、視角重設及 Standard／Economy／Reduced motion 降級。使用者回饋初版視差不明顯後，最終調整為星塵 18px、遠景 12px、中景 28px、近景 44px，並通過人工驗收；未新增 Three.js。
 
 Phase 3・Step 5 已於 2026-07-22 完成 `/lab/mini-game/`「幫蒂兒收集氣質」：Svelte 管理 30 秒遊戲狀態、分數、Combo、暫停與結算，Canvas 2D 繪製一般／閃耀氣質星及文字回饋；支援 Pointer 與完整鍵盤輸入、全體氣質時刻、本機最佳紀錄、共用音效與動態／效能偏好。Lab build 39 頁、360px、生命週期與 Console QA 通過，使用者已實際遊玩並確認目前效果可接受。production build 仍在頁面編譯前重現 `picomatch@4.0.5` 的 `require is not defined`，須在 Step 6 處理或明確列為環境阻擋。下一步為 Phase 3・Step 6 整合 QA 與結案。

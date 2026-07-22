@@ -28,8 +28,9 @@ const pageActions = [
 		<section id="desktop-pet-prototype" class="desktop-pet-intro" aria-labelledby="desktop-pet-prototype-title">
 			<div><p class="lab-eyebrow">Viewport Companion</p><h2 id="desktop-pet-prototype-title">一隻真的會亂跑的桌寵</h2></div>
 			<div>
-				<p>從右下角叫出 Koharu 後，她會在可視範圍內隨機遊走。每次出發會隨機選擇向左、向右、向上或向下 Flick 並循環播放，抵達後切回待機；拖曳可重新放置，輕點則觸發反應。</p>
+				<p>從頁面中央的按鈕叫出 Koharu 後，她會在可視範圍內隨機遊走。每次出發會隨機選擇向左、向右、向上或向下 Flick 並循環播放，抵達後切回待機；拖曳可重新放置，輕點則觸發反應。</p>
 				<p>Koharu 是 Live2D 官方 Sample Model，只作技術測試，不代表厄倫蒂兒或正式角色素材。</p>
+				<DesktopPet client:load />
 			</div>
 		</section>
 
@@ -55,6 +56,4 @@ const pageActions = [
 			</ul>
 		</section>
 	</main>
-
-	<DesktopPet client:load />
 </LabLayout>

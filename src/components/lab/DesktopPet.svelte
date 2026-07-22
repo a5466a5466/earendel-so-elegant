@@ -21,6 +21,8 @@
 		{ group: 'Idle', index: 1, label: '待機 A' },
 		{ group: 'Idle', index: 2, label: '待機 B' },
 	];
+	const MAX_WANDER_SPEED_PX_PER_SECOND = 125;
+	const MIN_TRAVEL_DURATION_MS = 1800;
 
 	let canvas: HTMLCanvasElement;
 	let pet: HTMLElement;
@@ -82,7 +84,10 @@
 		const nextY = 18 + Math.random() * Math.max(0, maxY - 38);
 		const distance = Math.hypot(nextX - x, nextY - y);
 		const chosen = randomItem(travelMotions);
-		travelDuration = clamp(distance * 8, 1800, 4300);
+		travelDuration = Math.max(
+			MIN_TRAVEL_DURATION_MS,
+			(distance / MAX_WANDER_SPEED_PX_PER_SECOND) * 1000,
+		);
 		adapter?.playMotion(chosen.group, chosen.index);
 		activePetMotion = chosen.label;
 		status = `移動中 · 循環播放「${chosen.label}」。`;
@@ -280,7 +285,8 @@
 
 {#if state === 'collapsed'}
 	<button class="desktop-pet-launcher" type="button" onclick={openPet} aria-label="叫出 Koharu 網站桌寵">
-		<span aria-hidden="true">✦</span><strong>叫出桌寵</strong>
+		<span aria-hidden="true">✦</span>
+		<span><strong>叫出 Koharu 桌寵</strong><small>載入後她會在畫面中自由遊走</small></span>
 	</button>
 {:else}
 	<aside
