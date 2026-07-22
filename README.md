@@ -1,16 +1,20 @@
 # 厄倫蒂兒好氣質
 
-以粉絲應援活動成果展示為主的 Astro 網站。目前主要成果是隔離於 `/lab/` 的功能實驗室，用來驗證正式站可能採用的內容、圖片、導覽、動畫、Gallery、影音、分享與搜尋能力。
+以粉絲應援活動成果展示為主的 Astro 網站。公開的 `/lab/` 功能實驗室用來示範內容、圖片、導覽、動畫、Gallery、影音、分享、搜尋、Live2D、Canvas 與小遊戲能力。
+
+- 正式首頁：<https://a5466a5466.github.io/earendel-so-elegant/>
+- 功能實驗室：<https://a5466a5466.github.io/earendel-so-elegant/lab/>
 
 ## 專案狀態
 
 - Phase 0：完成。
 - Phase 1 Step 1～18：全部完成。
 - Phase 1 已於 2026-07-20 通過使用者最終人工驗收並結案。
-- Phase 2：執行計畫已建立，Step 1～5 尚未開始。
-- 正式網站視覺、正式素材、網域與 Cloudflare 部署尚未開始。
+- Phase 2：完成並結案。
+- Phase 3：完成並結案。
+- Phase 4：F24 後端與 F25 PWA 停止；網站已部署至 GitHub Pages。
 
-最新進度與接手方式請先讀 `handoff.md`。目前執行範圍與 Step 位於 `Astro功能實驗室－Phase2執行計畫與紀錄.md`；Phase 1 最終結果位於 `Astro功能實驗室－Phase1-Step18-QA與結案.md`。
+最新進度與接手方式請先讀 `handoff.md`；GitHub Pages 與公開 Lab 的部署決策位於 `Astro功能實驗室－Phase4停止決策與GitHubPages部署轉向.md`。
 
 ## 環境
 
@@ -35,7 +39,7 @@ pnpm dev --host 127.0.0.1
 # Lab 驗收建置；保留 /lab/ 與測試資產
 pnpm build:lab
 
-# 正式建置；輸出守門會移除 /lab/ 與 Lab 專用資產
+# GitHub Pages 正式建置；包含公開 Lab 與示範資產
 pnpm build
 ```
 
@@ -53,7 +57,11 @@ pnpm build
 - Astro 元件、HTML、原生 CSS 與原生 TypeScript 優先。
 - 未經核准不得新增 dependency。
 - Lab 使用普通 Astro MPA、原生 History 與漸進增強。
-- Lab 頁面保持 noindex；正式輸出不得包含 `/lab/`、`/lab-assets/` 或 Lab 專用 bundle。
+- Lab 頁面公開但保持 `noindex`，避免實驗內容主動進入搜尋索引。
 - 正式首頁視覺、正式素材與部署策略不得因 Lab 實驗被默認決定。
+
+第三方程式、Live2D runtime／範例模型與遠端嵌入不因 repository
+公開而成為本專案的開源資產；來源、署名與適用條款見
+[`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md)。
 
 共用契約位於 `src/data/lab/`；各 Step 的範圍、驗證與決策記錄於專案根目錄的 `Astro功能實驗室－Phase*.md` 文件。

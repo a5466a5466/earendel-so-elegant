@@ -4,8 +4,7 @@ import GalleryImage from '../../components/lab/GalleryImage.astro';
 import LabLayout from '../../layouts/LabLayout.astro';
 import LabPageHero from '../../components/lab/LabPageHero.astro';
 
-const labContentEnabled = import.meta.env.DEV || import.meta.env.MODE === 'lab';
-const events = labContentEnabled ? await getCollection('events') : [];
+const events = await getCollection('events');
 const galleryEvent = events.find((event) => event.data.slug === 'starlight-birthday-project');
 const lightboxItems = galleryEvent?.data.gallery ?? [];
 const lightboxData = lightboxItems.map((item) => ({

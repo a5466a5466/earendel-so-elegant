@@ -27,6 +27,7 @@ const {
 } = Astro.props;
 const currentPath = normalizeLabPath(Astro.url.pathname);
 const breadcrumbs = getLabBreadcrumbs(currentPath, breadcrumbLabel);
+const baseUrl = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
 ---
 
 <!doctype html>
@@ -38,8 +39,8 @@ const breadcrumbs = getLabBreadcrumbs(currentPath, breadcrumbLabel);
 		<meta name="robots" content="noindex, nofollow, noarchive" />
 		<meta name="theme-color" content="#08131f" />
 		<meta name="generator" content={Astro.generator} />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
+		<link rel="icon" type="image/svg+xml" href={`${baseUrl}favicon.svg`} />
+		<link rel="icon" href={`${baseUrl}favicon.ico`} />
 		{alternates.map((alternate) => (
 			<link rel="alternate" hreflang={alternate.lang} href={alternate.href} />
 		))}

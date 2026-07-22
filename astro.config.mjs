@@ -1,5 +1,5 @@
 // @ts-check
-import { readFile, readdir, rm } from 'node:fs/promises';
+import { readFile, readdir, writeFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { defineConfig } from 'astro/config';
 
@@ -16,60 +16,60 @@ const productionBuild =
 	!explicitLabBuild &&
 	(process.env.npm_lifecycle_event === 'build' || process.argv.includes('build'));
 
+const textOutputExtensions = new Set([
+	'.css',
+	'.html',
+	'.js',
+	'.json',
+	'.map',
+	'.webmanifest',
+	'.xml',
+]);
+
 /**
- * Keep Lab available during development and explicit Lab builds, while
- * excluding it from the default production output.
+ * Keep local Lab URLs rooted at `/lab/`, but prefix literal Lab paths in the
+ * production artifact for GitHub Project Pages.
  *
  * @returns {import('astro').AstroIntegration}
  */
-const labOutputGuard = () => {
-	let labEnabled = false;
+const githubPagesLabPaths = () => ({
+	name: 'earendel-github-pages-lab-paths',
+	hooks: {
+		'astro:build:done': async ({ dir, logger }) => {
+			if (!productionBuild) return;
 
-	return {
-		name: 'earendel-lab-output-guard',
-		hooks: {
-			'astro:config:setup': ({ command }) => {
-				labEnabled = command === 'dev' || explicitLabBuild;
-			},
-			'astro:build:done': async ({ dir, logger }) => {
-				if (labEnabled) return;
+			/** @param {URL} directory */
+			const rewriteDirectory = async (directory) => {
+				const entries = await readdir(directory, { withFileTypes: true });
 
-				const astroAssetDirectory = new URL('./_astro/', dir);
-				const labAssetPattern = /^(?:LabLayout\.|LabControls\.|LabNavigation\.|CharacterStateStation\.|Live2DCharacter\.|DesktopPet\.|TemperamentGame\.|live2d-adapter\.|ambient-effects\.|mini-game\.|lapp|cubism|client\.svelte\.|client\.|preferences(?:\.astro[^.]*)?\.|navigation(?:\.astro[^.]*)?\.|islands(?:\.astro[^.]*)?\.|character-animation(?:\.astro[^.]*)?\.|desktop-pet(?:\.astro[^.]*)?\.|scroll(?:\.astro[^.]*)?\.|cursor(?:\.astro[^.]*)?\.|carousel(?:\.astro[^.]*)?\.|lightbox(?:\.astro[^.]*)?\.|video(?:\.astro[^.]*)?\.|youtube(?:\.astro[^.]*)?\.|social-embeds(?:\.astro[^.]*)?\.|audio(?:\.astro[^.]*)?\.|sound-effects(?:\.astro[^.]*)?\.|share(?:\.astro[^.]*)?\.|search(?:\.astro[^.]*)?\.|audio-manager\.|gallery-|starlight-birthday\.|summer-letter\.|moonlit-message-transparent\.)/;
-				const astroAssets = await readdir(astroAssetDirectory).catch(() => []);
-				const labOnlyAssets = astroAssets.filter((file) => labAssetPattern.test(file));
+				await Promise.all(entries.map(async (entry) => {
+					const entryUrl = new URL(entry.name + (entry.isDirectory() ? '/' : ''), directory);
+					if (entry.isDirectory()) return rewriteDirectory(entryUrl);
 
-				await Promise.all([
-					rm(new URL('./lab/', dir), { recursive: true, force: true }),
-					rm(new URL('./lab-assets/', dir), { recursive: true, force: true }),
-					...labOnlyAssets.map((file) =>
-						rm(new URL(file, astroAssetDirectory), { force: true }),
-					),
-				]);
+					const extension = entry.name.slice(entry.name.lastIndexOf('.'));
+					if (!textOutputExtensions.has(extension)) return;
 
-				const outputFiles = await readdir(dir);
-				const sitemapFiles = outputFiles.filter((file) => /^sitemap.*\.xml$/i.test(file));
+					const original = await readFile(entryUrl, 'utf8');
+					const rewritten = original.replace(
+						/(["'`(=])\/(lab(?:-assets)?\/)/g,
+						`$1${githubPagesBase}/$2`,
+					);
 
-				for (const sitemapFile of sitemapFiles) {
-					const sitemap = await readFile(new URL(sitemapFile, dir), 'utf8');
-					if (sitemap.includes('/lab/')) {
-						throw new Error(
-							`Production sitemap must not include Lab routes: ${sitemapFile}`,
-						);
-					}
-				}
+					if (rewritten !== original) await writeFile(entryUrl, rewritten, 'utf8');
+				}));
+			};
 
-				logger.info('Excluded Lab routes and Lab-only assets from the production output.');
-			},
+			await rewriteDirectory(dir);
+			logger.info(`Prefixed public Lab paths with ${githubPagesBase}.`);
 		},
-	};
-};
+	},
+});
 
 // https://astro.build/config
 export default defineConfig({
 	site: githubPagesSite,
 	base: productionBuild ? githubPagesBase : '/',
-	integrations: [labOutputGuard(), svelte()],
+	integrations: [svelte(), githubPagesLabPaths()],
 	vite: {
 		resolve: {
 			alias: {

@@ -4,8 +4,7 @@ import LabLayout from '../../../layouts/LabLayout.astro';
 import LabPageHero from '../../../components/lab/LabPageHero.astro';
 import OptimizedEventImage from '../../../components/lab/OptimizedEventImage.astro';
 
-const labContentEnabled = import.meta.env.DEV || import.meta.env.MODE === 'lab';
-const events = (labContentEnabled ? await getCollection('events') : []).sort(
+const events = (await getCollection('events')).sort(
 	(a, b) => b.data.date.getTime() - a.data.date.getTime(),
 );
 const starlightEvent = events.find((event) => event.data.slug === 'starlight-birthday-project');

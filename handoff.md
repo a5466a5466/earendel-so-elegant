@@ -13,15 +13,15 @@
 | 專案 | `earendel-so-elegant` |
 | Repository | `https://github.com/a5466a5466/earendel-so-elegant.git` |
 | 分支 | `master` |
-| HEAD | 本文件所在提交完成 Phase 3・Step 6 與 Phase 3 結案；精確 hash 以 `git log -1 --oneline` 核對 |
+| HEAD | 本文件所在提交已完成 GitHub Pages 與公開 Lab 部署；精確 hash 以 `git log -1 --oneline` 核對 |
 | 遠端 | 採 `master` 直接推送至 `origin/master`；同步狀態以 `git status -sb` 核對 |
-| 工作樹 | Phase 3 結案交付後應為乾淨；現況以 `git status -sb` 為準 |
+| 工作樹 | 部署交付後應為乾淨；現況以 `git status -sb` 為準 |
 | Phase 0 | Step 1～6 完成 |
 | Phase 1 | Step 1～18 全部完成；2026-07-20 通過使用者驗收並結案 |
 | Phase 2 | Step 1、Step 3、Step 4 已完成使用者驗收並結案；Step 2 最新列表暫緩 |
 | Phase 3 | Step 1～6 全部完成；採用候選、效能上限與工具鏈處置已核准並結案 |
 | Phase 4 | 已做停止決策；F24 後端投稿延後，F25 PWA 暫不採用，不建立 Prototype |
-| 下一步 | GitHub Pages 首次部署與線上 QA 已完成；待使用者瀏覽器人工確認，再規劃正式內容整合 |
+| 下一步 | GitHub Pages 已公開正式首頁與完整 Lab；待使用者以一般瀏覽器確認示範體驗，再規劃正式內容整合 |
 
 最近完成的 Phase 1 功能：
 
@@ -143,9 +143,9 @@ pnpm build:lab
 pnpm build
 ```
 
-- `pnpm build:lab` 保留 Lab 路由、首頁入口與實驗資產，供本機驗收。
-- `pnpm build` 是正式模式：保留正式首頁與 404，移除 `/lab/`、`/lab-assets/`、Lab 專用 CSS／JavaScript／圖片，並檢查 Sitemap 不含 `/lab/`。
-- 正式 build 會覆寫 `dist`；若之後要繼續查看 Lab 靜態輸出，最後再執行一次 `pnpm build:lab`。
+- `pnpm build:lab` 供本機驗收，Lab 維持根路徑 `/lab/` 與 `/lab-assets/`。
+- `pnpm build` 是 GitHub Pages 正式模式：輸出首頁、404、完整 Lab 與示範資產，並將公開路徑加上 `/earendel-so-elegant/` base。
+- 兩種 build 都會覆寫 `dist/`；要檢查哪種模式，就把對應命令放在最後執行。
 
 ## 5. 恢復工作流程
 
@@ -168,7 +168,7 @@ pnpm build
 先告訴我目前完成到哪個 Step、工作樹是否乾淨，以及下一個 Step 的範圍。
 ```
 
-## 6. 近期進度與下一步：GitHub Pages 部署準備
+## 6. 近期進度與下一步：GitHub Pages 與公開 Lab
 
 Step 6 已由使用者驗收完成。最終決策為保留普通 Astro MPA 與原生 History，採用 native cross-document View Transition，不採用 ClientRouter。
 
@@ -237,7 +237,7 @@ Phase 3・Step 6 已於 2026-07-22 完成整合技術 QA：五個 Phase 3 Protot
 
 2026-07-22 使用者確認網站預計發布至 GitHub Pages，並決定目前不進行後端相關功能。F24 投稿表單／後端延後，不使用第三方表單服務、資料庫或 Serverless Function；F25 PWA 因缺乏明確安裝／離線需求且 Service Worker 會增加快取與更新成本，暫不採用。Phase 4 不建立功能 Prototype，轉入 GitHub Pages 部署準備：優先處理 production build 的 `picomatch` 問題，再確認 Pages URL／base、GitHub Actions、Lab 公開策略與正式部署 QA。詳細決策位於 `Astro功能實驗室－Phase4停止決策與GitHubPages部署轉向.md`。
 
-2026-07-22 GitHub Pages 已完成首次部署：Project Pages URL 為 `https://a5466a5466.github.io/earendel-so-elegant/`，Repository 已改為 public，Pages source 為 GitHub Actions 且強制 HTTPS。production build 才套用 `base: /earendel-so-elegant`，dev 與 `build:lab` 維持根路徑；favicon、404 首頁連結與 Astro bundle 均包含正確 base。`.github/workflows/deploy.yml` 於 `master` push 或手動觸發時使用 Node 24、pnpm 11.13.0、`withastro/action@v6` 與 `actions/deploy-pages@v5`。首次手動 run `29884523696` 的 build／deploy 成功；線上首頁、CSS 與 favicon 回應 200，標題正確，`/lab/` 回應 404，符合正式隔離政策。`picomatch@4.0.5` 錯誤未重現；本機 `pnpm build` 與 `pnpm build:lab` 39 頁皆通過。下一步由使用者在一般瀏覽器完成人工確認，再規劃正式內容整合。
+2026-07-22 GitHub Pages 已完成首次部署：Project Pages URL 為 `https://a5466a5466.github.io/earendel-so-elegant/`，Repository 已改為 public，Pages source 為 GitHub Actions 且強制 HTTPS。使用者隨後決定完整公開功能實驗室供示範；production build 現在輸出 39 頁（37 個 Lab HTML）、3 個活動詳情、`lab-assets`、Live2D Core 與 Koharu 模型，首頁亦提供 Lab 入口。production build 才套用 `base: /earendel-so-elegant`，並於輸出階段修正 Lab runtime 的 root-relative 路徑；dev 與 `build:lab` 仍維持 `/lab/` 與 `/lab-assets/`。Lab 繼續使用 `noindex`，代表可由網址公開瀏覽但不主動要求搜尋引擎收錄。Live2D 與其他第三方內容不因 Repository 公開而改授權，完整歸屬與官方條款入口記錄於 `THIRD_PARTY_NOTICES.md`，既有授權文字保留於 `src/vendor/live2d/licenses/`。本機 `pnpm build`、`pnpm build:lab`、39 頁產出與子路徑靜態守門皆通過；部署 run 與最終線上網址應以本次提交後的 GitHub Actions／實際頁面核對。下一步由使用者在一般瀏覽器確認示範體驗，再規劃正式內容整合。
 
 ## 7. 目前架構與重要限制
 
@@ -251,6 +251,7 @@ Phase 3・Step 6 已於 2026-07-22 完成整合技術 QA：五個 Phase 3 Protot
 - Lab 內部路由使用普通 `<a>` 與 Astro file routing；Step 4 沒有攔截 History。Page Transition／ClientRouter 要等 Step 6 決策。
 - 手機、完整鍵盤、深層路由與返回行為已保留技術實作，但使用者決定它們不作為目前本機 Prototype 的追加人工 QA 阻擋條件。
 - 正式首頁視覺不應因 Lab 實驗被任意修改。
+- Lab 已公開供示範但保持 `noindex`；公開可存取不等於第三方資產被重新授權，修改或再利用前先讀 `THIRD_PARTY_NOTICES.md` 與 `src/vendor/live2d/licenses/`。
 
 ## 8. 已知工具／環境狀況
 

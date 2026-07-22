@@ -7,7 +7,7 @@ const projects = [
 	{ no: '03', date: '2025 · ARCHIVE', title: '月色音樂會', en: 'Concert Under Moonlight', copy: '收藏那些被歌聲接住的夜晚，也收藏我們曾經一起仰望、一起靜靜聆聽的時刻。', tone: 'rose' },
 ];
 
-const labEnabled = import.meta.env.DEV || import.meta.env.MODE === 'lab';
+const labUrl = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/lab/`;
 ---
 
 <BaseLayout title="厄倫蒂兒好氣質｜Earendel, So Elegant" description="獻給厄倫蒂兒的非官方粉絲應援網站。收藏她的優雅、歌聲，與我們一起走過的星光。">
@@ -18,7 +18,7 @@ const labEnabled = import.meta.env.DEV || import.meta.env.MODE === 'lab';
 		</a>
 		<button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav"><span></span><span></span><span class="sr-only">開啟選單</span></button>
 		<nav id="site-nav" class="site-nav" aria-label="主要導覽">
-			<a href="#about">關於她</a><a href="#projects">應援企劃</a><a href="#moments">星光片刻</a><a href="#follow">追隨星光</a>{labEnabled && <a href="/lab/">功能實驗室</a>}
+			<a href="#about">關於她</a><a href="#projects">應援企劃</a><a href="#moments">星光片刻</a><a href="#follow">追隨星光</a><a href={labUrl}>功能實驗室</a>
 		</nav>
 		<noscript><style>@media (max-width:720px){.menu-toggle{display:none}.site-nav{visibility:visible;transform:none;opacity:1}}</style></noscript>
 	</header>

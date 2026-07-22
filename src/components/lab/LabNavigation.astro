@@ -9,14 +9,15 @@ interface Props {
 }
 
 const { currentPath } = Astro.props;
-const links = [{ label: '返回首頁', href: '/' }, ...labNavigation];
+const baseUrl = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const links = [{ label: '返回首頁', href: baseUrl }, ...labNavigation];
 const currentFor = (href: string) =>
-	href !== '/' && isLabNavigationItemCurrent(currentPath, href) ? 'page' : undefined;
+	href !== baseUrl && isLabNavigationItemCurrent(currentPath, href) ? 'page' : undefined;
 ---
 
 <header class="lab-header" data-lab-navigation>
 	<div class="lab-header-inner">
-		<a class="lab-brand" href="/" aria-label="返回厄倫蒂兒好氣質首頁">
+		<a class="lab-brand" href={baseUrl} aria-label="返回厄倫蒂兒好氣質首頁">
 			<svg viewBox="0 0 48 48" aria-hidden="true">
 				<path d="M24 2 28.4 19.6 46 24l-17.6 4.4L24 46l-4.4-17.6L2 24l17.6-4.4L24 2Z"></path>
 				<circle cx="24" cy="24" r="4.4"></circle>
