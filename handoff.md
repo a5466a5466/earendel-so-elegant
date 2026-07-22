@@ -21,7 +21,8 @@
 | Phase 2 | Step 1、Step 3、Step 4 已完成使用者驗收並結案；Step 2 最新列表暫緩 |
 | Phase 3 | Step 1～6 全部完成；採用候選、效能上限與工具鏈處置已核准並結案 |
 | Phase 4 | 已做停止決策；F24 後端投稿延後，F25 PWA 暫不採用，不建立 Prototype |
-| 下一步 | GitHub Pages 已公開正式首頁與完整 Lab；待使用者以一般瀏覽器確認示範體驗，再規劃正式內容整合 |
+| 補充更新 | 已建立「首頁入場動畫」獨立文件；目前只有規劃，尚未修改首頁程式碼 |
+| 下一步 | 先確認入場動畫的播放頻率、主標文案、識別素材與總長度，再依補充更新文件開始實作 |
 
 最近完成的 Phase 1 功能：
 
@@ -242,6 +243,8 @@ Phase 3・Step 6 已於 2026-07-22 完成整合技術 QA：五個 Phase 3 Protot
 2026-07-22 GitHub Pages 已完成首次部署：Project Pages URL 為 `https://a5466a5466.github.io/earendel-so-elegant/`，Repository 已改為 public，Pages source 為 GitHub Actions 且強制 HTTPS。使用者隨後決定完整公開功能實驗室供示範；production build 現在輸出 39 頁（37 個 Lab HTML）、3 個活動詳情、`lab-assets`、Live2D Core 與 Koharu 模型，首頁亦提供 Lab 入口。production build 才套用 `base: /earendel-so-elegant`，並於輸出階段修正 Lab runtime 的 root-relative 路徑；dev 與 `build:lab` 仍維持 `/lab/` 與 `/lab-assets/`。Lab 繼續使用 `noindex`，代表可由網址公開瀏覽但不主動要求搜尋引擎收錄。Live2D 與其他第三方內容不因 Repository 公開而改授權，完整歸屬與官方條款入口記錄於 `THIRD_PARTY_NOTICES.md`，既有授權文字保留於 `src/vendor/live2d/licenses/`。本機 `pnpm build`、`pnpm build:lab`、39 頁產出與子路徑靜態守門皆通過。公開 Lab commit `b54faca` 的 Actions run `29885492267` build／deploy 成功；線上首頁、Lab、活動深層頁、Live2D、桌寵、小遊戲與重型資產皆回應 200。瀏覽器確認首頁跳轉正確、Koharu 載入至 `ready` 且維持單一 Canvas／11 段動作控制，小遊戲亦能啟動 Canvas，Console error／warning 為 0。下一步由使用者在一般瀏覽器確認主觀視覺與示範流程，再規劃正式內容整合。
 
 2026-07-23 使用者調整 Lab 共用偏好政策：所有 Lab 預設並常駐「完整動態／音效開啟／標準效能」，設定只由共用實驗控制器管理並跨頁保存。動態不再提供「跟隨系統」，效能不再提供「自動」，也不再依 `prefers-reduced-motion`、Save-Data 或 `deviceMemory` 私下自動降級；使用者仍可明確切換減少動態、關閉音效或節能模式。音效實驗頁原有的第二組音效開關與偏好重設已移除。儲存鍵升級為 `earendel-lab-preferences-v2`，舊版預設不會造成新控制器狀態混用。背景頁籤暫停、離頁清理、觸控輸入限制與使用者明確選擇的降級仍保留。`pnpm build:lab` 通過 39 頁，瀏覽器確認根節點與控制器摘要為「完整動態 · 音效開啟 · 標準」，Console error／warning 為 0。
+
+2026-07-23 新增補充更新「首頁入場動畫」。參考 `https://cyg.sid.tw/` 的全螢幕分階段揭露節奏，候選方向為深色全螢幕、星光／識別元素、厄倫蒂兒主標、主標退場後揭露首頁 Hero。本站不複製參考網站的文字、圖片、角色、品牌或程式碼；預計只使用原生 CSS 與少量 TypeScript，不新增 dependency。此輪只建立 `Astro功能實驗室－補充更新－首頁入場動畫.md` 與交接索引，首頁程式碼尚未修改。實作前必須先確認播放頻率、文案、素材與總長度；後續進度、QA、人工驗收與部署證據集中寫入該文件，不重開已結案 Phase。
 
 ## 7. 目前架構與重要限制
 
