@@ -354,7 +354,3 @@
 	.state-station__controls { grid-template-columns: 1fr 1fr; }
 	.islands-verification ul { grid-template-columns: 1fr; }
 }
-
-@media (prefers-reduced-motion: reduce) {
-	.state-character * { animation: none !important; }
-}

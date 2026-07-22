@@ -1,6 +1,6 @@
 # 厄倫蒂兒好氣質網站－通用工作交接
 
-最後更新：2026-07-22（Asia/Taipei）
+最後更新：2026-07-23（Asia/Taipei）
 
 這是本專案跨電腦、跨 Codex 任務與跨工作階段的第一入口。接手者必須先讀本文件，再依「恢復工作流程」核對實際 Git 狀態；本文件的 Git 資訊是更新當下的快照，不可取代現場檢查。
 
@@ -239,6 +239,8 @@ Phase 3・Step 6 已於 2026-07-22 完成整合技術 QA：五個 Phase 3 Protot
 
 2026-07-22 GitHub Pages 已完成首次部署：Project Pages URL 為 `https://a5466a5466.github.io/earendel-so-elegant/`，Repository 已改為 public，Pages source 為 GitHub Actions 且強制 HTTPS。使用者隨後決定完整公開功能實驗室供示範；production build 現在輸出 39 頁（37 個 Lab HTML）、3 個活動詳情、`lab-assets`、Live2D Core 與 Koharu 模型，首頁亦提供 Lab 入口。production build 才套用 `base: /earendel-so-elegant`，並於輸出階段修正 Lab runtime 的 root-relative 路徑；dev 與 `build:lab` 仍維持 `/lab/` 與 `/lab-assets/`。Lab 繼續使用 `noindex`，代表可由網址公開瀏覽但不主動要求搜尋引擎收錄。Live2D 與其他第三方內容不因 Repository 公開而改授權，完整歸屬與官方條款入口記錄於 `THIRD_PARTY_NOTICES.md`，既有授權文字保留於 `src/vendor/live2d/licenses/`。本機 `pnpm build`、`pnpm build:lab`、39 頁產出與子路徑靜態守門皆通過。公開 Lab commit `b54faca` 的 Actions run `29885492267` build／deploy 成功；線上首頁、Lab、活動深層頁、Live2D、桌寵、小遊戲與重型資產皆回應 200。瀏覽器確認首頁跳轉正確、Koharu 載入至 `ready` 且維持單一 Canvas／11 段動作控制，小遊戲亦能啟動 Canvas，Console error／warning 為 0。下一步由使用者在一般瀏覽器確認主觀視覺與示範流程，再規劃正式內容整合。
 
+2026-07-23 使用者調整 Lab 共用偏好政策：所有 Lab 預設並常駐「完整動態／音效開啟／標準效能」，設定只由共用實驗控制器管理並跨頁保存。動態不再提供「跟隨系統」，效能不再提供「自動」，也不再依 `prefers-reduced-motion`、Save-Data 或 `deviceMemory` 私下自動降級；使用者仍可明確切換減少動態、關閉音效或節能模式。音效實驗頁原有的第二組音效開關與偏好重設已移除。儲存鍵升級為 `earendel-lab-preferences-v2`，舊版預設不會造成新控制器狀態混用。背景頁籤暫停、離頁清理、觸控輸入限制與使用者明確選擇的降級仍保留。`pnpm build:lab` 通過 39 頁，瀏覽器確認根節點與控制器摘要為「完整動態 · 音效開啟 · 標準」，Console error／warning 為 0。
+
 ## 7. 目前架構與重要限制
 
 - Astro：`^7.0.9`。
@@ -247,7 +249,7 @@ Phase 3・Step 6 已於 2026-07-22 完成整合技術 QA：五個 Phase 3 Protot
 - 不得未經使用者核准新增 dependency。
 - Svelte integration 已帶入 TypeScript peer dependency，但專案仍未安裝 `@astrojs/check`；不要為了額外型別命令自行新增套件。現階段以 Astro build 作為編譯基線。
 - Content Collection schema 位於 `src/content.config.ts`。修改 schema 後應重新啟動 dev server，不能只依賴 HMR。
-- Lab 偏好只使用 `earendel-lab-preferences-v1`，後續功能不得建立第二份 localStorage 或 reduced-motion 狀態。
+- Lab 偏好只使用 `earendel-lab-preferences-v2`，唯一寫入入口是共用實驗控制器；後續功能不得建立第二份 localStorage、media query 或頁內偏好控制。
 - Lab 內部路由使用普通 `<a>` 與 Astro file routing；Step 4 沒有攔截 History。Page Transition／ClientRouter 要等 Step 6 決策。
 - 手機、完整鍵盤、深層路由與返回行為已保留技術實作，但使用者決定它們不作為目前本機 Prototype 的追加人工 QA 阻擋條件。
 - 正式首頁視覺不應因 Lab 實驗被任意修改。

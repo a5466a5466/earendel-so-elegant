@@ -25,18 +25,17 @@
 			<label>
 				<span>動態偏好</span>
 				<select name="motion" data-motion-control>
-					<option value="system">跟隨系統</option>
-					<option value="full">完整動態</option>
+					<option value="full">完整動態（預設）</option>
 					<option value="reduce">減少動態</option>
 				</select>
-				<small>「完整動態」會覆蓋系統的減少動畫設定；可隨時切回跟隨系統。</small>
+				<small>所有 Lab 功能共用此設定，並跨頁保存。</small>
 			</label>
 
 			<label>
 				<span>音效偏好</span>
 				<select name="sound" data-sound-control>
-					<option value="off">關閉（預設）</option>
-					<option value="on">開啟</option>
+					<option value="on">開啟（預設）</option>
+					<option value="off">關閉</option>
 				</select>
 				<small>這一步只記住偏好，不會播放測試聲音。</small>
 			</label>
@@ -44,11 +43,10 @@
 			<label>
 				<span>效能模式</span>
 				<select name="performance" data-performance-control>
-					<option value="auto">自動</option>
-					<option value="standard">標準</option>
+					<option value="standard">標準（預設）</option>
 					<option value="economy">節能</option>
 				</select>
-				<small>自動模式會參考省流量設定與可用裝置記憶體。</small>
+				<small>只有明確選擇節能時才降低裝飾性效果。</small>
 			</label>
 
 			<button type="button" data-reset-preferences>重設所有偏好</button>

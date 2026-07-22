@@ -31,7 +31,7 @@ const baseUrl = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
 ---
 
 <!doctype html>
-<html lang={lang} data-motion="full" data-motion-setting="system" data-sound="off" data-performance="standard" data-performance-setting="auto" data-transition-effect={nativeViewTransitions ? viewTransitionEffect : undefined}>
+<html lang={lang} data-motion="full" data-motion-setting="full" data-sound="on" data-performance="standard" data-performance-setting="standard" data-transition-effect={nativeViewTransitions ? viewTransitionEffect : undefined}>
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -96,16 +96,6 @@ const baseUrl = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
 				::view-transition-new(lab-stagger-title),
 				::view-transition-new(lab-stagger-copy) { animation: 360ms ease-out both lab-stagger-in; }
 				@keyframes lab-stagger-in { from { opacity: 0; transform: translateY(18px); } }
-				@media (prefers-reduced-motion: reduce) {
-					::view-transition-old(root),
-					::view-transition-new(root),
-					::view-transition-group(lab-transition-postcard),
-					::view-transition-group(lab-stagger-visual),
-					::view-transition-group(lab-stagger-title),
-					::view-transition-group(lab-stagger-copy),
-					::view-transition-new(lab-stagger-title),
-					::view-transition-new(lab-stagger-copy) { animation: none; }
-				}
 				html[data-motion='reduce']::view-transition-old(root),
 				html[data-motion='reduce']::view-transition-new(root),
 				html[data-motion='reduce']::view-transition-group(lab-transition-postcard),

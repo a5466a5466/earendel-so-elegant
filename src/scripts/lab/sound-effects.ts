@@ -1,11 +1,5 @@
 import { labAudioManager, type LabSoundEffect, type SoundEffectPlayResult } from './audio-manager';
-import {
-	applyLabPreferences,
-	onLabPreferencesChange,
-	readLabPreferences,
-	resetLabPreferences,
-	writeLabPreferences,
-} from './preferences';
+import { onLabPreferencesChange } from './preferences';
 
 interface ActiveSoundEffectsLab {
 	root: HTMLElement;
@@ -32,11 +26,9 @@ export const initializeSoundEffectsLab = () => {
 	const status = root.querySelector<HTMLElement>('[data-sound-effects-status]');
 	const result = root.querySelector<HTMLElement>('[data-sound-effects-result]');
 	const count = root.querySelector<HTMLElement>('[data-sound-effects-count]');
-	const disableButton = root.querySelector<HTMLButtonElement>('[data-sound-disable]');
-	const resetButton = root.querySelector<HTMLButtonElement>('[data-sound-reset]');
 	const rapidButton = root.querySelector<HTMLButtonElement>('[data-sound-rapid]');
 	const effectButtons = Array.from(root.querySelectorAll<HTMLButtonElement>('[data-sound-effect]'));
-	if (!channel || !status || !result || !count || !disableButton || !resetButton || !rapidButton) return;
+	if (!channel || !status || !result || !count || !rapidButton) return;
 
 	const successSource = channel.dataset.successSrc;
 	const cancelSource = channel.dataset.cancelSrc;
@@ -95,24 +87,6 @@ export const initializeSoundEffectsLab = () => {
 			}, index * 35));
 		}
 	};
-	const handleSoundToggle = () => {
-		registerInteraction();
-		const preferences = readLabPreferences();
-		const enabling = preferences.sound === 'off';
-		const stored = writeLabPreferences({ ...preferences, sound: enabling ? 'on' : 'off' });
-		applyLabPreferences(stored, 'control');
-		setResult(enabling
-			? '已重新開啟共用音效偏好；請按成功或取消按鈕測試。'
-			: '已將共用音效偏好設為關閉；重新整理後仍保持靜音，也可由同一按鈕重新開啟。');
-	};
-	const handleReset = () => {
-		const defaults = resetLabPreferences();
-		applyLabPreferences(defaults, 'reset');
-		labAudioManager.lockEffects();
-		actionCount = 0;
-		count.textContent = '0';
-		setResult('所有 Lab 偏好與本頁計數已重設；安全預設仍是靜音。');
-	};
 	const handleVisibility = () => {
 		if (document.hidden) labAudioManager.pauseEffects();
 	};
@@ -122,16 +96,12 @@ export const initializeSoundEffectsLab = () => {
 		button.addEventListener('pointerenter', handleHover);
 	});
 	rapidButton.addEventListener('click', handleRapid);
-	disableButton.addEventListener('click', handleSoundToggle);
-	resetButton.addEventListener('click', handleReset);
 	document.addEventListener('visibilitychange', handleVisibility);
 	const stopPreferences = onLabPreferencesChange((detail) => {
 		const enabled = detail.preferences.sound === 'on';
 		const economy = detail.resolvedPerformance === 'economy';
 		labAudioManager.setSoundEnabled(enabled);
 		labAudioManager.setEconomyMode(economy);
-		disableButton.textContent = enabled ? '關閉並記住音效設定' : '重新開啟音效';
-		disableButton.dataset.soundState = enabled ? 'on' : 'off';
 		status.textContent = enabled
 			? economy
 				? '音效已開啟；節能模式會略過 hover，只保留明確操作音效。'
@@ -150,8 +120,6 @@ export const initializeSoundEffectsLab = () => {
 				button.removeEventListener('pointerenter', handleHover);
 			});
 			rapidButton.removeEventListener('click', handleRapid);
-			disableButton.removeEventListener('click', handleSoundToggle);
-			resetButton.removeEventListener('click', handleReset);
 			document.removeEventListener('visibilitychange', handleVisibility);
 			window.removeEventListener('pagehide', handlePageHide);
 			stopPreferences();

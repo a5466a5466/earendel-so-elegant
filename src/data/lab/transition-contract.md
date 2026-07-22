@@ -15,7 +15,7 @@
 
 - 不支援 cross-document View Transition：普通 MPA 換頁。
 - JavaScript 關閉：普通 MPA 換頁；原生 CSS 轉場若瀏覽器支援仍可運作。
-- `prefers-reduced-motion: reduce` 或 Lab 動態偏好為 reduce：停用 root 與共享元素動畫。
+- Lab 實驗控制器的動態偏好為 reduce：停用 root 與共享元素動畫；完整動態時不再由系統 media query 私下覆蓋。
 - 直接開啟、重新整理、前進與返回皆不得依賴 transition 狀態。
 
 ## Script 生命週期

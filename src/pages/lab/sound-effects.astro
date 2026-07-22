@@ -35,7 +35,7 @@ const audioBase = '/lab-assets/audio';
 			<div>
 				<p class="lab-eyebrow">Shared Effect Channel</p>
 				<h2 id="sound-overview-title">一個 channel，三種短回饋</h2>
-				<p>先在頁首實驗控制器把音效改為開啟。初始載入、重新整理與偏好切換都不會自行播放。</p>
+				<p>音效預設開啟，也可隨時由實驗控制器關閉。初始載入、重新整理與偏好切換都不會自行播放。</p>
 			</div>
 			<dl>
 				<div><dt>成功</dt><dd>0.24 秒</dd></div>
@@ -86,7 +86,7 @@ const audioBase = '/lab-assets/audio';
 					<span>02</span><div><h3>節能模式略過 hover</h3><p>效能結果為「節能」時，只保留成功與取消等明確操作，不播放滑入提示。</p></div>
 				</article>
 				<article>
-					<span>03</span><div><h3>記住關閉，也能隨時重開</h3><p>關閉狀態會保存，但同一按鈕會立即變成「重新開啟音效」；兩個方向都使用既有 F26 偏好 API，不建立第二個儲存鍵。</p><div class="sound-preference-actions"><button type="button" data-sound-disable>讀取音效設定中</button><button type="button" data-sound-reset>重設所有偏好</button></div></div>
+					<span>03</span><div><h3>統一由實驗控制器管理</h3><p>音效開關與偏好重設只存在於共用實驗控制器；本頁只測試播放結果，不建立第二個控制入口。</p></div>
 				</article>
 			</div>
 		</section>

@@ -725,11 +725,6 @@ html[data-performance='economy'] .scroll-story-visual i { transition-duration: .
 	.lab-footer { flex-direction: column; gap: .6rem; }
 }
 
-@media (prefers-reduced-motion: reduce) {
-	html { scroll-behavior: auto; }
-	*, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
-}
-
 html[data-motion='reduce'] { scroll-behavior: auto; }
 html[data-motion='reduce'] *,
 html[data-motion='reduce'] *::before,
@@ -1232,7 +1227,7 @@ html[data-motion='reduce'] .cursor-halo, html[data-performance='economy'] .curso
 	50% { border-color: rgba(255, 243, 201, 1); box-shadow: 0 0 0 7px rgba(245, 221, 160, .07), 0 0 22px rgba(245, 221, 160, .32); }
 }
 
-@media (prefers-reduced-motion: reduce), (pointer: coarse), (hover: none) {
+@media (pointer: coarse), (hover: none) {
 	.cursor-halo, .cursor-halo i { display: none; animation: none; }
 }
 

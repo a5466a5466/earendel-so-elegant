@@ -43,10 +43,10 @@ const pageActions = [
 				<p>開啟右下角實驗控制器修改設定；此區應立即更新。重新整理或切換 Lab 頁面後，選擇仍應保留。</p>
 			</div>
 			<dl class="preference-state-grid" aria-live="polite">
-				<div><dt>動態設定</dt><dd data-pref-motion-setting>跟隨系統</dd></div>
+				<div><dt>動態設定</dt><dd data-pref-motion-setting>完整動態</dd></div>
 				<div><dt>動態結果</dt><dd data-pref-motion-resolved>完整</dd></div>
-				<div><dt>音效</dt><dd data-pref-sound>靜音</dd></div>
-				<div><dt>效能設定</dt><dd data-pref-performance-setting>自動</dd></div>
+				<div><dt>音效</dt><dd data-pref-sound>音效開啟</dd></div>
+				<div><dt>效能設定</dt><dd data-pref-performance-setting>標準</dd></div>
 				<div><dt>效能結果</dt><dd data-pref-performance-resolved>標準</dd></div>
 				<div><dt>最後來源</dt><dd data-pref-source>初始化</dd></div>
 			</dl>
@@ -65,7 +65,7 @@ const pageActions = [
 					<div class="motion-consumer-visual" aria-hidden="true"><i></i><i></i><i></i></div>
 					<span>Motion Consumer</span>
 					<h3 data-motion-consumer-title>完整動態</h3>
-					<p>完整模式會緩慢旋轉；系統或站內要求減少動態時立即停止。</p>
+					<p>完整模式會緩慢旋轉；由實驗控制器切換為減少動態時立即停止。</p>
 				</article>
 				<article class="preference-consumer sound-consumer">
 					<div class="sound-consumer-visual" aria-hidden="true"><i></i><i></i><i></i></div>
@@ -95,7 +95,7 @@ const pageActions = [
 		</section>
 
 		<noscript>
-			<p class="preference-noscript">JavaScript 未啟用：頁面採用安全預設（完整動態、靜音、標準效能）；主要說明仍可閱讀。</p>
+			<p class="preference-noscript">JavaScript 未啟用：頁面採用預設設定（完整動態、音效開啟、標準效能）；主要說明仍可閱讀。</p>
 		</noscript>
 	</div>
 </LabLayout>
@@ -109,10 +109,10 @@ const pageActions = [
 	const root = document.querySelector<HTMLElement>('[data-preference-lab]');
 	if (root) {
 		const labels = {
-			motion: { system: '跟隨系統', full: '完整動態', reduce: '減少動態' },
+			motion: { full: '完整動態', reduce: '減少動態' },
 			sound: { off: '靜音', on: '音效開啟' },
-			performance: { auto: '自動', standard: '標準', economy: '節能' },
-			source: { initialize: '初始化', control: '控制器', reset: '重設', system: '系統變更', storage: '跨頁同步', api: '程式介面' },
+			performance: { standard: '標準', economy: '節能' },
+			source: { initialize: '初始化', control: '控制器', reset: '重設', storage: '跨頁同步', api: '程式介面' },
 		} as const;
 		const setText = (selector: string, value: string) => {
 			const element = root.querySelector<HTMLElement>(selector);

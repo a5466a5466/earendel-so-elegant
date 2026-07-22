@@ -35,4 +35,3 @@
 
 @media (max-width: 820px) { .desktop-pet-intro, .desktop-pet-boundaries { grid-template-columns: 1fr; }.desktop-pet-safety-grid { grid-template-columns: 1fr; } }
 @media (max-width: 520px) { .desktop-pet-lab { width: min(100% - 28px, 1120px); }.desktop-pet { width: 136px; height: 166px; }.desktop-pet-launcher { right: 14px; bottom: max(72px, env(safe-area-inset-bottom)); }.desktop-pet-menu-toggle { opacity: .72; }.desktop-pet-dialogue { max-width: 160px; } }
-@media (prefers-reduced-motion: reduce) { .desktop-pet, .desktop-pet-character canvas, .desktop-pet-menu-toggle { transition: none; }.desktop-pet-loading { animation: none; } }

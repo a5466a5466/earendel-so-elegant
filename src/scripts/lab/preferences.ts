@@ -1,9 +1,9 @@
-export type MotionPreference = 'system' | 'full' | 'reduce';
+export type MotionPreference = 'full' | 'reduce';
 export type SoundPreference = 'off' | 'on';
-export type PerformancePreference = 'auto' | 'standard' | 'economy';
+export type PerformancePreference = 'standard' | 'economy';
 export type ResolvedMotionPreference = 'full' | 'reduce';
 export type ResolvedPerformancePreference = 'standard' | 'economy';
-export type LabPreferencesChangeSource = 'initialize' | 'control' | 'reset' | 'system' | 'storage' | 'api';
+export type LabPreferencesChangeSource = 'initialize' | 'control' | 'reset' | 'storage' | 'api';
 
 export interface LabPreferences {
 	motion: MotionPreference;
@@ -21,35 +21,30 @@ export interface LabPreferencesChangeDetail extends LabPreferencesSnapshot {
 	source: LabPreferencesChangeSource;
 }
 
-interface NavigatorWithDeviceHints extends Navigator {
-	connection?: { saveData?: boolean };
-	deviceMemory?: number;
-}
-
 interface ActiveController {
 	controls: HTMLElement;
 	dispose: () => void;
 }
 
-export const LAB_PREFERENCES_STORAGE_KEY = 'earendel-lab-preferences-v1';
+export const LAB_PREFERENCES_STORAGE_KEY = 'earendel-lab-preferences-v2';
 export const LAB_PREFERENCES_CHANGE_EVENT = 'lab:preferences-change';
 
 export const DEFAULT_LAB_PREFERENCES: Readonly<LabPreferences> = Object.freeze({
-	motion: 'system',
-	sound: 'off',
-	performance: 'auto',
+	motion: 'full',
+	sound: 'on',
+	performance: 'standard',
 });
 
 let activeController: ActiveController | undefined;
 
 const isMotionPreference = (value: unknown): value is MotionPreference =>
-	value === 'system' || value === 'full' || value === 'reduce';
+	value === 'full' || value === 'reduce';
 
 const isSoundPreference = (value: unknown): value is SoundPreference =>
 	value === 'off' || value === 'on';
 
 const isPerformancePreference = (value: unknown): value is PerformancePreference =>
-	value === 'auto' || value === 'standard' || value === 'economy';
+	value === 'standard' || value === 'economy';
 
 const sanitizePreferences = (value: unknown): LabPreferences => {
 	const candidate = value && typeof value === 'object' ? value as Partial<LabPreferences> : {};
@@ -91,31 +86,14 @@ export const resetLabPreferences = (): LabPreferences => {
 	return { ...DEFAULT_LAB_PREFERENCES };
 };
 
-const resolvePerformance = (preference: PerformancePreference): ResolvedPerformancePreference => {
-	if (preference !== 'auto') return preference;
-	if (typeof navigator === 'undefined') return 'standard';
-
-	const deviceNavigator = navigator as NavigatorWithDeviceHints;
-	const prefersDataSaving = deviceNavigator.connection?.saveData === true;
-	const hasLimitedMemory =
-		typeof deviceNavigator.deviceMemory === 'number' && deviceNavigator.deviceMemory <= 4;
-	return prefersDataSaving || hasLimitedMemory ? 'economy' : 'standard';
-};
-
 export const getLabPreferencesSnapshot = (
 	preferences: LabPreferences = readLabPreferences(),
 ): LabPreferencesSnapshot => {
 	const safePreferences = sanitizePreferences(preferences);
-	const systemRequestsReducedMotion =
-		typeof matchMedia !== 'undefined' && matchMedia('(prefers-reduced-motion: reduce)').matches;
 	return {
 		preferences: safePreferences,
-		resolvedMotion: safePreferences.motion === 'reduce'
-			? 'reduce'
-			: safePreferences.motion === 'full'
-				? 'full'
-				: systemRequestsReducedMotion ? 'reduce' : 'full',
-		resolvedPerformance: resolvePerformance(safePreferences.performance),
+		resolvedMotion: safePreferences.motion,
+		resolvedPerformance: safePreferences.performance,
 	};
 };
 
@@ -177,7 +155,6 @@ export const initializeLabPreferences = () => {
 	const statusOutput = controls.querySelector<HTMLElement>('[data-preferences-status]');
 	if (!form || !motionSelect || !soundSelect || !performanceSelect) return;
 
-	const reducedMotionQuery = matchMedia('(prefers-reduced-motion: reduce)');
 	const coarsePointerQuery = matchMedia('(pointer: coarse)');
 	const hoverQuery = matchMedia('(hover: hover)');
 	let preferences = readLabPreferences();
@@ -196,18 +173,13 @@ export const initializeLabPreferences = () => {
 		soundSelect.value = snapshot.preferences.sound;
 		performanceSelect.value = snapshot.preferences.performance;
 		if (motionOutput) {
-			const systemStatus = reducedMotionQuery.matches ? '系統要求減少' : '系統允許完整動態';
-			motionOutput.textContent = `${systemStatus}；目前${snapshot.resolvedMotion === 'reduce' ? '減少' : '完整'}`;
+			motionOutput.textContent = snapshot.resolvedMotion === 'reduce' ? '減少動態' : '完整動態';
 		}
 		if (performanceOutput) performanceOutput.textContent = snapshot.resolvedPerformance === 'economy' ? '節能' : '標準';
 		if (summaryOutput) {
-			const motionLabel = snapshot.preferences.motion === 'reduce'
-				? '減少動態'
-				: snapshot.preferences.motion === 'full' ? '完整動態' : '跟隨系統';
+			const motionLabel = snapshot.preferences.motion === 'reduce' ? '減少動態' : '完整動態';
 			const soundLabel = snapshot.preferences.sound === 'on' ? '音效開啟' : '靜音';
-			const performanceLabel = snapshot.preferences.performance === 'auto'
-				? `自動→${snapshot.resolvedPerformance === 'economy' ? '節能' : '標準'}`
-				: snapshot.resolvedPerformance === 'economy' ? '節能' : '標準';
+			const performanceLabel = snapshot.resolvedPerformance === 'economy' ? '節能' : '標準';
 			summaryOutput.textContent = `${motionLabel} · ${soundLabel} · ${performanceLabel}`;
 		}
 		if (announcement && statusOutput) statusOutput.textContent = announcement;
@@ -231,7 +203,6 @@ export const initializeLabPreferences = () => {
 		preferences = resetLabPreferences();
 		renderPreferences('reset', '實驗室偏好已重設。');
 	};
-	const handleSystemMotionChange = () => renderPreferences('system');
 	const handleStorageChange = (event: StorageEvent) => {
 		if (event.key !== null && event.key !== LAB_PREFERENCES_STORAGE_KEY) return;
 		preferences = readLabPreferences();
@@ -252,7 +223,6 @@ export const initializeLabPreferences = () => {
 
 	form.addEventListener('change', handleFormChange);
 	resetButton?.addEventListener('click', handleReset);
-	reducedMotionQuery.addEventListener('change', handleSystemMotionChange);
 	coarsePointerQuery.addEventListener('change', updateDeviceInformation);
 	hoverQuery.addEventListener('change', updateDeviceInformation);
 	window.addEventListener('storage', handleStorageChange);
@@ -270,7 +240,6 @@ export const initializeLabPreferences = () => {
 			cancelAnimationFrame(resizeFrame);
 			form.removeEventListener('change', handleFormChange);
 			resetButton?.removeEventListener('click', handleReset);
-			reducedMotionQuery.removeEventListener('change', handleSystemMotionChange);
 			coarsePointerQuery.removeEventListener('change', updateDeviceInformation);
 			hoverQuery.removeEventListener('change', updateDeviceInformation);
 			window.removeEventListener('storage', handleStorageChange);

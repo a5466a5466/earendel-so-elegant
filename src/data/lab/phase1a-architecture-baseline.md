@@ -31,9 +31,10 @@
 
 ## 4. 使用者偏好
 
-- 唯一持久化 key 為 `earendel-lab-preferences-v1`；不得另建第二份 motion、sound 或 performance 儲存狀態。
-- 所有功能透過共用 API 讀取、寫入、套用及訂閱偏好，並監聽同一個自訂事件。
-- 動態同時尊重使用者設定與系統 `prefers-reduced-motion`；節能模式降低裝飾負載，不刪除主要內容。
+- 唯一持久化 key 為 `earendel-lab-preferences-v2`；不得另建第二份 motion、sound 或 performance 儲存狀態。
+- 實驗控制器是唯一寫入入口；其他功能只能透過共用 API 讀取與訂閱偏好，並監聽同一個自訂事件。
+- 預設為完整動態、音效開啟與標準效能；只有使用者明確選擇時才切換減少動態、靜音或節能，不依裝置訊號自動降級。
+- 節能與減少動態只降低裝飾負載，不刪除主要內容；背景頁籤停止與離頁清理仍是必要生命週期防護。
 - 每個 listener／observer 必須有對應 cleanup；初始化須可重入。
 
 ## 5. i18n 決策

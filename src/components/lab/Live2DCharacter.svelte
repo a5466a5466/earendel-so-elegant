@@ -41,7 +41,7 @@
 	let loadState = $state<LoadState>('idle');
 	let status = $state('尚未載入；目前不會下載模型或啟動 WebGL。');
 	let motion = $state<ResolvedMotionPreference>('full');
-	let motionSetting = $state<MotionPreference>('system');
+	let motionSetting = $state<MotionPreference>('full');
 	let performanceMode = $state<ResolvedPerformancePreference>('standard');
 	let activeMotion = $state('Idle-0');
 	let reducedPauseTimer = 0;
@@ -163,7 +163,7 @@
 			<button type="button" onclick={loadState === 'paused' ? resume : pause}>{loadState === 'paused' ? '繼續渲染' : '暫停渲染'}</button>
 		{/if}
 		<dl>
-			<div><dt>動態設定</dt><dd>{motionSetting === 'system' ? '跟隨系統' : motionSetting === 'full' ? '完整動態' : '減少動態'}</dd></div>
+			<div><dt>動態設定</dt><dd>{motionSetting === 'full' ? '完整動態' : '減少動態'}</dd></div>
 			<div><dt>目前結果</dt><dd>{motion === 'reduce' ? '減少' : '完整'}</dd></div>
 			<div><dt>效能模式</dt><dd>{performanceMode === 'economy' ? '節能' : '標準'}</dd></div>
 			<div><dt>模型貼圖</dt><dd>2048px · 1.43 MB</dd></div>
