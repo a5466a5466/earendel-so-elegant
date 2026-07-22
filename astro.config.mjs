@@ -5,6 +5,17 @@ import { defineConfig } from 'astro/config';
 
 import svelte from '@astrojs/svelte';
 
+const githubPagesSite = 'https://a5466a5466.github.io';
+const githubPagesBase = '/earendel-so-elegant';
+const explicitLabBuild =
+	process.env.npm_lifecycle_event === 'build:lab' ||
+	process.argv.some((argument, index) =>
+		argument === '--mode' && process.argv[index + 1] === 'lab',
+	);
+const productionBuild =
+	!explicitLabBuild &&
+	(process.env.npm_lifecycle_event === 'build' || process.argv.includes('build'));
+
 /**
  * Keep Lab available during development and explicit Lab builds, while
  * excluding it from the default production output.
@@ -13,11 +24,6 @@ import svelte from '@astrojs/svelte';
  */
 const labOutputGuard = () => {
 	let labEnabled = false;
-	const explicitLabBuild =
-		process.env.npm_lifecycle_event === 'build:lab' ||
-		process.argv.some((argument, index) =>
-			argument === '--mode' && process.argv[index + 1] === 'lab',
-		);
 
 	return {
 		name: 'earendel-lab-output-guard',
@@ -61,6 +67,8 @@ const labOutputGuard = () => {
 
 // https://astro.build/config
 export default defineConfig({
+	site: githubPagesSite,
+	base: productionBuild ? githubPagesBase : '/',
 	integrations: [labOutputGuard(), svelte()],
 	vite: {
 		resolve: {

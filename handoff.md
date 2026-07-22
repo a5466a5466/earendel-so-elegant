@@ -21,7 +21,7 @@
 | Phase 2 | Step 1、Step 3、Step 4 已完成使用者驗收並結案；Step 2 最新列表暫緩 |
 | Phase 3 | Step 1～6 全部完成；採用候選、效能上限與工具鏈處置已核准並結案 |
 | Phase 4 | 已做停止決策；F24 後端投稿延後，F25 PWA 暫不採用，不建立 Prototype |
-| 下一步 | 進入 GitHub Pages 部署準備；先修復 production build，再確認 Pages URL／base、Actions 與 Lab 公開策略 |
+| 下一步 | GitHub Pages 程式端設定已完成；待 commit／push、在 Repository Settings 啟用 GitHub Actions，並進行首次線上部署 QA |
 
 最近完成的 Phase 1 功能：
 
@@ -168,7 +168,7 @@ pnpm build
 先告訴我目前完成到哪個 Step、工作樹是否乾淨，以及下一個 Step 的範圍。
 ```
 
-## 6. 近期進度與下一步：Phase 3・Step 1 完成
+## 6. 近期進度與下一步：GitHub Pages 部署準備
 
 Step 6 已由使用者驗收完成。最終決策為保留普通 Astro MPA 與原生 History，採用 native cross-document View Transition，不採用 ClientRouter。
 
@@ -236,6 +236,8 @@ Phase 3・Step 5 已於 2026-07-22 完成 `/lab/mini-game/`「幫蒂兒收集氣
 Phase 3・Step 6 已於 2026-07-22 完成整合技術 QA：五個 Phase 3 Prototype、跨頁偏好、360px RWD、Console、37 個 Lab HTML noindex／重複 ID 與 39 頁 Lab build 均通過。最終採用決策為 Svelte 採用；Live2D、桌寵與粒子條件採用；氣質小遊戲作為活動限定功能。同頁只允許一個主要高頻 runtime，小遊戲執行時應暫停桌寵自主遊走與非必要背景動畫。使用者接受 production build 的 `picomatch@4.0.5` 問題移至乾淨依賴環境處理，不阻擋概念驗證結案。Phase 3 正式完成，詳細證據位於 `Astro功能實驗室－Phase3-Step6-QA與結案.md`；下一步為 Phase 4・F24。
 
 2026-07-22 使用者確認網站預計發布至 GitHub Pages，並決定目前不進行後端相關功能。F24 投稿表單／後端延後，不使用第三方表單服務、資料庫或 Serverless Function；F25 PWA 因缺乏明確安裝／離線需求且 Service Worker 會增加快取與更新成本，暫不採用。Phase 4 不建立功能 Prototype，轉入 GitHub Pages 部署準備：優先處理 production build 的 `picomatch` 問題，再確認 Pages URL／base、GitHub Actions、Lab 公開策略與正式部署 QA。詳細決策位於 `Astro功能實驗室－Phase4停止決策與GitHubPages部署轉向.md`。
+
+2026-07-22 GitHub Pages 程式端設定已完成但尚未上線：Project Pages URL 固定為 `https://a5466a5466.github.io/earendel-so-elegant/`，production build 才套用 `base: /earendel-so-elegant`，dev 與 `build:lab` 維持根路徑；favicon、404 首頁連結與 Astro bundle 均已驗證包含正確 base。新增 `.github/workflows/deploy.yml`，於 `master` push 或手動觸發時使用 Node 24、pnpm 11.13.0、`withastro/action@v6` 與 `actions/deploy-pages@v5`。`pnpm build` 已通過且排除 Lab，先前 `picomatch@4.0.5` 錯誤未重現；`pnpm build:lab` 39 頁亦通過。Repository 已改為 public，本機 `gh` 已重新登入且 Actions 已啟用；下一步是 commit／push、建立 Pages site，再驗證首次線上部署。
 
 ## 7. 目前架構與重要限制
 
