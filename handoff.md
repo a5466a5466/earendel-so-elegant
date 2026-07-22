@@ -21,7 +21,7 @@
 | Phase 2 | Step 1、Step 3、Step 4 已完成使用者驗收並結案；Step 2 最新列表暫緩 |
 | Phase 3 | Step 1～6 全部完成；採用候選、效能上限與工具鏈處置已核准並結案 |
 | Phase 4 | 已做停止決策；F24 後端投稿延後，F25 PWA 暫不採用，不建立 Prototype |
-| 下一步 | GitHub Pages 程式端設定已完成；待 commit／push、在 Repository Settings 啟用 GitHub Actions，並進行首次線上部署 QA |
+| 下一步 | GitHub Pages 首次部署與線上 QA 已完成；待使用者瀏覽器人工確認，再規劃正式內容整合 |
 
 最近完成的 Phase 1 功能：
 
@@ -237,7 +237,7 @@ Phase 3・Step 6 已於 2026-07-22 完成整合技術 QA：五個 Phase 3 Protot
 
 2026-07-22 使用者確認網站預計發布至 GitHub Pages，並決定目前不進行後端相關功能。F24 投稿表單／後端延後，不使用第三方表單服務、資料庫或 Serverless Function；F25 PWA 因缺乏明確安裝／離線需求且 Service Worker 會增加快取與更新成本，暫不採用。Phase 4 不建立功能 Prototype，轉入 GitHub Pages 部署準備：優先處理 production build 的 `picomatch` 問題，再確認 Pages URL／base、GitHub Actions、Lab 公開策略與正式部署 QA。詳細決策位於 `Astro功能實驗室－Phase4停止決策與GitHubPages部署轉向.md`。
 
-2026-07-22 GitHub Pages 程式端設定已完成但尚未上線：Project Pages URL 固定為 `https://a5466a5466.github.io/earendel-so-elegant/`，production build 才套用 `base: /earendel-so-elegant`，dev 與 `build:lab` 維持根路徑；favicon、404 首頁連結與 Astro bundle 均已驗證包含正確 base。新增 `.github/workflows/deploy.yml`，於 `master` push 或手動觸發時使用 Node 24、pnpm 11.13.0、`withastro/action@v6` 與 `actions/deploy-pages@v5`。`pnpm build` 已通過且排除 Lab，先前 `picomatch@4.0.5` 錯誤未重現；`pnpm build:lab` 39 頁亦通過。Repository 已改為 public，本機 `gh` 已重新登入且 Actions 已啟用；下一步是 commit／push、建立 Pages site，再驗證首次線上部署。
+2026-07-22 GitHub Pages 已完成首次部署：Project Pages URL 為 `https://a5466a5466.github.io/earendel-so-elegant/`，Repository 已改為 public，Pages source 為 GitHub Actions 且強制 HTTPS。production build 才套用 `base: /earendel-so-elegant`，dev 與 `build:lab` 維持根路徑；favicon、404 首頁連結與 Astro bundle 均包含正確 base。`.github/workflows/deploy.yml` 於 `master` push 或手動觸發時使用 Node 24、pnpm 11.13.0、`withastro/action@v6` 與 `actions/deploy-pages@v5`。首次手動 run `29884523696` 的 build／deploy 成功；線上首頁、CSS 與 favicon 回應 200，標題正確，`/lab/` 回應 404，符合正式隔離政策。`picomatch@4.0.5` 錯誤未重現；本機 `pnpm build` 與 `pnpm build:lab` 39 頁皆通過。下一步由使用者在一般瀏覽器完成人工確認，再規劃正式內容整合。
 
 ## 7. 目前架構與重要限制
 
