@@ -11,6 +11,19 @@ const labUrl = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/lab/`;
 ---
 
 <BaseLayout title="厄倫蒂兒好氣質｜Earendel, So Elegant" description="獻給厄倫蒂兒的非官方粉絲應援網站。收藏她的優雅、歌聲，與我們一起走過的星光。">
+	<input class="home-intro-toggle" id="home-intro-toggle" type="checkbox" aria-label="略過首頁入場動畫" />
+	<div class="home-intro" data-home-intro aria-label="厄倫蒂兒首頁入場動畫">
+		<div class="home-intro-stars" aria-hidden="true"></div>
+		<div class="home-intro-mark" aria-hidden="true">
+			<svg viewBox="0 0 120 120"><path d="M60 4 68 52l48 8-48 8-8 48-8-48-48-8 48-8 8-48Z"/><circle cx="60" cy="60" r="8"/></svg>
+		</div>
+		<div class="home-intro-title">
+			<p>For the star who sings beyond the night</p>
+			<h1><span>厄倫蒂兒</span><em>好氣質，從星光開始</em></h1>
+		</div>
+		<label for="home-intro-toggle">略過動畫</label>
+	</div>
+
 	<header class="site-header" data-header>
 		<a class="brand" href="#top" aria-label="回到首頁">
 			<svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 2 28.4 19.6 46 24l-17.6 4.4L24 46l-4.4-17.6L2 24l17.6-4.4L24 2Z"/><circle cx="24" cy="24" r="4.4"/></svg>
@@ -117,6 +130,29 @@ const labUrl = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/lab/`;
 </BaseLayout>
 
 <style>
+	.home-intro-toggle { position: fixed; z-index: 1001; right: 24px; bottom: 24px; width: 1px; height: 1px; opacity: 0; }
+	.home-intro { position: fixed; z-index: 1000; inset: 0; display: grid; overflow: hidden; place-items: center; background: #06101c; color: #f4f1e9; isolation: isolate; animation: intro-overlay-out .5s 2.8s ease forwards; }
+	.home-intro-toggle:checked + .home-intro { visibility: hidden; opacity: 0; pointer-events: none; animation: none; }
+	.home-intro::before { content: ''; position: absolute; width: min(78vw, 820px); aspect-ratio: 1; border: 1px solid rgba(222, 208, 168, .14); border-radius: 50%; opacity: 0; animation: intro-orbit 1.7s .2s ease-out forwards; }
+	.home-intro-stars { position: absolute; inset: 0; opacity: 0; background-image: radial-gradient(circle, #fff 0 1px, transparent 1.5px), radial-gradient(circle, #d9c99d 0 1px, transparent 1.5px); background-position: 0 0, 47px 63px; background-size: 113px 107px, 151px 139px; animation: intro-stars 1.2s .15s ease-out forwards; }
+	.home-intro-mark { position: absolute; width: clamp(58px, 7vw, 88px); color: var(--gold-light); opacity: 0; transform: scale(.45) rotate(-22deg); animation: intro-mark 1s .2s cubic-bezier(.2,.75,.2,1) forwards, intro-mark-out .45s 2.15s ease-in forwards; }
+	.home-intro-mark svg { fill: none; stroke: currentColor; stroke-width: 1.2; filter: drop-shadow(0 0 18px rgba(222,208,168,.48)); }
+	.home-intro-title { position: relative; z-index: 2; width: min(88vw, 900px); text-align: center; opacity: 0; transform: translateY(24px); animation: intro-title-in .75s .88s cubic-bezier(.2,.75,.2,1) forwards, intro-title-out .5s 2.15s ease-in forwards; }
+	.home-intro-title p { margin: 0 0 1.4rem; color: var(--gold-light); font: 400 .64rem var(--sans); letter-spacing: .32em; text-transform: uppercase; }
+	.home-intro-title h1 { display: grid; gap: 1rem; margin: 0; font-weight: 400; }
+	.home-intro-title h1 span { font-size: clamp(3.2rem, 9vw, 7.5rem); letter-spacing: .16em; line-height: 1; }
+	.home-intro-title h1 em { color: var(--gold-light); font-size: clamp(.9rem, 2vw, 1.35rem); font-style: normal; letter-spacing: .38em; }
+	.home-intro label { position: absolute; z-index: 3; right: max(22px, env(safe-area-inset-right)); bottom: max(22px, env(safe-area-inset-bottom)); padding: .65rem .9rem; border: 1px solid rgba(222,208,168,.4); border-radius: 999px; background: rgba(6,16,28,.65); color: rgba(244,241,233,.72); font: 400 .65rem var(--sans); letter-spacing: .14em; cursor: pointer; opacity: 0; animation: intro-skip .4s .6s ease-out forwards; }
+	.home-intro label:hover, .home-intro-toggle:focus-visible + .home-intro label { border-color: var(--gold-light); color: #fff; outline: 2px solid rgba(222,208,168,.45); outline-offset: 3px; }
+	@keyframes intro-overlay-out { to { visibility: hidden; opacity: 0; pointer-events: none; } }
+	@keyframes intro-stars { to { opacity: .34; } }
+	@keyframes intro-orbit { from { opacity: 0; transform: scale(.72) rotate(-16deg); } to { opacity: 1; transform: scale(1) rotate(-16deg); } }
+	@keyframes intro-mark { to { opacity: 1; transform: scale(1) rotate(0); } }
+	@keyframes intro-mark-out { to { opacity: 0; transform: scale(1.18); } }
+	@keyframes intro-title-in { to { opacity: 1; transform: none; } }
+	@keyframes intro-title-out { to { opacity: 0; transform: translateY(-18px); } }
+	@keyframes intro-skip { to { opacity: 1; } }
+
 	.sr-only { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0,0,0,0); }
 	.site-header { position: fixed; z-index: 50; inset: 0 0 auto; display:flex; align-items:center; justify-content:space-between; height:92px; padding:0 4vw; color:#f4f1e9; transition:.35s ease; }
 	.site-header.is-scrolled { height:72px; background:rgba(8,19,31,.86); backdrop-filter:blur(14px); border-bottom:1px solid rgba(255,255,255,.08); }
@@ -169,12 +205,20 @@ const labUrl = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/lab/`;
 		.hero-content { padding-top:21vh; }.hero-figure { right:-10vw; width:58vw; opacity:.8; }.hero h1 em { margin-left:1.3em; }.about-grid { grid-template-columns:1fr 1fr; gap:3rem; }.project-list { grid-template-columns:1fr; }.project-card { display:grid; grid-template-columns:1fr 1fr; }.project-visual { aspect-ratio:auto; }.project-copy { min-height:0; }.follow-grid { gap:3rem; }
 	}
 	@media (max-width:720px) {
+		.home-intro-title h1 span { font-size: clamp(2.7rem, 14vw, 4.4rem); letter-spacing: .1em; }
+		.home-intro-title h1 em { font-size: .78rem; letter-spacing: .22em; }
+		.home-intro-title p { font-size: .5rem; line-height: 1.8; }
 		.site-header { height:72px; padding:0 20px; }.menu-toggle { display:grid; width:42px; height:42px; place-content:center; gap:6px; cursor:pointer; }.menu-toggle span:not(.sr-only) { display:block; width:22px; height:1px; background:currentColor; transition:.2s; }.menu-toggle[aria-expanded="true"] span:first-child { transform:translateY(3.5px) rotate(45deg); }.menu-toggle[aria-expanded="true"] span:nth-child(2) { transform:translateY(-3.5px) rotate(-45deg); }
 		.site-nav { position:fixed; inset:72px 0 auto; display:grid; gap:0; padding:1rem 24px 2rem; background:rgba(8,19,31,.96); visibility:hidden; transform:translateY(-130%); opacity:0; transition:transform .25s,opacity .25s,visibility 0s linear .25s; }.site-nav.is-open { visibility:visible; transform:none; opacity:1; transition-delay:0s; }.site-nav a { padding:1rem 0; border-bottom:1px solid rgba(255,255,255,.08); }
 		.hero { min-height:820px; }.hero-content { padding-top:145px; }.hero-kicker { font-size:.55rem; max-width:230px; line-height:1.7; }.hero h1 span { font-size:3.4rem; }.hero h1 em { margin-top:1rem; margin-left:1.8rem; font-size:1.25rem; }.hero-intro { margin:2.2rem 0 0; }.hero-cta { margin:1.6rem 0 0; }.hero-figure { width:94vw; right:-22vw; bottom:-1%; opacity:.62; }.hero::after { background:linear-gradient(90deg,rgba(8,19,31,.7),transparent),linear-gradient(0deg,#08131f,transparent 38%); }.hero-side-note { display:none; }
 		.about-grid { grid-template-columns:1fr; }.about-art { min-height:510px; order:2; }.arch { height:480px; }.about-art>p { left:0; }.about-copy { order:1; }.about-facts { grid-template-columns:1fr 1fr; }.section-heading { display:block; }.section-heading>.section-copy { text-align:left; margin-top:1.5rem; }.project-card { display:block; }.project-visual { aspect-ratio:1/.72; }.follow-grid { grid-template-columns:1fr; }.follow-copy { padding-top:0; }.moments blockquote { line-height:1.8; }.wave { letter-spacing:.1em; }.footer-brand+ p { margin-left:0; } footer .container { align-items:flex-start; flex-direction:column; gap:.8rem; }
 	}
 	@media (prefers-reduced-motion: reduce) {
-		*, *::before, *::after { animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; }
+		.home-intro { animation: intro-overlay-out .5s 2.8s ease forwards !important; }
+		.home-intro::before { animation: intro-orbit 1.7s .2s ease-out forwards !important; }
+		.home-intro-stars { animation: intro-stars 1.2s .15s ease-out forwards !important; }
+		.home-intro-mark { animation: intro-mark 1s .2s cubic-bezier(.2,.75,.2,1) forwards, intro-mark-out .45s 2.15s ease-in forwards !important; }
+		.home-intro-title { animation: intro-title-in .75s .88s cubic-bezier(.2,.75,.2,1) forwards, intro-title-out .5s 2.15s ease-in forwards !important; }
+		.home-intro label { animation: intro-skip .4s .6s ease-out forwards !important; }
 	}
 </style>

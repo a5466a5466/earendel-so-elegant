@@ -69,6 +69,7 @@ const githubPagesLabPaths = () => ({
 export default defineConfig({
 	site: githubPagesSite,
 	base: productionBuild ? githubPagesBase : '/',
+	devToolbar: { enabled: false },
 	integrations: [svelte(), githubPagesLabPaths()],
 	vite: {
 		resolve: {
